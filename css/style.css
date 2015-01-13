@@ -20,16 +20,19 @@ position:relative;
 }
 #buddycloud .item input{
 width:400px;
+display:block;
+margin:10px;
+margin-top:20px;
+margin-left:50px;
 }
 #buddycloud .item img{
 margin:10px;
 height:40px;
+position:absolute;
 }
 #buddycloud .item .person{
-position:absolute;
-top:7px;
-left:54px;
 padding:10px;
+margin-left:50px;
 }
 #buddycloud .item .name{
 font-weight:bold;
@@ -60,14 +63,14 @@ position:relative;
 }
 #buddycloud .item .subitem img{
 height:30px;
-
+position:absolute;
 top:5px;
 left:5px;
 margin-right:5px;
 }
 
 #buddycloud .item .subitem .person{
-margin-left:5px;
+margin-left:50px;
 }
 #buddycloud .item  .delete{
 display:none;
@@ -92,7 +95,6 @@ color:gray;
 font-weight:bold;
 font-size:25px;
 position:absolute;
-left:410px;
 top:4px;
 display:block;
 }
