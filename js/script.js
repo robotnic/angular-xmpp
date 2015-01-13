@@ -11,9 +11,9 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
         function($scope, $location, $anchorScroll) {
             SCOPE = $scope;
             $scope.username = "u5";
+            $scope.password = "nix";
             $scope.messages = [];
             $scope.newitems = {};
-
 
             //small chat window
 
@@ -65,6 +65,7 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
                 setTimeout(function() {
                     $scope.gotoBottom(user.name);
                 }, 10);
+                return false;
             }
 
             //scroll chat window
@@ -110,19 +111,29 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
 
 
             // socket!!!!
-
             var socket = new Primus("https://laos.buddycloud.com");
-            socket.on('open', function() {
-                socket.send('xmpp.login', {
-                    jid: $scope.username + '@laos.buddycloud.com',
-                    password: 'nix',
-                    register: true
-                });
+            socket.on("open",function(){
+                console.log("connected, ready for login");
+                $scope.connection_open=true;
+                $scope.$apply();
             });
+            
+            $scope.login=function(){
+                    console.log("try to login",$scope.username,$scope.password,$scope.register);
+                    socket.send('xmpp.login', {
+                        jid: $scope.username + '@laos.buddycloud.com',
+                        password: $scope.password,
+                        register: $scope.register
+                    });
+            }
+           
 
+            socket.on('xmpp.disconnect', function() {
+                $scope.connected=false;
+            });
             //connection established
             socket.on('xmpp.connection', function() {
-
+                $scope.connected=true;
                 //presence
                 socket.send('xmpp.buddycloud.presence', {});
 

@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+<script src="//code.angularjs.org/1.3.8/angular-animate.min.js" data-semver="1.3.8"></script>
+<script src="//code.angularjs.org/1.3.8/angular-sanitize.min.js" data-semver="1.3.8"></script>
 
 <link rel="stylesheet" href="css/style.css">
 <script src="js/script.js"></script>
@@ -17,8 +19,16 @@
 
 
 <h2>Buddycloud</h2>
-What's up?
-<div  id="buddycloud">
+<form class="loginform" ng-show="!connected" ng-submit="login()">
+<table>
+<tr><td>username</td><td><input ng-model="username"/></td></tr>
+<tr><td>password</td><td><input type="password" ng-model="password"/></td></tr>
+<tr><td>register</td><td><input type="checkbox" ng-model="register"/></td></tr>
+<tr><td></td><td><input ng-if="connection_open" type="submit" value="login"/></td></tr>
+</table>
+(u1 - u9 have avatar images)
+</form>
+<div ng-show="connected"  id="buddycloud" >
 <form ng-submit="publish()">
 <input ng-model="newtopic" placeholder="What's going on" >
 </form>
