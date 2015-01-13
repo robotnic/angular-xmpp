@@ -69,6 +69,19 @@ margin-right:5px;
 #buddycloud .item .subitem .person{
 margin-left:5px;
 }
+#buddycloud .item .subitem .close{
+display:none;
+cursor:pointer;
+}
+#buddycloud .item .subitem:hover .close{
+color:gray;
+font-weight:bold;
+font-size:25px;
+position:absolute;
+left:400px;
+top:4px;
+display:block;
+}
 
 .roster{
 position:fixed;

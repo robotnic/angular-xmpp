@@ -6,7 +6,9 @@
 <script data-require="angular.js@*" data-semver="1.3.7" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.7/angular.js"></script>
 <script data-require="underscore.js@*" data-semver="1.6.0" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 <!-- Latest compiled and minified CSS -->
+<!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
 
@@ -24,11 +26,12 @@ What's up?
 </form>
 
 
-<div  ng-repeat="item in tree |orderBy:'entry.atom.published': true" class="item">
+<div  ng-repeat="item in tree | orderBy:'-entry.atom.published'" class="item">
 <img  ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
 <div class="person">
 <span class="name">{{item.entry.atom.author.name}}</span>
 <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
+<span class="date">{{item.entry.atom.published}}</span>
 
 </div>
 <div class="content">
@@ -41,9 +44,9 @@ What's up?
     <div class="person">
     <span class="name">{{item.entry.atom.author.name}}</span>
     {{subitem.entry.atom.content.content}}
-    <span lass="close" ng-click="removeitem(subitem.entry.atom.id)">×</span>
 
     <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
+    <span class="close" ng-click="removeitem(subitem.entry.atom.id)">×</span>
     </div>
 </div>
 <form ng-submit="publish(item.entry.atom.id)">
