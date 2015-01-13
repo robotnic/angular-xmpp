@@ -29,6 +29,17 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
                 console.log("min", user);
             }
 
+            $scope.allow=function(user){
+                console.log(user);
+
+                socket.send(
+                    'xmpp.presence.subscribed',
+                    {
+                        "to": user.jid.user+"@"+user.jid.domain
+                    }
+                )
+            }
+
            
             $scope.create = function() {
                 socket.send(

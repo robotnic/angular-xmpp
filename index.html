@@ -76,6 +76,15 @@
 <p>{{user.name}}</p>
 {{user.presence.status}}
 </td></tr></table>
+<h4>Friend requests</h4>
+<table >
+<tr ng-if="user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
+<img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
+</td>
+<td>
+<p>{{user.name}}</p>
+{{user.presence.status}}
+</td></tr></table>
 </div>
 
 
