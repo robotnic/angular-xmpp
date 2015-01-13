@@ -32,6 +32,7 @@ What's up?
 <span class="date">{{item.entry.atom.published}}</span>
 
 </div>
+    <span class="delete" ng-click="removeitem(item.entry.atom.id)">×</span>
 <div class="content">
 {{item.entry.atom.content.content}}
 </div>
@@ -44,7 +45,7 @@ What's up?
     {{subitem.entry.atom.content.content}}
 
     <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
-    <span class="close" ng-click="removeitem(subitem.entry.atom.id)">×</span>
+    <span class="delete" ng-click="removeitem(subitem.entry.atom.id)">×</span>
     </div>
 </div>
 <form ng-submit="publish(item.entry.atom.id)">
