@@ -180,11 +180,14 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
 
                 $scope.removeitem = function(ref) {
                     console.log("delete", ref);
+                    var ar = ref.split(",");
+                    var id = ar[ar.length - 1];
                     var stanza = {
-                        node: ref
+                        node:node,
+                        id: id
                     };
                     socket.send(
-                        'xmpp.buddycloud.delete', stanza,
+                        'xmpp.buddycloud.item.delete', stanza,
                         function(error, data) {
                             if (error) console.error(error);
                             else {
