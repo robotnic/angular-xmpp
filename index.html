@@ -67,7 +67,7 @@
 
 
 
-<div class="roster">
+<div class="roster" ng-show="connected">
 <table >
 <tr ng-if="user.presence" ng-repeat="user in roster" ng-click="open(user)"><td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
@@ -76,6 +76,10 @@
 <p>{{user.name}}</p>
 {{user.presence.status}}
 </td></tr></table>
+<h4>Add JID</h4>
+<form ng-submit="addjid()">
+<input ng-model="newjid"/>
+</form>
 <h4>Friend requests</h4>
 <table >
 <tr ng-if="user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>

@@ -39,6 +39,9 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
                     }
                 )
             }
+            $scope.addjid=function(){
+                socket.send('xmpp.presence.subscribe', { "to": $scope.newjid })
+            }
 
            
             $scope.create = function() {
