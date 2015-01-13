@@ -10,7 +10,7 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
     .controller('Roster', ['$scope', '$location', '$anchorScroll',
         function($scope, $location, $anchorScroll) {
             SCOPE = $scope;
-            $scope.username = "u2";
+            $scope.username = "u5";
             $scope.messages = [];
             $scope.newitems = {};
 
