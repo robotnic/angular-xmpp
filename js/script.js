@@ -33,7 +33,6 @@ angular.module('Xmpp', ['mgcrea.ngStrap'])
             $scope.create = function() {
                 socket.send(
                     'xmpp.buddycloud.create', {
-                        "to": "laos.buddycloud.com",
                         "node": node,
                         "options": [{
                             "var": "buddycloud#channel_type",
