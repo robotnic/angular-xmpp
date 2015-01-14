@@ -1,0 +1,98 @@
+
+.buddycloud{
+margin-left:150px;
+}
+.buddycloud input{
+width:500px;
+}
+.buddycloud .item{
+border:1px solid lightgrey;
+background-color:white;
+width:500px;
+margin:0px;
+margin-top:20px;
+position:relative;
+
+}
+.buddycloud .item input{
+width:400px;
+display:block;
+margin:10px;
+margin-top:20px;
+margin-left:50px;
+}
+.buddycloud .item img{
+margin:10px;
+height:40px;
+position:absolute;
+}
+.buddycloud .item .person{
+padding:10px;
+margin-left:50px;
+}
+.buddycloud .item .name{
+font-weight:bold;
+color:blue;
+line-height:12px;
+display:block;
+}
+.buddycloud .item .date{
+color:grey;
+font-size:10px;
+line-height:10px;
+}
+.buddycloud .item .like{
+color:blue;
+margin-bottom:10px;
+padding:10px;
+}
+.buddycloud .item .content{
+margin-top:10px;
+margin-bottom:10px;
+padding:10px;
+}
+
+.buddycloud .item .subitem{
+background-color:#f4f4f4;
+padding:2px;
+position:relative;
+}
+.buddycloud .item .subitem img{
+height:30px;
+position:absolute;
+top:5px;
+left:5px;
+margin-right:5px;
+}
+
+.buddycloud .item .subitem .person{
+margin-left:50px;
+}
+.buddycloud .item  .delete{
+display:none;
+cursor:pointer;
+}
+.buddycloud .item:hover .delete{
+color:gray;
+font-weight:bold;
+font-size:25px;
+position:absolute;
+left:470px;
+top:4px;
+display:block;
+}
+
+.buddycloud .item .subitem  .delete{
+display:none;
+cursor:pointer;
+}
+.buddycloud .item .subitem:hover .delete{
+color:gray;
+font-weight:bold;
+font-size:25px;
+position:absolute;
+top:4px;
+display:block;
+}
+
+
