@@ -6,6 +6,8 @@ background-color:#efefef;
 border:1px solid gray;
 width:140px;
 margin:5px;
+padding:3px;
+background-color:white;
 }
 .menu.selected{
 border:1px solid gray;
@@ -15,7 +17,8 @@ color:red;
 #buddycloud{
 position:Absolute;
 top:40px;
-left:200px;
+left:170px;
+right:240px;
 }
 
 .loginform{
@@ -79,6 +82,7 @@ padding-right:240px;
 }
 
 #bottomchat .minichat{
+background-color:white;
 display:inline-block;
 border:1px solid lightgrey;
 text-align:left;

@@ -11,6 +11,8 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
 <script src="//code.angularjs.org/1.3.8/angular-animate.min.js" data-semver="1.3.8"></script>
 <script src="//code.angularjs.org/1.3.8/angular-sanitize.min.js" data-semver="1.3.8"></script>
+<script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/v2.0.2/src/scrollglue.js"></script>
+
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/buddycloud.css">
@@ -78,8 +80,8 @@
   <div class="minichat" ng-if="user.opened" ng-repeat="user in roster" title="{{ user.name }}"  >
     <div ng-if="user.opened=='max'">
         <div class="title" ng-click="minify(user)"><p>{{user.name}}</p><span class="close" ng-click="close(user)">×</span></div>
-            <div class="messages">
-                <div ng-repeat="message in user.messages">
+            <div class="messages" scroll-glue>
+                <div ng-repeat="message in user.messages" >
                 <img ng-if="message.from" ng-src="icons/avatars/{{message.from.user}}.png" />
                 <img ng-if="!message.from" ng-src="icons/avatars/{{username}}.png" />
                 {{message.content}}
@@ -87,7 +89,7 @@
             <div id="bottom_{{user.name}}"> </div>
             </div>
 
-        <form ng-submit="send(user)">
+        <form ng-submit="send(user,$event)">
         <input ng-model="user.newtext"/>
         </form>
       </div>

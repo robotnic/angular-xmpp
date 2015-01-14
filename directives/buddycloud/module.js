@@ -67,7 +67,8 @@ angular.module('Buddycloud', [])
 
 
 
-            socket.on('xmpp.connection', function() {
+            socket.on('xmpp.connection', function(data) {
+                $scope.jid=data.jid;
                 $scope.connected=true;
                 //presence
                 socket.send('xmpp.buddycloud.presence', {});

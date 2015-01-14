@@ -10,7 +10,6 @@
 <div class="person">
 <span class="name">{{item.entry.atom.author.name}}</span>
 <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
-<span class="date">{{item.entry.atom.published}}</span>
 
 </div>
     <span class="delete" ng-click="removeitem(item.entry.atom.id)">×</span>
@@ -19,7 +18,7 @@
 </div>
 <span class="like">like . share</span>
 <br/>
-<div ng-repeat="subitem in item.nodes" class="subitem">
+<div ng-repeat="subitem in item.nodes|toArray|orderBy:'entry.atom.published'" class="subitem">
     <img  ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
     <div class="person">
     <span class="name">{{item.entry.atom.author.name}}</span>
@@ -29,9 +28,11 @@
     <span class="delete" ng-click="removeitem(subitem.entry.atom.id)">×</span>
     </div>
 </div>
-<form ng-submit="publish(item.entry.atom.id)">
-<img  ng-src="icons/avatars/{{username}}.png" style="height:30px;margin-top:0px;"/>
+<form ng-submit="publish(item.entry.atom.id)" class="subitem">
+<img  ng-src="icons/avatars/{{jid.local}}.png" />
+    <div class="person">
 <input ng-model="newitems[item.entry.atom.id]" />
+</div>
 </form>
 </div>
 </div>

@@ -15,7 +15,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
     ])
 
 
-angular.module('XmppCore', ['mgcrea.ngStrap'])
+angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
 
 
@@ -23,7 +23,16 @@ angular.module('XmppCore', ['mgcrea.ngStrap'])
         console.log("XMPP init");
         var socket = new Primus("https://laos.buddycloud.com");
         var api={
-            socket:socket
+            socket:socket,
+            login:function(username,password,register){
+                    console.log("try to login",username,password,register);
+                    api.socket.send('xmpp.login', {
+                        jid: username + '@laos.buddycloud.com',
+                        password: password,
+                        register: register
+                    });
+            }
+
         }
         return api
     })
@@ -68,7 +77,8 @@ angular.module('XmppCore', ['mgcrea.ngStrap'])
 
            
             //send chat message 
-            $scope.send = function(user, text) {
+            $scope.send = function(user,event) {
+                console.log(arguments,this);
                 var message = {
                     to: user.name + "@laos.buddycloud.com",
                     content: user.newtext
@@ -78,7 +88,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap'])
                 socket.send('xmpp.chat.message', message);
                 user.newtext = "";
                 setTimeout(function() {
-                    $scope.gotoBottom(user.name);
+//                    $scope.gotoBottom(user.name);
                 }, 10);
                 return false;
             }
@@ -101,7 +111,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap'])
                 $scope.connection_open=true;
                 $scope.$apply();
             });
-            
+            /* 
             $scope.login=function(){
                     console.log("try to login",$scope.username,$scope.password,$scope.register);
                     socket.send('xmpp.login', {
@@ -110,13 +120,20 @@ angular.module('XmppCore', ['mgcrea.ngStrap'])
                         register: $scope.register
                     });
             }
+            */
+
+            $scope.login=function(){
+                Xmpp.login($scope.username,$scope.password,$scope.register);
+            }
            
 
             socket.on('xmpp.disconnect', function() {
                 $scope.connected=false;
             });
             //connection established
-            socket.on('xmpp.connection', function() {
+            socket.on('xmpp.connection', function(data) {
+                console.log("connect",data);
+                $scope.jid=data.jid;
                 $scope.connected=true;
 
                 //vCard - not working
