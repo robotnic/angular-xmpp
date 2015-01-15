@@ -3,14 +3,18 @@ var SCOPE = null;
 
 
 angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
-    .controller('pagecontroller', ['$scope',
-        function($scope) {
-            $scope.nodes=["u5","laos"]
+    .controller('pagecontroller', ['$scope','Xmpp',
+        function($scope,Xmpp) {
+            $scope.nodes=["u5","laos","cambodia","bugs","seppl"]
             $scope.selectednode="u5";
             $scope.open=function(node){
                 console.log(node);
                 $scope.selectednode=node;
             }
+            Xmpp.socket.on('xmpp.connection', function(data) {
+                console.log("connect",data);
+                $scope.jid=data.jid;
+            });
         }
     ])
 
@@ -22,12 +26,18 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
     .factory("Xmpp",function(){
         console.log("XMPP init");
         var socket = new Primus("https://laos.buddycloud.com");
+        //var socket = new Primus("http://localhost:3000");
         var api={
             socket:socket,
             login:function(username,password,register){
                     console.log("try to login",username,password,register);
+                    if(username.indexOf("@")==-1){
+                        var jid=username + '@laos.buddycloud.com';
+                    }else{
+                        var jid=username;
+                    };
                     api.socket.send('xmpp.login', {
-                        jid: username + '@laos.buddycloud.com',
+                        jid: jid,
                         password: password,
                         register: register
                     });
@@ -43,8 +53,8 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
     .controller('Roster', ['$scope', '$location', '$anchorScroll','Xmpp',
         function($scope, $location, $anchorScroll,Xmpp) {
             SCOPE = $scope;
-            $scope.username = "u5";
-            $scope.password = "nix";
+            $scope.username = "seppl";
+            $scope.password = "bbb";
             var socket=Xmpp.socket;
 
             //small chat window
@@ -64,44 +74,29 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             $scope.allow=function(user){
                 console.log(user);
 
-                socket.send(
-                    'xmpp.presence.subscribed',
-                    {
-                        "to": user.jid.user+"@"+user.jid.domain
-                    }
-                )
+                socket.send( 'xmpp.presence.subscribed', { "to": user.jid.user+"@"+user.jid.domain })
             }
             $scope.addjid=function(){
                 socket.send('xmpp.presence.subscribe', { "to": $scope.newjid })
+                socket.send( 'xmpp.presence.subscribed', { "to": $scope.newjid })
             }
 
            
             //send chat message 
             $scope.send = function(user,event) {
                 console.log(arguments,this);
+                var jid=user.jid.user+"@"+user.jid.domain;
                 var message = {
-                    to: user.name + "@laos.buddycloud.com",
+                    to: jid,
                     content: user.newtext
                 }
                 if (!user.messages) user.messages = [];
                 user.messages.push(message);
                 socket.send('xmpp.chat.message', message);
                 user.newtext = "";
-                setTimeout(function() {
-//                    $scope.gotoBottom(user.name);
-                }, 10);
                 return false;
             }
 
-            //scroll chat window
-            $scope.gotoBottom = function(name) {
-                // set the location.hash to the id of
-                // the element you wish to scroll to.
-                $location.hash('bottom_' + name);
-
-                // call $anchorScroll()
-                $anchorScroll();
-            };
 
 
 
@@ -152,7 +147,6 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                         }
                     }
                     $scope.$apply();
-                    $scope.gotoBottom(data.from.user);
                 });
 
 

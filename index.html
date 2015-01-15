@@ -20,7 +20,10 @@
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
-
+<div  ng-show="jid">
+<img  ng-src="icons/avatars/{{jid.user}}.png" style="width:140px;margin:5px;" />
+</div>
+<div ng-show="jid" style="font-size:10px">{{jid.user}}@{{jid.domain}}</div>
 <h4>Buddycloud nodes</h4>
 <div ng-repeat="node in nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode==node}">
 {{node}}
@@ -30,6 +33,9 @@
 <div id="buddycloud">
 <buddycloud ng-show="selectednode=='u5'" node="/user/u5@laos.buddycloud.com/posts"></buddycloud>
 <buddycloud ng-show="selectednode=='laos'" node="/user/laos@laos.buddycloud.com/posts"></buddycloud>
+<buddycloud ng-show="selectednode=='cambodia'" node="/user/cambodia@topics.buddycloud.org/posts"></buddycloud>
+<buddycloud ng-show="selectednode=='bugs'" node="/user/report_bugs@topics.buddycloud.org/posts"></buddycloud>
+<buddycloud ng-show="selectednode=='seppl'" node="/user/seppl@laos.buddycloud.com/posts"></buddycloud>
 </div>
 
 
@@ -42,7 +48,9 @@
 <tr><td>register</td><td><input type="checkbox" ng-model="register"/></td></tr>
 <tr><td></td><td><input ng-if="connection_open" type="submit" value="login"/></td></tr>
 </table>
-(u1 - u9 have avatar images)
+<hr/>
+u:eva,arni,seppl,maria,bill<br/>
+p:bbb
 </form>
 
 
@@ -66,7 +74,7 @@
 </form>
 <h4>Friend requests</h4>
 <table >
-<tr ng-if="user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
+<tr ng-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>

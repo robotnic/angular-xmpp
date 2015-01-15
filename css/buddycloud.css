@@ -28,7 +28,7 @@ height:40px;
 position:absolute;
 }
 .buddycloud .item .person{
-padding:10px;
+padding:5px;
 margin-left:50px;
 margin-top:3px;
 }
@@ -62,7 +62,7 @@ position:relative;
 .buddycloud .item .subitem img{
 height:30px;
 position:absolute;
-top:5px;
+top:0px;
 left:5px;
 margin-right:5px;
 }
