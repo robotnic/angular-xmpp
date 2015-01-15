@@ -18,7 +18,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
             });
             Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
                 console.log("sub",data);
-                var name=getNameFromNode(data.node);    
+                var name=Xmpp.getOwnerFromNode(data.node).name;    
                 console.log(name);
                 $scope.addNode({
                     node:data.node,
@@ -51,7 +51,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                                     var node=data[i].node;
                                     var n = node.lastIndexOf('/');
                                     var type = node.substring(n + 1);
-                                    var name=getNameFromNode(node);
+                                    var name=Xmpp.getOwnerFromNode(node).name;
                                     console.log(name,type,node);
                                     if(type=='posts'){
                                         $scope.addNode({
@@ -74,14 +74,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                     }
                 }
                 $scope.nodes.push(node);
-
-            }
-            function getNameFromNode(node){
-                    var n = node.indexOf('@');
-                    var name=node.substring(0,n);
-                    n = name.lastIndexOf('/');
-                    name=name.substring(n+1);
-                    return name
 
             }
         }
@@ -111,6 +103,20 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                         password: password,
                         register: register
                     });
+            },
+            getOwnerFromNode:function(node){
+                    var n = node.indexOf('@');
+                    var name=node.substring(0,n);
+                    var domain=node.substring(n+1);
+                    n = name.lastIndexOf('/');
+                    name=name.substring(n+1);
+
+                    n = domain.indexOf('/');
+                    domain=domain.substring(0,n);
+
+                    var jid=name+"@"+domain;
+                    return {name:name,domain:domain,jid:jid};
+
             }
 
         }

@@ -24,7 +24,9 @@
 <div  ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
 <img  ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
 <div class="person">
-<span class="name" ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
+<span class="name" ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}
+<span ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
+</span>
 <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
 
 </div>

@@ -101,6 +101,7 @@ angular.module('Buddycloud', [])
                 if(!data)return tree;
                 for (var i = 0; i < data.length; i++) {
                     data[i].entry.atom.author.image=data[i].entry.atom.author.name.split("@")[0];
+                    data[i].nodeowner=Xmpp.getOwnerFromNode(data[i].node).jid;
                     var ar = data[i].entry.atom.id.split(",");
                     var id = ar.pop();
 
@@ -115,6 +116,7 @@ angular.module('Buddycloud', [])
                         tree[id] = data[i];
                     }
                 }
+                console.log("the tree",tree);
                 return tree;
             }
 
