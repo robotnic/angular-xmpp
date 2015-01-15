@@ -210,6 +210,11 @@ angular.module('Buddycloud', [])
                     if($scope.node=="recent"){
                         node="/user/"+$scope.jid.user+"@"+$scope.jid.domain+"/posts";
                     }
+                    if(ref){
+                        node=ref.substring(0,ref.lastIndexOf(","));
+                        node=node.substring(node.lastIndexOf(",")+1);
+                        console.log(">>>>>>>>>>>",node);
+                    }
                         
                     console.log("publishing: ", $scope.newmessage);
                     if (ref) {
