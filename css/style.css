@@ -2,16 +2,24 @@ body{
 background-color:#efefef;
 }
 
+
+.header{
+background-color:lightblue;
+text-align:right;
+}
+
+.menu:hover{
+color:black;
+}
 .menu{
-border:1px solid gray;
 width:140px;
-margin:5px;
-padding:3px;
-background-color:white;
+padding:2px;
+padding-left:12px;
+color:gray;
+cursor:pointer;
 }
 .menu.selected{
-border:1px solid gray;
-color:red;
+font-weight:bold;
 }
 
 #buddycloud{
@@ -36,7 +44,7 @@ padding:20px;
 
 .roster{
 position:fixed;
-top:00px;
+top:40px;
 right:10px;
 bottom:00px;
 border-left:1px solid lightgrey;

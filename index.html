@@ -20,22 +20,25 @@
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
-<div  ng-show="jid">
-<img  ng-src="icons/avatars/{{jid.user}}.png" style="width:140px;margin:5px;" />
+<div  ng-show="jid" class="header">
+<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+<span ng-show="unreadmessages">({{unreadmessages}})</span>
+&#160;
+<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+&#160;
+&#160;
+{{jid.user}}@{{jid.domain}}
+<img  ng-src="icons/avatars/{{jid.user}}.png" style="width:30px;margin:5px;" />
 </div>
-<div ng-show="jid" style="font-size:10px">{{jid.user}}@{{jid.domain}}</div>
+<img  ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
+<div style="font-size:7px">{{selectednode.node}}</div>
 <h4>Buddycloud nodes</h4>
-<div ng-repeat="node in nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode==node}">
-{{node}}
+<div ng-repeat="node in nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
+{{node.name}}
 </div>
 
-
-<div id="buddycloud">
-<buddycloud ng-show="selectednode=='u5'" node="/user/u5@laos.buddycloud.com/posts"></buddycloud>
-<buddycloud ng-show="selectednode=='laos'" node="/user/laos@laos.buddycloud.com/posts"></buddycloud>
-<buddycloud ng-show="selectednode=='cambodia'" node="/user/cambodia@topics.buddycloud.org/posts"></buddycloud>
-<buddycloud ng-show="selectednode=='bugs'" node="/user/report_bugs@topics.buddycloud.org/posts"></buddycloud>
-<buddycloud ng-show="selectednode=='seppl'" node="/user/seppl@laos.buddycloud.com/posts"></buddycloud>
+<div id="buddycloud" >
+<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid"></buddycloud>
 </div>
 
 
@@ -61,7 +64,8 @@ p:bbb
 
 <div class="roster" ng-show="connected">
 <table >
-<tr ng-if="user.presence" ng-repeat="user in roster" ng-click="open(user)"><td>
+<tr ng-if="user.presence" ng-repeat="user in roster" ng-click="open(user)">
+<td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>

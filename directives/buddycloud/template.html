@@ -6,17 +6,21 @@
 <input ng-model="newnode" placeholder="What's going on" >
 </form>
 -->
+<br/>
 <button ng-click="subscribe()">subscribe</button>
-
+<button ng-click="unsubscribe()">unsubscribe</button>
+<br/>
+<br/>
 <form ng-submit="publish()">
-<input ng-model="newtopic" placeholder="What's going on" >
+<textarea ng-model="newtopic" placeholder="What's going on" ></textarea>
+<input ng-show="newtopic" type="submit"/>
 </form>
 
 
 <div  ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
 <img  ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
 <div class="person">
-<span class="name">{{item.entry.atom.author.name}}</span>
+<span class="name" ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
 <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
 
 </div>
@@ -29,7 +33,7 @@
 <div ng-repeat="subitem in item.nodes|toArray|orderBy:'entry.atom.published'" class="subitem">
     <img  ng-src="icons/avatars/{{subitem.entry.atom.author.image}}.png" />
     <div class="person">
-    <span class="name">{{subitem.entry.atom.author.name}}</span>
+    <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
     {{subitem.entry.atom.content.content}}
 
     <span class="date">{{subitem.entry.atom.published | date:'medium'}}</span>

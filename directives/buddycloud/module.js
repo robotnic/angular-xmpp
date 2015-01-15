@@ -6,31 +6,30 @@ angular.module('Buddycloud', [])
       return {
         'restrict': 'E',
         'scope': {
-          'node': '@'
+          'node': '@',
+          'jid': '=',
+          'changenode': '&changenode'
         },
         'transclude': false,
         'templateUrl': 'directives/buddycloud/template.html',
         'controller': function($scope,Xmpp){
-
             var socket=Xmpp.socket;
             $scope.newitems = {};
-            var node=$scope.node;
 
-/*
-socket.send('xmpp.buddycloud.create',
-      {
-          node : node,
-          options: [
-              { "var": "buddycloud#channel_type", value : "topic" },
-              { "var": "pubsub#title", value : "Chat Topic Channel" },
-              { "var": "pubsub#access_model", value : "open" },
-              { "var": "buddycloud#default_affiliation", value : "publisher" }
-          ]
-      },
-*/
+            $scope.opennode=function(name){
+                 console.log(name);
+                var localname=name.substring(0,name.indexOf("@"));
+                var domain=name.substring(name.indexOf("@")+1);
+                console.log(localname,domain);
 
+                var node={
+                        node:"/user/"+localname+"@"+domain+"/posts",
+                        name:localname  
+                }
+                $scope.changenode({node:node});
+                console.log({node:node});
+            }
 
-            console.log("-----------------",node);
             $scope.create = function() {
                 var node="/user/"+$scope.newnode+"@laos.buddycloud.com/posts";
                 socket.send(
@@ -50,6 +49,32 @@ socket.send('xmpp.buddycloud.create',
                 console.log("created");
             }
 
+
+                //Buddycloud timeline
+
+                $scope.getNodeItems = function(node) {
+                    console.log('Retrieving node items')
+                    //var node='/user/team@topics.buddycloud.org/posts';
+                    socket.send(
+                        'xmpp.buddycloud.retrieve', {
+                            node: node,
+                            rsm: {
+                                max: 55
+                            }
+                        },
+                        function(error, data) {
+                            //            $scope.items=data;
+                            $scope.tree = $scope.maketree(data);
+                            $scope.$apply();
+                        }
+                    )
+
+                }
+
+
+
+
+
             $scope.maketree = function(data) {
                 console.log("maketree", data);
                 var tree = {};
@@ -60,7 +85,6 @@ socket.send('xmpp.buddycloud.create',
                     var id = ar.pop();
 
                     if (data[i].entry["in-reply-to"]) {
-                        console.log(data[i].entry["in-reply-to"].ref);
                         var ref = data[i].entry["in-reply-to"].ref;
                         var item = tree[ref];
                         if (item) {
@@ -75,43 +99,14 @@ socket.send('xmpp.buddycloud.create',
             }
 
 
-
-            socket.on('xmpp.connection', function(data) {
-                $scope.jid=data.jid;
+            console.log("----wait for connection ---");
+//            socket.on('xmpp.connection', function(data) {
+                console.log("+++connected+++");
                 $scope.connected=true;
                 //presence
                 socket.send('xmpp.buddycloud.presence', {});
 
 
-                //discover Buddycloud - not in use
-                socket.send(
-                    'xmpp.buddycloud.discover', {},
-                    function(error, data) {
-                        console.log(error, data);
-                        if (error) return console.error(error)
-                        console.log('Discovered Buddycloud server at', data);
-                        $scope.getNodeItems();
-
-
-                        socket.send(
-                            'xmpp.buddycloud.subscriptions', { },
-                            function(error, data) { console.log("SUBSRIPTIONS",error, data) }
-                        )
-                    }
-                );
-
-
-/*
-                //subscribe to node
-                socket.send(
-                    'xmpp.buddycloud.subscribe', {
-                        node: node
-                    },
-                    function(error, data) {
-                        "subscrive", console.log(error, data)
-                    }
-                )
-*/
 
                 
                 //buddycloud message listener
@@ -144,11 +139,24 @@ socket.send('xmpp.buddycloud.create',
                     socket.send(
                         'xmpp.buddycloud.subscribe',
                         {
-                            "node": node
+                            "node": $scope.node
                         },
                         function(error, data) { console.log(error, data) }
                     )
                 }
+
+                //unsubscribe from node
+
+                $scope.unsubscribe = function() {
+                    socket.send(
+                        'xmpp.buddycloud.unsubscribe',
+                        {
+                            "node": $scope.node
+                        },
+                        function(error, data) { console.log(error, data) }
+                    )
+                }
+
 
 
                 //Buddycloud delete - not working
@@ -183,7 +191,7 @@ socket.send('xmpp.buddycloud.create',
                         var text = $scope.newtopic;
                     }
                     var stanza = {
-                        "node": node,
+                        "node": $scope.node,
                         "content": {
                             "atom": {
                                 "content": text
@@ -207,43 +215,27 @@ socket.send('xmpp.buddycloud.create',
                     );
 
 
-                }
-
-
-                //Buddycloud timeline
-
-                $scope.getNodeItems = function() {
-                    console.log('Retrieving node items')
-                    //var node='/user/team@topics.buddycloud.org/posts';
-                    socket.send(
-                        'xmpp.buddycloud.retrieve', {
-                            node: node,
-                            rsm: {
-                                max: 55
-                            }
-                        },
-                        function(error, data) {
-                            //            $scope.items=data;
-                            $scope.tree = $scope.maketree(data);
-                            $scope.$apply();
-                        }
-                    )
-
-                }
 
 
 
-            });
 
 
+//            });  //connect
 
+
+            }
 
 
 
         },
         'link': function(scope, element, attrs){
-            console.log("dada");
-          scope.node = attrs.node;
+            console.log("dada",attrs.node);
+            scope.node = attrs.node;
+            scope.getNodeItems(scope.node);
+            scope.$watch("node",function(){
+                console.log("changed");
+                scope.getNodeItems(scope.node);
+            });
         }
       };
     })
