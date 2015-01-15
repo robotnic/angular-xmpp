@@ -133,7 +133,7 @@ angular.module('Buddycloud', [])
 
                 socket.on('xmpp.buddycloud.push.item', function(data) {
                     console.log("==================", data.node);
-                    if(data.node==$scope.node){
+                    if(data.node==$scope.node || $scope.node=='recent'){
                         var ar = data.id.split(",");
                         var id = ar[ar.length - 1];
                         console.log("id", id);
@@ -204,6 +204,11 @@ angular.module('Buddycloud', [])
 
                 $scope.publish = function(ref) {
                     console.log(ref);
+                    var node=$scope.node;
+                    if($scope.node=="recent"){
+                        node="/user/"+$scope.jid.user+"@"+$scope.jid.domain+"/posts";
+                    }
+                        
                     console.log("publishing: ", $scope.newmessage);
                     if (ref) {
                         var text = $scope.newitems[ref];
@@ -211,7 +216,7 @@ angular.module('Buddycloud', [])
                         var text = $scope.newtopic;
                     }
                     var stanza = {
-                        "node": $scope.node,
+                        "node": node,
                         "content": {
                             "atom": {
                                 "content": text

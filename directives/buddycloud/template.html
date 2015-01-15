@@ -7,14 +7,18 @@
 </form>
 -->
 <br/>
+
+<div ng-if="node!='recent'">
 <button ng-click="subscribe()">subscribe</button>
 <button ng-click="unsubscribe()">unsubscribe</button>
 <br/>
+</div>
 <br/>
 <form ng-submit="publish()">
 <textarea ng-model="newtopic" placeholder="What's going on" ></textarea>
 <input ng-show="newtopic" type="submit"/>
 </form>
+
 
 
 <div  ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
