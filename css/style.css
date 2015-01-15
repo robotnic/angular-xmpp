@@ -6,6 +6,22 @@ background-color:#efefef;
 .header{
 background-color:lightblue;
 text-align:right;
+position:fixed;
+top:0px;
+left:0px;
+right:0px;
+z-index:1;
+}
+.header .logo{
+position:absolute;
+font-size:20px;
+left:0px;
+}
+
+.leftcol{
+position:fixed;
+top:40px;
+left:0px;
 }
 
 .menu:hover{

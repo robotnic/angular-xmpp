@@ -72,6 +72,26 @@ angular.module('Buddycloud', [])
                 }
 
 
+                $scope.getRecentItems = function() {
+                    console.log('Retrieving recent items')
+                    //var node='/user/team@topics.buddycloud.org/posts';
+                    socket.send(
+                        'xmpp.buddycloud.items.recent', {
+                            rsm: {
+                                max: 55
+                            }
+                        },
+                        function(error, data) {
+                            //            $scope.items=data;
+                            $scope.tree = $scope.maketree(data);
+                            $scope.$apply();
+                        }
+                    )
+
+                }
+
+
+
 
 
 
@@ -231,10 +251,14 @@ angular.module('Buddycloud', [])
         'link': function(scope, element, attrs){
             console.log("dada",attrs.node);
             scope.node = attrs.node;
-            scope.getNodeItems(scope.node);
+//            scope.getNodeItems(scope.node);
             scope.$watch("node",function(){
                 console.log("changed");
-                scope.getNodeItems(scope.node);
+                if(scope.node=="recent"){
+                    scope.getRecentItems();
+                }else{
+                    scope.getNodeItems(scope.node);
+                }
             });
         }
       };

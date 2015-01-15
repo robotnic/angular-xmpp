@@ -39,8 +39,8 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                         console.log('Discovered Buddycloud server at', data);
 
                         $scope.selectednode={
-                            node:"/user/"+$scope.jid.user+"@"+$scope.jid.domain+"/posts",
-                            name:$scope.jid.user
+                            node:"recent",
+                            name:""
                         }
                         console.log("ask subscriptions");
                         Xmpp.socket.send(
@@ -63,10 +63,10 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                                 $scope.$apply();
                             }
                         )
-                    }
-                );
 
-            });
+
+                });
+            })
             $scope.addNode=function(node){
                 for(var i=0;i<$scope.nodes.length;i++){
                     if($scope.nodes[i].node==node.node){

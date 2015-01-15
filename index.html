@@ -21,6 +21,7 @@
 </head>
 <body ng-controller="pagecontroller">
 <div  ng-show="jid" class="header">
+<div ng-click="open({name:'',node:'recent'})" class="logo">Logo</div>
 <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
 <span ng-show="unreadmessages">({{unreadmessages}})</span>
 &#160;
@@ -30,11 +31,15 @@
 {{jid.user}}@{{jid.domain}}
 <img  ng-src="icons/avatars/{{jid.user}}.png" style="width:30px;margin:5px;" />
 </div>
-<img  ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
+
+
+<div class="leftcol">
+<img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
 <div style="font-size:7px">{{selectednode.node}}</div>
 <h4>Buddycloud nodes</h4>
 <div ng-repeat="node in nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
 {{node.name}}
+</div>
 </div>
 
 <div id="buddycloud" >
