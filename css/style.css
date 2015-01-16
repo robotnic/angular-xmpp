@@ -4,6 +4,7 @@ background-color:#efefef;
 
 
 .header{
+display:none;
 background-color:lightblue;
 text-align:right;
 position:fixed;
@@ -20,7 +21,7 @@ left:0px;
 
 .leftcol{
 position:fixed;
-top:40px;
+top:60px;
 left:0px;
 }
 
@@ -60,7 +61,7 @@ padding:20px;
 
 .roster{
 position:fixed;
-top:40px;
+top:53px;
 right:10px;
 bottom:00px;
 border-left:1px solid lightgrey;

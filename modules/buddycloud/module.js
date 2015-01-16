@@ -2,6 +2,8 @@
 
 angular.module('Buddycloud', [])
 
+
+
     .directive('buddycloud', function(){
       return {
         'restrict': 'E',
@@ -11,9 +13,26 @@ angular.module('Buddycloud', [])
           'changenode': '&changenode'
         },
         'transclude': false,
-        'templateUrl': 'directives/buddycloud/template.html',
-        'controller': function($scope,Xmpp){
-            var socket=Xmpp.socket;
+        'templateUrl': 'modules/buddycloud/template.html',
+        'controller': 'buddycloudController',
+        'link': function(scope, element, attrs){
+            console.log("link",attrs.node);
+            scope.node = attrs.node;
+            scope.$watch("node",function(){
+                console.log("node changed");
+                if(scope.node=="recent"){
+                    scope.getRecentItems();
+                }else{
+                    scope.getNodeItems(scope.node);
+                }
+            });
+        }
+      };
+    })
+
+
+    .controller('buddycloudController', function($scope,Xmpp){
+       var socket=Xmpp.socket;
             $scope.newitems = {};
 
             $scope.opennode=function(name){
@@ -259,22 +278,9 @@ angular.module('Buddycloud', [])
 
 
 
-        },
-        'link': function(scope, element, attrs){
-            console.log("dada",attrs.node);
-            scope.node = attrs.node;
-//            scope.getNodeItems(scope.node);
-            scope.$watch("node",function(){
-                console.log("changed");
-                if(scope.node=="recent"){
-                    scope.getRecentItems();
-                }else{
-                    scope.getNodeItems(scope.node);
-                }
-            });
-        }
-      };
     })
+
+
 
     .filter('toArray', function () {
         'use strict';
