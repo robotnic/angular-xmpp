@@ -83,30 +83,26 @@ margin-right:5px;
 .buddycloud .item .subitem .person{
 margin-left:50px;
 }
-.buddycloud .item  .delete{
+.buddycloud .item  .tool{
 display:none;
 cursor:pointer;
+margin-right:5px;
 }
-.buddycloud .item:hover .delete{
+.buddycloud .item:hover .tool{
 color:gray;
 font-weight:bold;
-font-size:25px;
-position:absolute;
-right:20px;
-top:4px;
+font-size:15px;
 display:block;
 }
 
-.buddycloud .item .subitem  .delete{
+.buddycloud .item .subitem  .tool{
 display:none;
 cursor:pointer;
 }
-.buddycloud .item .subitem:hover .delete{
+.buddycloud .item .subitem:hover .tool{
 color:gray;
 font-weight:bold;
-font-size:25px;
-position:absolute;
-top:4px;
+font-size:15px;
 display:block;
 }
 

@@ -2,7 +2,7 @@ var SCOPE = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
+angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','btford.markdown'])
     .controller('pagecontroller', ['$scope','Xmpp',
         function($scope,Xmpp) {
             $scope.nodes=[
@@ -10,10 +10,14 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
             ];
             $scope.unreadmessages=0;
             $scope.messages={};
+            $scope.friendRequests={};
+            $scope.friendRequestsCount=0;
             $scope.open=function(node){
                 console.log(node);
                 $scope.selectednode=node;
             }
+
+            //message tool in navbar
             Xmpp.socket.on('xmpp.chat.message', function(data) {
                 $scope.unreadmessages++;
                 console.log("THE MESSAGE",data);
@@ -24,6 +28,24 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                 $scope.$apply();
                 
             });
+
+            //friend request
+            //3:::{"type":0,"data":["xmpp.presence.subscribe",{"from":{"domain":"laos.buddycloud.com","user":"bill"}}]}
+
+            Xmpp.socket.on('xmpp.presence.subscribe', function(data) {
+
+                console.log("Friend request",data,$scope.friendRequestsCount);
+                var jid=data.from.user+"@"+data.from.domain;
+                data.from.jid=jid;
+                if(!$scope.friendRequests[jid]){
+                    $scope.friendRequests[jid]=data;
+                    $scope.friendRequestsCount++;
+                }
+
+                $scope.$apply();
+            })
+
+            //subscribe, unsubscribe events (unsubsribe not firing bug)
             Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
                 console.log("sub",data);
                 var name=Xmpp.getOwnerFromNode(data.node).name;    
@@ -34,6 +56,8 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                 });
                 $scope.$apply();
             });
+
+            //loged in
             Xmpp.socket.on('xmpp.connection', function(data) {
                 console.log("connect",data);
                 $scope.jid=data.jid;
@@ -77,7 +101,15 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
 
 
                 });
+
+                Xmpp.socket.on('xmpp.error', function (error) {
+                    console.log('error', error)
+                })
+                Xmpp.socket.on('xmpp.error.client', function (error) {
+                    console.log('client error', error)
+                })
             })
+
             $scope.addNode=function(node){
                 for(var i=0;i<$scope.nodes.length;i++){
                     if($scope.nodes[i].node==node.node){
@@ -86,6 +118,9 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore'])
                 }
                 $scope.nodes.push(node);
 
+            }
+            $scope.addFriend=function(from){
+                Xmpp.addFriend(from.user+"@"+from.domain);
             }
             $scope.logout=function(jid){
                 Xmpp.logout();

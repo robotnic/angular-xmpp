@@ -52,7 +52,27 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                     var jid=name+"@"+domain;
                     return {name:name,domain:domain,jid:jid,type:type};
 
+            },
+            confirmFriend:function(node){
+                console.log("confirm",jid); 
+                socket.send( 'xmpp.presence.subscribe', { "to": jid })
+                socket.send( 'xmpp.presence.subscribed', { "to": jid })
+            },
+            addFriend:function(jid){
+                console.log("add",jid); 
+                socket.send('xmpp.presence.subscribe', { "to": jid })
+                socket.send( 'xmpp.presence.subscribed', { "to": jid })
+            },
+            removeFriend:function(jid){
+                console.log("remove",jid);
+                socket.send( 'xmpp.presence.unsubscribe', { "to": jid })
+                socket.send( 'xmpp.presence.unsubscribed', { "to": jid })
             }
+
+
+
+
+
 
         }
         return api
@@ -61,7 +81,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
 
 
-    .controller('Roster', ['$scope', '$location', '$anchorScroll','Xmpp',
+    .controller('XmppBasics', ['$scope', '$location', '$anchorScroll','Xmpp',
         function($scope, $location, $anchorScroll,Xmpp) {
             SCOPE = $scope;
             $scope.username = "seppl";
@@ -83,14 +103,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             }
 
             $scope.allow=function(user){
+                confirmFriend(user.jid.user+"@"+user.jid.domain);
                 console.log(user);
 
-                socket.send( 'xmpp.presence.subscribe', { "to": user.jid.user+"@"+user.jid.domain })
-                socket.send( 'xmpp.presence.subscribed', { "to": user.jid.user+"@"+user.jid.domain })
             }
             $scope.addjid=function(){
-                socket.send('xmpp.presence.subscribe', { "to": $scope.newjid })
-                socket.send( 'xmpp.presence.subscribed', { "to": $scope.newjid })
+                addFriend($scope.newjid);
             }
 
            
@@ -118,6 +136,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 $scope.connection_open=true;
                 $scope.$apply();
             });
+
+            socket.on('end', function () {
+                  console.log('Connection closed');
+                $scope.connected=false;
+            });
+
             /* 
             $scope.login=function(){
                     console.log("try to login",$scope.username,$scope.password,$scope.register);
@@ -165,12 +189,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 //presence handling
                 socket.on('xmpp.presence', function(data) {
                     for (var i = 0; i < $scope.roster.length; i++) {
-                        if ($scope.roster[i].jid.user == data.from.user) {
+                        if ($scope.roster[i].jid.user == data.from.user) {  //domain missing you fixit!!
                             console.log(data);
                             if (data.status) {
                                 status = data.status;
                             } else {
-                                status = "online";
+                                status = "";
                             }
                             $scope.roster[i].presence = {
                                 status: status
@@ -181,10 +205,28 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 });
 
 
+
+//3:::{"type":0,"data":["xmpp.roster.push",{"jid":{"domain":"laos.buddycloud.com","user":"bill"},"subscription":"none","name":"bill"}]}
+
+                socket.on('xmpp.roster.push', function(data) {
+                    for (var i = 0; i < $scope.roster.length; i++) {
+                        if ($scope.roster[i].jid.user == data.jid.user) {   //domain missing you fixit!!
+                                $scope.roster[i]=data;
+                        }
+                    }
+                    $scope.$apply();
+                });
+
+
+
+
+
+
                 //ask for roster
                 socket.send(
                     'xmpp.roster.get', {},
                     function(error, data) {
+                        console.log(data);
                         $scope.roster = data;
                         $scope.$apply();
                         socket.send(

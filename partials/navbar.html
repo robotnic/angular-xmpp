@@ -25,7 +25,7 @@
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
-            <span ng-show="unreadmessages">({{unreadmessages}})</span>
+            <span ng-show="unreadmessages" class="badge">{{unreadmessages}}</span>
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="message in messages"><a href="#" ng-click="openchat(message[0].from.jid)">
@@ -40,16 +40,15 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <span ng-show="friendrequests">({{friendrequests}})</span>
+            <span ng-show="friendRequestsCount" class="badge">{{friendRequestsCount}}</span>
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <li>Friend Requests</li>
+            <li ng-repeat="request in friendRequests">
+            <a href="#" ng-click="addFriend(request.from)">
+            <img ng-src="icons/avatars/{{request.from.user}}.png" style="height:20px;" />
+            {{request.from.user}}</a></li>
+
           </ul>
         </li>
 
