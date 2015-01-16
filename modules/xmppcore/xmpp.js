@@ -23,10 +23,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                     };
                     api.jid=jid;
                     api.socket.send('xmpp.login', {
-                        jid: jid,
-                        password: password,
-                        register: register
-                    });
+                            jid: jid,
+                            password: password,
+                            register: register
+                        },
+                        function(error, data) {"logout", console.log(error, data) }
+                    );
             },
             logout:function(){
                     socket.send(
@@ -81,14 +83,27 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
 
 
-    .controller('XmppBasics', ['$scope', '$location', '$anchorScroll','Xmpp',
-        function($scope, $location, $anchorScroll,Xmpp) {
+    .controller('XmppBasics', ['$scope','$rootScope', '$location', '$anchorScroll','Xmpp',
+        function($scope, $rootScope,$location, $anchorScroll,Xmpp) {
             SCOPE = $scope;
             $scope.username = "seppl";
             $scope.password = "bbb";
             var socket=Xmpp.socket;
 
             //small chat window
+
+            $rootScope.$on("openchat",function(data,user){
+                console.log(user);
+                for(var i=0;i<$scope.roster.length;i++){
+                    var item=$scope.roster[i];
+                    console.log(item,user);
+                    if(item.jid.user==user.jid.user && item.jid.domain==user.jid.domain){
+                            console.log("MATCH");
+                            $scope.open(item);
+                            return;
+                    }
+                }
+            });
 
             $scope.open = function(user) {
                 console.log("open", user);

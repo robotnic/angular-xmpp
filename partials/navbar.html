@@ -28,7 +28,7 @@
             <span ng-show="unreadmessages" class="badge">{{unreadmessages}}</span>
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="message in messages"><a href="#" ng-click="openchat(message[0].from.jid)">
+            <li ng-repeat="message in messages"><a href="#" ng-click="openchat(message[0].from)">
             <img ng-src="icons/avatars/{{message[0].from.user}}.png" style="height:20px"/>
             {{message[0].from.jid}} ({{message.length}})<br/>
             <span style="font-size:9px">{{message[0].content}}</span>
