@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/buddycloud.css">
 <script src="modules/buddycloud/module.js"></script>
+<script src="modules/xmpplike/module.js"></script>
 <script src="modules/xmppcore/xmpp.js"></script>
 <script src="js/script.js"></script>
 </head>
@@ -46,6 +47,9 @@
 
 <!-- Left side, Avatar of node, list of nodes -->
 <div class="leftcol">
+
+<like node="234"> </like>
+<div ng-include="'partials/navbar.html'"></div>
 <img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
 <div style="font-size:7px">{{selectednode.node}}</div>
 <h4>Buddycloud nodes</h4>
@@ -90,23 +94,23 @@ password:bbb
 
 <!-- roster - the online users und friends -->
 <div class="roster" ng-show="connected">
+<h4>Online Contacts</h4>
 <table >
-<tr g-if="user.presence" ng-repeat="user in roster" ng-click="open(user)">
+<tr ng-if="user.presence" ng-repeat="user in roster" ng-click="open(user)">
 <td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>
 <p>{{user.name}}</p>
-{{user.presence.status}}
-<p>{{user.subscription}}</p>
+<p>{{user.presence.status}}</p>
 </td></tr></table>
 <h4>Add JID</h4>
 <form ng-submit="addjid()">
 <input ng-model="newjid"/>
 </form>
-<h4>Friend requests</h4>
+<h4>Complete Roster</h4>
 <table >
-<tr ng-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
+<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>

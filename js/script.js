@@ -2,7 +2,7 @@ var SCOPE = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','btford.markdown'])
+angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','btford.markdown'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp',
         function($scope,$rootScope,Xmpp) {
             $scope.nodes=[

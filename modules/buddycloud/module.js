@@ -1,3 +1,7 @@
+var BC=null;
+var LIKE=null;
+
+
 angular.module('Buddycloud', [])
 
 
@@ -30,6 +34,7 @@ angular.module('Buddycloud', [])
 
 
 .controller('buddycloudController', function($scope, Xmpp) {
+    BC=$scope;
     var socket = Xmpp.socket;
     $scope.newitems = {};
 
@@ -89,6 +94,7 @@ angular.module('Buddycloud', [])
                 console.log(error);
                 //            $scope.items=data;
                 $scope.tree = $scope.maketree(data);
+            //    $scope.getLikes(data);
                 $scope.$apply();
             }
         )
@@ -108,13 +114,12 @@ angular.module('Buddycloud', [])
             function(error, data) {
                 //            $scope.items=data;
                 $scope.tree = $scope.maketree(data);
-                $scope.$apply();
+                //$scope.getLikes(data);
+                    $scope.$apply();
             }
         )
 
     }
-
-
 
 
 
@@ -240,8 +245,9 @@ angular.module('Buddycloud', [])
 
     }
 
-    //Buddycloud publish
 
+
+    //Buddycloud publish
     $scope.publish = function(ref) {
         console.log(ref);
         var node = $scope.node;
@@ -297,6 +303,7 @@ angular.module('Buddycloud', [])
 
 
 })
+
 
 
 

@@ -7,13 +7,72 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
 
 
-    .factory("Xmpp",function(){
+    .factory("Xmpp",function($q){
         console.log("XMPP init");
         var socket = new Primus("https://laos.buddycloud.com");
         //var socket = new Primus("http://localhost:3000");
+
+        function watch(q){
+            //roster change
+            socket.on('xmpp.connection', function(data) {
+                api.connected=true;
+            });
+
+            socket.on('xmpp.roster.push', function(data) {
+                for (var i = 0; i < api.roster.length; i++) {
+                    if (api.roster[i].jid.user == data.jid.user) {   //domain missing you fixit!!
+                            api.roster[i]=data;
+                    }
+                }
+                q.notify("roster");
+            });
+
+            //collect messages and add it to the roster
+            socket.on('xmpp.chat.message', function(data) {
+                if(api.roster){
+                    for (var i = 0; i < api.roster.length; i++) {
+                        if (api.roster[i].jid.user == data.from.user) {
+                            if (!api.roster[i].messages) api.roster[i].messages = [];
+                            api.roster[i].messages.push(data);
+                        }
+                    }
+                    q.notify("message");
+                }
+            });
+
+            //presence handling
+            socket.on('xmpp.presence', function(data) {
+                console.log("presence",data);
+                if(api.roster){
+                    for (var i = 0; i < api.roster.length; i++) {
+                        if (api.roster[i].jid.user == data.from.user) {  //domain missing you fixit!!
+                            console.log(data);
+                            if (data.status) {
+                                status = data.status;
+                            } else {
+                                status = "";
+                            }
+                            api.roster[i].presence = {
+                                status: status
+                            }
+                        }
+                    }
+                    q.notify("presence");
+                }
+            });
+
+        }
+
+
         var api={
             jid:null,
+            connected:false,
             socket:socket,
+            watch:function(){
+                var q=$q.defer();
+                watch(q);
+                return q.promise; 
+            },
             login:function(username,password,register){
                     console.log("try to login",username,password,register);
                     if(username.indexOf("@")==-1){
@@ -36,6 +95,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                         {},
                         function(error, data) {"logout", console.log(error, data) }
                     )
+
+            },
+            send:function(user,message){
+                if (!user.messages) user.messages = [];
+                user.messages.push(message);
+                socket.send('xmpp.chat.message', message);
 
             },
             getOwnerFromNode:function(node){
@@ -69,6 +134,30 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 console.log("remove",jid);
                 socket.send( 'xmpp.presence.unsubscribe', { "to": jid })
                 socket.send( 'xmpp.presence.unsubscribed', { "to": jid })
+            },
+            getRoster:function(){
+                var q=$q.defer();
+                //ask for roster
+                socket.send(
+                    'xmpp.roster.get', {},
+                    function(error, data) {
+                        console.log(data);
+                        api.roster = data;
+                        q.resolve(data);
+
+                    }
+                )
+                return q.promise;
+            },
+            setPresence:function(){
+                    socket.send(
+                        'xmpp.presence', {
+                            "show": "online",
+                            "status": "I'm using xmpp-ftw!",
+                            "priority": 10,
+                        }
+                    )
+
             }
 
 
@@ -89,8 +178,19 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             $scope.username = "seppl";
             $scope.password = "bbb";
             var socket=Xmpp.socket;
+            $scope.roster=Xmpp.roster;
 
             //small chat window
+            Xmpp.watch().then( function(){
+                console.log("watch roster stopped");
+            },
+            function(){
+                console.log("watch roster error");
+            },
+            function(){
+                console.log("roster event");
+//                $scope.$apply();
+            });
 
             $rootScope.$on("openchat",function(data,user){
                 console.log(user);
@@ -135,11 +235,8 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                     to: jid,
                     content: user.newtext
                 }
-                if (!user.messages) user.messages = [];
-                user.messages.push(message);
-                socket.send('xmpp.chat.message', message);
+                Xmpp.send(user,message);
                 user.newtext = "";
-                return false;
             }
 
 
@@ -148,6 +245,9 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             // socket!!!!
             socket.on("open",function(){
                 console.log("connected, ready for login");
+                if($scope.connected){
+                    $scope.login();   //just poking with that
+                }
                 $scope.connection_open=true;
                 $scope.$apply();
             });
@@ -157,22 +257,12 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 $scope.connected=false;
             });
 
-            /* 
-            $scope.login=function(){
-                    console.log("try to login",$scope.username,$scope.password,$scope.register);
-                    socket.send('xmpp.login', {
-                        jid: $scope.username + '@laos.buddycloud.com',
-                        password: $scope.password,
-                        register: $scope.register
-                    });
-            }
-            */
 
             $scope.login=function(){
                 Xmpp.login($scope.username,$scope.password,$scope.register);
             }
            
-
+            //not working
             socket.on('xmpp.disconnect', function() {
                 $scope.connected=false;
             });
@@ -186,21 +276,9 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 socket.send('xmpp.vcard.get', {}, function(error, data) {
                     consle.log(error, data);
                 })
+                Xmpp.setPresence();
 
-
-                //receive chat messages
-
-                socket.on('xmpp.chat.message', function(data) {
-                    for (var i = 0; i < $scope.roster.length; i++) {
-                        if ($scope.roster[i].jid.user == data.from.user) {
-                            if (!$scope.roster[i].messages) $scope.roster[i].messages = [];
-                            $scope.roster[i].messages.push(data);
-                        }
-                    }
-                    $scope.$apply();
-                });
-
-
+/*
                 //presence handling
                 socket.on('xmpp.presence', function(data) {
                     for (var i = 0; i < $scope.roster.length; i++) {
@@ -219,41 +297,16 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                     $scope.$apply();
                 });
 
+*/
 
 
-//3:::{"type":0,"data":["xmpp.roster.push",{"jid":{"domain":"laos.buddycloud.com","user":"bill"},"subscription":"none","name":"bill"}]}
 
-                socket.on('xmpp.roster.push', function(data) {
-                    for (var i = 0; i < $scope.roster.length; i++) {
-                        if ($scope.roster[i].jid.user == data.jid.user) {   //domain missing you fixit!!
-                                $scope.roster[i]=data;
-                        }
-                    }
-                    $scope.$apply();
+
+
+                Xmpp.getRoster().then(function(data){
+                    console.log("roster",data);
+                    $scope.roster=data;
                 });
-
-
-
-
-
-
-                //ask for roster
-                socket.send(
-                    'xmpp.roster.get', {},
-                    function(error, data) {
-                        console.log(data);
-                        $scope.roster = data;
-                        $scope.$apply();
-                        socket.send(
-                            'xmpp.presence', {
-                                "show": "online",
-                                "status": "I'm using xmpp-ftw!",
-                                "priority": 10,
-                            }
-                        )
-
-                    }
-                )
             });
 
         }
