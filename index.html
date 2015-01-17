@@ -13,13 +13,6 @@
 
 <!-- Bootstap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-<!--
-<link rel="stylesheet" href="css/3rdparty/bootstrap.css"/>
--->
-<!-- Optional theme 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
--->
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
@@ -33,12 +26,15 @@
 <script src="bower_components/showdown/src/showdown.js"></script>
 <script src="bower_components/angular-markdown-directive/markdown.js"></script>
 
-
+<!-- if you know grant, please help -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/buddycloud.css">
 <script src="modules/buddycloud/module.js"></script>
 <script src="modules/xmpplike/module.js"></script>
 <script src="modules/xmppcore/xmpp.js"></script>
+<script src="modules/roster/module.js"></script>
+<script src="modules/minichat/module.js"></script>
+<script src="modules/xmpplogin/xmpplogin.js"></script>
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
@@ -48,8 +44,6 @@
 <!-- Left side, Avatar of node, list of nodes -->
 <div class="leftcol">
 
-<like node="234"> </like>
-<div ng-include="'partials/navbar.html'"></div>
 <img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
 <div style="font-size:7px">{{selectednode.node}}</div>
 <h4>Buddycloud nodes</h4>
@@ -64,90 +58,19 @@
 <buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid"></buddycloud>
 </div>
 
-
-
-<div  ng-controller="XmppBasics">
-
-
-<!-- login form -->
-<form class="loginform" ng-show="!connected" ng-submit="login()">
-<table>
-<tr><td>username</td><td><input ng-model="username"/></td></tr>
-<tr><td>password</td><td><input type="password" ng-model="password"/></td></tr>
-<tr><td>register</td><td><input type="checkbox" ng-model="register"/></td></tr>
-<tr><td></td><td>
-<input ng-if="connection_open" type="submit" value="login"/>
-<div ng-if="!connection_open">connecting...</div>
-</td></tr>
-</table>
-<hr/>
-testaccounts:<br/>
-username:eva,arni,seppl,maria,bill<br/>
-password:bbb
-</form>
-
-
-
-
-
-
+<!-- xmpp login -->
+<xmpplogin></xmpplogin>
 
 <!-- roster - the online users und friends -->
-<div class="roster" ng-show="connected">
-<h4>Online Contacts</h4>
-<table >
-<tr ng-if="user.presence" ng-repeat="user in roster" ng-click="open(user)">
-<td>
-<img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
-</td>
-<td>
-<p>{{user.name}}</p>
-<p>{{user.presence.status}}</p>
-</td></tr></table>
-<h4>Add JID</h4>
-<form ng-submit="addjid()">
-<input ng-model="newjid"/>
-</form>
-<h4>Complete Roster</h4>
-<table >
-<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
-<img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
-</td>
-<td>
-<p>{{user.name}}</p>
-{{user.presence.status}}
-<p>{{user.subscription}}</p>
-</td></tr></table>
+<div>
+<xmpproster></xmpproster>
 </div>
 
-
-<!-- minichat at the bottom -->
-<div id="bottomchat" >
-  <div class="minichat" ng-if="user.opened" ng-repeat="user in roster" title="{{ user.name }}"  >
-    <div ng-if="user.opened=='max'">
-        <div class="title" ng-click="minify(user)"><p>{{user.name}}</p><span class="close" ng-click="close(user)">×</span></div>
-            <div class="messages" scroll-glue>
-                <div ng-repeat="message in user.messages" >
-                <img ng-if="message.from" ng-src="icons/avatars/{{message.from.user}}.png" />
-                <img ng-if="!message.from" ng-src="icons/avatars/{{username}}.png" />
-                {{message.content}}
-                </div>
-            <div id="bottom_{{user.name}}"> </div>
-            </div>
-
-        <form ng-submit="send(user,$event)">
-        <input ng-model="user.newtext"/>
-        </form>
-      </div>
-    <div ng-if="user.opened=='min'" ng-click="open(user)" class="min">
-    {{user.name}}<span class="close" ng-click="close(user)">×</span>
-    </div>
-    </div>
-</div>
+<!-- chat at the bottom -->
+<xmppminichat></xmppminichat>
 
 
 
-</div>
 
 </body>
 

@@ -1,0 +1,23 @@
+<div id="bottomchat" >
+  <div class="minichat" ng-if="user.opened" ng-repeat="user in roster" title="{{ user.name }}"  >
+    <div ng-if="user.opened=='max'">
+        <div class="title" ng-click="minify(user)"><p>{{user.name}}</p><span class="close" ng-click="close(user)">×</span></div>
+            <div class="messages" scroll-glue>
+                <div ng-repeat="message in user.messages" >
+                <img ng-if="message.from" ng-src="icons/avatars/{{message.from.user}}.png" />
+                <img ng-if="!message.from" ng-src="icons/avatars/{{user.name}}.png" />
+                {{message.content}}
+                </div>
+            <div id="bottom_{{user.name}}"> </div>
+            </div>
+
+        <form ng-submit="send(user,$event)">
+        <input ng-model="user.newtext"/>
+        </form>
+      </div>
+    <div ng-if="user.opened=='min'" ng-click="open(user)" class="min">
+    {{user.name}}<span class="close" ng-click="close(user)">×</span>
+    </div>
+    </div>
+</div>
+

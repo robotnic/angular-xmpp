@@ -2,9 +2,10 @@ var SCOPE = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','btford.markdown'])
+angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp',
         function($scope,$rootScope,Xmpp) {
+            $scope.roster=Xmpp.roster;
             $scope.nodes=[
                 {name:"laos",node:"/user/laos@laos.buddycloud.com/posts" }
             ];
@@ -128,7 +129,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','bt
             }
             $scope.openchat=function(user){
                 console.log("Open Minichat not implemented (communicate to roster controller ?)",jid);
-                $rootScope.$broadcast('openchat',{jid:user});
+                $rootScope.$broadcast('openchat',user);
                 var jid=user.user+"@"+user.domain;
                 console.log("llll",$scope.messages[jid].length);
                 $scope.unreadmessages=-$scope.messages[jid].length ;  //does not calculater correct, you fix it

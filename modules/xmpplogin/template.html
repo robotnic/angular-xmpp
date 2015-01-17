@@ -1,0 +1,15 @@
+<form class="loginform" ng-show="!connected" ng-submit="login()">
+<table>
+<tr><td>username</td><td><input ng-model="username"/></td></tr>
+<tr><td>password</td><td><input type="password" ng-model="password"/></td></tr>
+<tr><td>register</td><td><input type="checkbox" ng-model="register"/></td></tr>
+<tr><td></td><td>
+<input ng-if="connection_open" type="submit" value="login"/>
+<div ng-if="!connection_open">connecting...</div>
+</td></tr>
+</table>
+<hr/>
+<h5>testaccounts</h5>
+username:eva,arni,seppl,maria,bill<br/>
+password:bbb
+</form>
