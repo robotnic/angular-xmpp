@@ -41,6 +41,9 @@ Roster
                 console.log("openchat",user.jid.user+"@"+user.jid.domain);
                 $rootScope.$broadcast('openchat',user.jid.user+"@"+user.jid.domain);
             };
+            $scope.addcontact=function(jid){
+                Xmpp.addFriend(jid);
+            }
 
 
             socket.on('xmpp.connection', function(data) {

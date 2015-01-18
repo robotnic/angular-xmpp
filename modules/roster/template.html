@@ -11,12 +11,18 @@
 <p>{{user.presence.status}}</p>
 </td></tr></table>
 <h4>Add JID</h4>
-<form ng-submit="addjid()">
+<form ng-submit="addcontact(newjid)">
 <input ng-model="newjid"/>
 </form>
-<h4>Complete Roster</h4>
-<table >
-<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="allow(user)"><td>
+<br/>
+<br/>
+<button class="btn btn-small btn-default" ng-click="offlineusers=!offlineusers">
+<span ng-show="!offlineusers">show </span>
+<span ng-show="offlineusers">hide </span>
+<br/>
+offline contacts</button>
+<table ng-if="offlineusers">
+<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="openchat(user)"><td>
 <img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>
