@@ -33,6 +33,8 @@ angular.module('Buddycloud', [])
 })
 
 
+//todo: make factory, controll is tool long
+
 .controller('buddycloudController', function($scope, Xmpp) {
     BC=$scope;
     var socket = Xmpp.socket;
@@ -114,8 +116,7 @@ angular.module('Buddycloud', [])
             function(error, data) {
                 //            $scope.items=data;
                 $scope.tree = $scope.maketree(data);
-                //$scope.getLikes(data);
-                    $scope.$apply();
+                $scope.$apply();
             }
         )
 

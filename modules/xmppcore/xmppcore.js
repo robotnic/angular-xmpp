@@ -1,9 +1,8 @@
 /*
 factory:XmppCore
-controller:Roster
 */
 
-var API=null;
+var API=null;  //global for debugging
 
 angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
@@ -29,6 +28,8 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             q.notify("roster");
         });
 
+
+        /*
         //collect messages and add it to the roster
         socket.on('xmpp.chat.message', function(data) {
             if(api.roster){
@@ -41,6 +42,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
                 q.notify("message");
             }
         });
+        */
 
         //presence handling
         socket.on('xmpp.presence', function(data) {

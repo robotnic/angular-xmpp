@@ -1,12 +1,17 @@
 <div id="bottomchat" >
-  <div class="minichat" ng-if="user.opened" ng-repeat="user in roster" title="{{ user.name }}"  >
-    <div ng-if="user.opened=='max'">
-        <div class="title" ng-click="minify(user)"><p>{{user.name}}</p><span class="close" ng-click="close(user)">×</span></div>
+  <div class="minichat"  ng-repeat="user in chatwindows" title="{{ user.jid }}"  >
+    <div ng-if="user.style=='max'">
+        <div class="title" ng-click="minify(user.jid)"><p>{{user.fromname}}</p><span class="close" ng-click="close(user.jid)">×</span></div>
             <div class="messages" scroll-glue>
-                <div ng-repeat="message in user.messages" >
-                <img ng-if="message.from" ng-src="icons/avatars/{{message.from.user}}.png" />
-                <img ng-if="!message.from" ng-src="icons/avatars/{{user.name}}.png" />
-                {{message.content}}
+                <div  ng-repeat="message in messages" >
+                    <div ng-if="message.from.jid==user.jid">
+                        <img ng-src="icons/avatars/{{message.from.user}}.png" />
+                        {{message.content}}
+                    </div>
+                    <div ng-if="message.to==user.jid">
+                        <img ng-src="icons/avatars/{{me}}.png" />
+                        {{message.content}}
+                    </div>
                 </div>
             <div id="bottom_{{user.name}}"> </div>
             </div>
@@ -15,8 +20,8 @@
         <input ng-model="user.newtext"/>
         </form>
       </div>
-    <div ng-if="user.opened=='min'" ng-click="open(user)" class="min">
-    {{user.name}}<span class="close" ng-click="close(user)">×</span>
+    <div ng-if="user.style=='min'" ng-click="open(user.jid)" class="min">
+    {{user.name}}<span class="close" ng-click="close(user.jid)">×</span>
     </div>
     </div>
 </div>

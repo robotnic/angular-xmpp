@@ -3,7 +3,7 @@ angular.module('XmppLogin', ['XmppCore'])
 /*
 Login
 
-This modul needs cleanup. The session is not stable. Reconnect doesn't really work. Pure socket.id is better in that.
+This modul needs cleanup. The session is not stable. Reconnect doesn't really work. I was happy to have a connection.
 */
 
 .directive('xmpplogin', function() {

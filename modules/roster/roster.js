@@ -39,7 +39,7 @@ Roster
 
             $scope.openchat=function(user){
                 console.log("openchat",user);
-                $rootScope.$broadcast('openchat',user);
+                $rootScope.$broadcast('openchat',user.jid.user+"@"+user.jid.domain);
             };
 
 

@@ -19,6 +19,10 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             }
 
             //message tool in navbar
+            Xmpp.socket.on('xmpp.wtf.push', function(data) {
+                console.log(data);
+                alert(1);
+            })
             Xmpp.socket.on('xmpp.chat.message', function(data) {
                 $scope.unreadmessages++;
                 console.log("THE MESSAGE",data);
@@ -127,13 +131,15 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                 Xmpp.logout();
                 $scope.connected=false;  //fake logout. Fixit!!
             }
-            $scope.openchat=function(user){
+            $scope.openchat=function(jid){
                 console.log("Open Minichat not implemented (communicate to roster controller ?)",jid);
-                $rootScope.$broadcast('openchat',user);
+                $rootScope.$broadcast('openchat',jid);
+                /*
                 var jid=user.user+"@"+user.domain;
                 console.log("llll",$scope.messages[jid].length);
                 $scope.unreadmessages=-$scope.messages[jid].length ;  //does not calculater correct, you fix it
                 if($scope.unreadmessages<0)$scope.unreadmessages=0;
+                */
             }
         }
     ])

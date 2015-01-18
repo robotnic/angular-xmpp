@@ -21,43 +21,45 @@ Roster
 
     .controller('XmppUiMinichat', ['$scope','$rootScope', '$location', '$anchorScroll','Xmpp',
         function($scope, $rootScope,$location, $anchorScroll,Xmpp) {
-            $scope.roster=Xmpp.roster;
             $scope.username=Xmpp.user;
+            $scope.chatwindows=[];
+            $scope.messages=[];
             console.log(Xmpp.jid,Xmpp.user);
-            $rootScope.$on("openchat",function(data,user){
-                console.log("user",user);
-                    for(var i=0;i<Xmpp.roster.length;i++){
-                        var item=Xmpp.roster[i];
-                        console.log(item,user);
-                        console.log(item.jid.user,user.jid.user , item.jid.domain,user.jid.domain);
-                        if(item.jid.user==user.jid.user && item.jid.domain==user.jid.domain){
-                                console.log("MATCH");
-                                $scope.open(item);
-                                return;
-                        }
-                    }
+            $rootScope.$on("openchat",function(data,jid){
+                console.log("openchat",arguments);
+                $scope.me=Xmpp.jid.substring(0,Xmpp.jid.indexOf("@"));
+                var fromname=jid.substring(0,jid.indexOf("@"));
+                $scope.chatwindows.push({jid:jid,style:"max",fromname:fromname});
             });
+            Xmpp.socket.on('xmpp.chat.message', function(message) {
+                $scope.messages.push(message);
+                $scope.$apply();
+            })
+
+
+
 
             $scope.open = function(user) {
                 console.log("open", user);
-                user.opened = "max";
+                user.style = "max";
             };
             $scope.close = function(user) {
-                user.opened = false;
+                user.style = false;
             }
             $scope.minify = function(user) {
                 user.opened = "min";
                 console.log("min", user);
             }
             //send chat message 
-            $scope.send = function(user,event) {
+            $scope.send = function(user,text,event) {
                 console.log(arguments,this);
-                var jid=user.jid.user+"@"+user.jid.domain;
                 var message = {
-                    to: jid,
+                    to: user.jid,
                     content: user.newtext
                 }
-                Xmpp.send(user,message);
+                user.newtext = "";
+                $scope.messages.push(message);
+                Xmpp.socket.send('xmpp.chat.message', message);
                 user.newtext = "";
             }
 
