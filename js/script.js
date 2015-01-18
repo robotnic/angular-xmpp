@@ -5,6 +5,7 @@ var SCOPE = null;
 angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp',
         function($scope,$rootScope,Xmpp) {
+            $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot post invisible?
             $scope.roster=Xmpp.roster;
             $scope.nodes=[
                 {name:"laos",node:"/user/laos@laos.buddycloud.com/posts" }
@@ -24,13 +25,15 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                 alert(1);
             })
             Xmpp.socket.on('xmpp.chat.message', function(data) {
-                $scope.unreadmessages++;
                 console.log("THE MESSAGE",data);
                 var jid=data.from.user+"@"+data.from.domain;
-                data.from.jid=jid;
-                if(!$scope.messages[jid])$scope.messages[jid]=[];
-                $scope.messages[jid].unshift(data);
-                $scope.$apply();
+                if(jid!=$scope.excludejid){
+                    $scope.unreadmessages++;
+                    data.from.jid=jid;
+                    if(!$scope.messages[jid])$scope.messages[jid]=[];
+                    $scope.messages[jid].unshift(data);
+                    $scope.$apply();
+                }
                 
             });
 

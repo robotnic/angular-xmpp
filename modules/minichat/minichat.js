@@ -55,6 +55,7 @@ Roster
                 console.log(arguments,this);
                 var message = {
                     to: user.jid,
+                    type: "chat",
                     content: user.newtext
                 }
                 user.newtext = "";
