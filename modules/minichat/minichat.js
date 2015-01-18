@@ -29,7 +29,14 @@ Roster
                 console.log("openchat",arguments);
                 $scope.me=Xmpp.jid.substring(0,Xmpp.jid.indexOf("@"));
                 var fromname=jid.substring(0,jid.indexOf("@"));
-                $scope.chatwindows.push({jid:jid,style:"max",fromname:fromname});
+                for(var i=0;i<$scope.chatwindows.length;i++){
+                    if( $scope.chatwindows[i].jid==jid){
+                        console.log("already open",jid);
+                        $scope.chatwindows[i].style="max";
+                        break; 
+                    }
+                    $scope.chatwindows.push({jid:jid,style:"max",fromname:fromname});
+                }
             });
             Xmpp.socket.on('xmpp.chat.message', function(message) {
                 $scope.messages.push(message);
@@ -47,7 +54,7 @@ Roster
                 user.style = false;
             }
             $scope.minify = function(user) {
-                user.opened = "min";
+                user.style = "min";
                 console.log("min", user);
             }
             //send chat message 

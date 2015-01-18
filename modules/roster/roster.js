@@ -38,7 +38,7 @@ Roster
             $scope.roster=Xmpp.roster;
 
             $scope.openchat=function(user){
-                console.log("openchat",user);
+                console.log("openchat",user.jid.user+"@"+user.jid.domain);
                 $rootScope.$broadcast('openchat',user.jid.user+"@"+user.jid.domain);
             };
 
