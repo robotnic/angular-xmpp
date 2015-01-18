@@ -47,7 +47,7 @@ Roster
 
 
             socket.on('xmpp.connection', function(data) {
-                console.log("connect",data);
+                console.log("starting roster, publish presence");
                 $scope.jid=data.jid;
                 $scope.connected=true;
 

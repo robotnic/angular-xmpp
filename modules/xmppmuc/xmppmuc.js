@@ -4,13 +4,13 @@ angular.module('Minichat', ['XmppCore'])
 Roster
 */
 
-.directive('xmppminichat', function() {
+.directive('xmppmuc', function() {
     return {
         'restrict': 'E',
         'scope': {},
         'transclude': false,
         'templateUrl': 'modules/minichat/template.html',
-        'controller': 'XmppUiMinichat',
+        'controller': 'XmppUiMuc',
         'link': function(scope, element, attrs) {
             console.log("minichat");
         }
@@ -18,7 +18,7 @@ Roster
 })
 
 
-.controller('XmppUiMinichat', ['$scope', '$rootScope', '$location', '$anchorScroll', 'Xmpp',
+.controller('XmppUiMuc', ['$scope', '$rootScope', '$location', 'Xmpp',
     function($scope, $rootScope, $location, $anchorScroll, Xmpp) {
         $scope.username = Xmpp.user;
         $scope.chatwindows = [];
@@ -38,7 +38,7 @@ Roster
             $scope.chatwindows.push({
                 jid: jid,
                 style: "max",
-                name: fromname
+                fromname: fromname
             });
             console.log($scope.chatwindows);
         });

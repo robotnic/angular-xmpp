@@ -10,8 +10,8 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
 
 .factory("Xmpp",function($q){
     console.log("XMPP init");
-    var socket = new Primus("https://laos.buddycloud.com");   //--------------- put to config
-    //var socket = new Primus("http://localhost:3000");
+    //var socket = new Primus("https://laos.buddycloud.com");   //--------------- put to config
+    var socket = new Primus("http://localhost:3000");
 
     function watch(q){
         //roster change

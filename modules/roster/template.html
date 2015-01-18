@@ -4,10 +4,11 @@
 <table >
 <tr ng-if="user.presence" ng-repeat="user in roster" ng-click="openchat(user)">
 <td>
-<img ng-src="icons/avatars/{{user.name}}.png" style="height:40px"/>
+<img ng-src="icons/avatars/{{user.jid.user}}.png" style="height:40px"/>
 </td>
 <td>
-<p>{{user.name}}</p>
+<p ng-if="!user.name">{{user.jid.user}}</p>
+<p ng-if="user.name">{{user.name}}</p>
 <p>{{user.presence.status}}</p>
 </td></tr></table>
 <h4>Add JID</h4>

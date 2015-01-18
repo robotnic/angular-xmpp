@@ -1,7 +1,7 @@
 <div id="bottomchat" >
   <div class="minichat"  ng-repeat="user in chatwindows" title="{{ user.jid }}"  >
     <div ng-if="user.style=='max'">
-        <div class="title" ng-click="minify(user)"><p>{{user.fromname}}</p><span class="close" ng-click="close(user)">×</span></div>
+        <div class="title" ng-click="minify(user)"><p>{{user.name}}</p><span class="close" ng-click="close(user)">×</span></div>
             <div class="messages" scroll-glue>
                 <div  ng-repeat="message in messages" >
                     <div ng-if="message.from.jid==user.jid">
@@ -20,8 +20,10 @@
         <input ng-model="user.newtext"/>
         </form>
       </div>
-    <div ng-if="user.style=='min'" ng-click="makebig(user.jid)" class="min">
-    {{user.name}}<span class="close" ng-click="close(user.jid)">×</span>
+    <div ng-if="user.style=='min'" ng-click="makebig(user)" class="min">
+    {{user.name}}
+
+    <span class="close" ng-click="close(user)">×</span>
     </div>
     </div>
 </div>
