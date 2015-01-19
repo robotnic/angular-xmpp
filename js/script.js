@@ -27,12 +27,9 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
               },
               {
                 "title": "Groupchat",
-              },
-              {
-                "title": "Map",
               }
             ];
-            $scope.tabs.activeTab = 1;
+            $scope.tabs.activeTab = 0;
 
             Xmpp.connect($scope.host).then(function(){
                 $scope.online=true;

@@ -132,7 +132,6 @@ Roster
 .controller('XmppUiMuc', ['$scope', '$rootScope', '$location', 'Xmpp','MucFactory',
     function($scope, $rootScope, $location,  Xmpp,MucFactory) {
         MUC=$scope;
-        $scope.nick="eluag";
         $scope.chatwindows = [];
         $scope.messages = MucFactory.messages;
         $scope.roster = MucFactory.roster;
