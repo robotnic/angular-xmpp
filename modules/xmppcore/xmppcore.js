@@ -10,7 +10,6 @@ angular.module('XmppCore', [])
 
 .factory("Xmpp",function($q){
     console.log("XMPP init");
-    var socket=null;
     //var socket = new Primus("https://xmpp-ftw.jit.su/");   //--------------- put to config
     //var socket = new Primus("https://laos.buddycloud.com");   //--------------- put to config
     //var socket = new Primus("http://localhost:3000");
@@ -74,7 +73,7 @@ angular.module('XmppCore', [])
         jid:null,
         //user:null,
         connected:false,
-        socket:socket,
+        socket:null,
         roster:[],
         watch:function(){
             var q=$q.defer();
@@ -110,7 +109,7 @@ angular.module('XmppCore', [])
                 );
         },
         logout:function(){
-                socket.send(
+                api.socket.send(
                     'xmpp.logout',
                     {},
                     function(error, data) {"logout", console.log(error, data) }
@@ -120,7 +119,7 @@ angular.module('XmppCore', [])
         send:function(user,message){
             if (!user.messages) user.messages = [];
             user.messages.push(message);
-            socket.send('xmpp.chat.message', message);
+            api.socket.send('xmpp.chat.message', message);
 
         },
         getOwnerFromNode:function(node){   //should be renamed
@@ -142,18 +141,18 @@ angular.module('XmppCore', [])
         },
         confirmFriend:function(node){
             console.log("confirm",jid); 
-            socket.send( 'xmpp.presence.subscribe', { "to": jid })
-            socket.send( 'xmpp.presence.subscribed', { "to": jid })
+            api.socket.send( 'xmpp.presence.subscribe', { "to": jid })
+            api.socket.send( 'xmpp.presence.subscribed', { "to": jid })
         },
         addFriend:function(jid){
             console.log("add",jid); 
-            socket.send('xmpp.presence.subscribe', { "to": jid })
-            socket.send( 'xmpp.presence.subscribed', { "to": jid })
+            api.socket.send('xmpp.presence.subscribe', { "to": jid })
+            api.socket.send( 'xmpp.presence.subscribed', { "to": jid })
         },
         removeFriend:function(jid){
             console.log("remove",jid);
-            socket.send( 'xmpp.presence.unsubscribe', { "to": jid })
-            socket.send( 'xmpp.presence.unsubscribed', { "to": jid })
+            api.socket.send( 'xmpp.presence.unsubscribe', { "to": jid })
+            api.socket.send( 'xmpp.presence.unsubscribed', { "to": jid })
         },
         getRoster:function(){
             var q=$q.defer();

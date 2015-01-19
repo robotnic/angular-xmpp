@@ -14,7 +14,7 @@ angular.module('XmppLike', ['XmppCore'])
             'node': '@',
         },
         'transclude': false,
-        'template': '<p ng-click="like(node)">like <span class="badge">{{likes[node]}}</span></p>',
+        'template': '<span ng-click="like(node)">like <span class="badge">{{likes[node]}}</span></span>',
         'controller': 'likeController',
         'link': function(scope, element, attrs) {
             scope.node = attrs.node;
