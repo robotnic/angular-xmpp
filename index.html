@@ -76,7 +76,7 @@ connecting ...
 
 
 
-<div ng-if="tabs.activeTab==0">
+<div ng-show="tabs.activeTab==0">
 <!-- Left side, Avatar of node, list of nodes -->
 <div class="leftcol">
 
@@ -96,7 +96,7 @@ connecting ...
 </div>
 
 
-<div id="muc" ng-if="connected && tabs.activeTab==1">
+<div id="muc" ng-show="connected && tabs.activeTab==1">
 <xmppmuc node="laos@channels.buddycloud.com"></xmppmuc>
 </div>
 
