@@ -1,0 +1,21 @@
+<div class="xmppform">
+<div>
+<h3>{{formdata.title}}</h3>
+<h4>{{formdata.instructions}}</h4>
+<table>
+<tr ng-repeat="field in formdata.fields">
+<td>{{field.label}}</td>
+<td>
+<input type="password" ng-model="field.value" ng-if="field.type=='text-private'"/>
+<input ng-model="field.value" ng-if="field.type=='text-single'"/>
+<input type="checkbox" ng-model="field.value" ng-if="field.type=='boolean'"/>
+<select ng-model="field.value" ng-if="field.type=='list-single'" ng-selected="field.value">
+<option  ng-repeat="item in field.options" value="item.value" selected>{{item.label}}</option>
+</select>
+</td>
+</tr>
+</table>
+<button ng-click="save()">save</button><button ng-click="close()">cancel</button>
+</div>
+</div>
+

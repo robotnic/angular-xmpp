@@ -4,22 +4,24 @@ factory:XmppCore
 
 var API=null;  //global for debugging
 
-angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
+angular.module('XmppCore', [])
 
 
 
 .factory("Xmpp",function($q){
     console.log("XMPP init");
+    var socket=null;
+    //var socket = new Primus("https://xmpp-ftw.jit.su/");   //--------------- put to config
     //var socket = new Primus("https://laos.buddycloud.com");   //--------------- put to config
-    var socket = new Primus("http://localhost:3000");
+    //var socket = new Primus("http://localhost:3000");
 
     function watch(q){
         //roster change
-        socket.on('xmpp.connection', function(data) {
+        api.socket.on('xmpp.connection', function(data) {
             api.connected=true;
         });
 
-        socket.on('xmpp.roster.push', function(data) {
+        api.socket.on('xmpp.roster.push', function(data) {
             for (var i = 0; i < api.roster.length; i++) {
                 if (api.roster[i].jid.user == data.jid.user) {   //domain missing you fixit!!
                         api.roster[i]=data;
@@ -45,7 +47,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
         */
 
         //presence handling
-        socket.on('xmpp.presence', function(data) {
+        api.socket.on('xmpp.presence', function(data) {
             console.log("presence",data);
             if(api.roster){
                 for (var i = 0; i < api.roster.length; i++) {
@@ -78,6 +80,17 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             var q=$q.defer();
             watch(q);
             return q.promise; 
+        },
+        connect:function(host){
+            var q=$q.defer();
+            if(api.socket){
+                q.resolve();
+            }
+            api.socket = new Primus(host);
+            api.socket.on("open", function() {
+                q.resolve();
+            })
+            return q.promise;
         },
         login:function(username,password,register){
                 console.log("try to login",username,password,register);
@@ -145,7 +158,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
         getRoster:function(){
             var q=$q.defer();
             //ask for roster
-            socket.send(
+            api.socket.send(
                 'xmpp.roster.get', {},
                 function(error, data) {
                     console.log("ROSTER",data);
@@ -162,7 +175,7 @@ angular.module('XmppCore', ['mgcrea.ngStrap','luegg.directives'])
             return q.promise;
         },
         setPresence:function(){
-                socket.send(
+                api.socket.send(
                     'xmpp.presence', {
                         "show": "online",
                         "status": "I'm using xmpp-ftw!",

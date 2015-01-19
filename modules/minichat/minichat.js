@@ -1,4 +1,5 @@
-angular.module('Minichat', ['XmppCore'])
+angular.module('Minichat', ['XmppCore','luegg.directives'])
+//luegg.directives for scroll cha down
 
 /*
 Roster
@@ -18,8 +19,8 @@ Roster
 })
 
 
-.controller('XmppUiMinichat', ['$scope', '$rootScope', '$location', '$anchorScroll', 'Xmpp',
-    function($scope, $rootScope, $location, $anchorScroll, Xmpp) {
+.controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp',
+    function($scope, $rootScope,  $anchorScroll, Xmpp) {
         $scope.username = Xmpp.user;
         $scope.chatwindows = [];
         $scope.messages = [];

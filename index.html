@@ -32,18 +32,51 @@
 <!-- if you know grant, please help -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/buddycloud.css">
+<link rel="stylesheet" href="modules/xmppmuc/muc.css">
+<link rel="stylesheet" href="modules/xmppform/xmppform.css">
+
+
 <script src="modules/buddycloud/buddycloud.js"></script>
 <script src="modules/xmpplike/xmpplike.js"></script>
 <script src="modules/xmppcore/xmppcore.js"></script>
 <script src="modules/roster/roster.js"></script>
 <script src="modules/minichat/minichat.js"></script>
 <script src="modules/xmpplogin/xmpplogin.js"></script>
+<script src="modules/xmppmuc/xmppmuc.js"></script>
+<script src="modules/xmppform/xmppform.js"></script>
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
+
+
 <div ng-include="'partials/navbar.html'"></div>
 
 
+
+<!-- xmpp login -->
+<div ng-if="!online">
+<br/>
+<br/>
+<br/>
+<br/>
+connecting ...
+</div>
+<div ng-if="online">
+<xmpplogin></xmpplogin>
+</div>
+
+
+<div ng-show="connected">
+
+
+<div bs-active-pane="tabs.activeTab" bs-tabs id="tabs">
+  <div ng-repeat="tab in tabs" title="{{ tab.title }}"  bs-pane></div>
+</div>
+
+
+
+
+<div ng-if="tabs.activeTab==0">
 <!-- Left side, Avatar of node, list of nodes -->
 <div class="leftcol">
 
@@ -60,12 +93,15 @@
 <div id="buddycloud" >
 <buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid"></buddycloud>
 </div>
-
-<div id="muc">
-<xmppmuc node="seehaus@channels.buddycloud.org"></xmppmuc>
 </div>
-<!-- xmpp login -->
-<xmpplogin></xmpplogin>
+
+
+<div id="muc" ng-if="connected && tabs.activeTab==1">
+<xmppmuc node="testing2@channels.buddycloud.com"></xmppmuc>
+</div>
+
+
+
 
 <!-- roster - the online users und friends -->
 <div>
@@ -75,7 +111,7 @@
 <!-- chat at the bottom -->
 <xmppminichat></xmppminichat>
 
-
+</div>
 
 
 </body>

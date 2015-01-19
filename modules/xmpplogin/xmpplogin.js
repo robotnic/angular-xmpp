@@ -28,48 +28,59 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
         $scope.password = "bbb";
         var socket = Xmpp.socket;
 
+        //Xmpp.connect();
         //watch roster - not really clear what it's doing
-        Xmpp.watch().then(function() {
-            console.log("watch roster stopped");
-        },
-        function() {
-            console.log("watch roster error");
-        },
-        function() {
-            console.log("roster event");
-            //                $scope.$apply();
-        });
 
-        // socket!!!!
-        socket.on("open", function() {
-            console.log("connected, ready for login");
-            if ($scope.connected) {
-                $scope.login(); //just poking with that
+            console.log("after connect",Xmpp);
+            Xmpp.watch().then(function() {
+                console.log("watch roster stopped");
+            },
+            function() {
+                console.log("watch roster error");
+            },
+            function() {
+                console.log("roster event");
+                //                $scope.$apply();
+            });
+
+            // socket!!!!
+            /*
+            socket.on("open", function() {
+                console.log("connected, ready for login");
+                if ($scope.connected) {
+                    $scope.login(); //just poking with that
+                }
+                $scope.connection_open = true;
+                $scope.$apply();
+            });
+            */
+
+            socket.on('end', function() {
+                console.log('Connection closed');
+                $scope.connected = false;
+            });
+
+
+            $scope.login = function() {
+                Xmpp.login($scope.username, $scope.password, $scope.register);
             }
-            $scope.connection_open = true;
-            $scope.$apply();
-        });
 
-        socket.on('end', function() {
-            console.log('Connection closed');
-            $scope.connected = false;
-        });
+            //not working
+            socket.on('xmpp.disconnect', function() {
+                $scope.connected = false;
+            });
+            //connection established
 
+            socket.on('xmpp.connection', function(data) {
+                console.log("connect", data);
+                $scope.jid = data.jid;
+                $scope.connected = true;
+     
+            });
 
         $scope.login = function() {
             Xmpp.login($scope.username, $scope.password, $scope.register);
         }
 
-        //not working
-        socket.on('xmpp.disconnect', function() {
-            $scope.connected = false;
-        });
-        //connection established
-
-        socket.on('xmpp.connection', function(data) {
-            console.log("connect", data);
-            $scope.jid = data.jid;
-            $scope.connected = true;
-        });
     }
 ])

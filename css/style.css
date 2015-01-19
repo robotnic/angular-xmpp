@@ -16,10 +16,31 @@ font-size:20px;
 left:0px;
 }
 
+#tabs{
+position:fixed;
+top:50px;
+padding-top:20px;
+left:10px;
+right:240px;
+height:70px;
+background-color:white;
+z-index:1;
+}
+
+
 .leftcol{
 position:fixed;
-top:60px;
+top:150px;
 left:0px;
+}
+
+#muc{
+position:absolute;
+top:140px;
+left:10px;
+right:250px;
+bottom:10px;
+border:1px solid #efefef;
 }
 
 .menu:hover{
@@ -37,15 +58,15 @@ font-weight:bold;
 }
 
 #buddycloud{
-position:Absolute;
-top:40px;
+position:absolute;
+top:90px;
 left:170px;
 right:240px;
 }
 
 .loginform{
 position:absolute;
-top:100px;
+top:140px;
 left:50%;
 width:300px;
 height:250px;

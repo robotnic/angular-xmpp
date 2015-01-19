@@ -45,6 +45,36 @@ angular.module('Buddycloud', [])
     //presence
     socket.send('xmpp.buddycloud.presence', {});
 
+    $scope.getConfig=function(){
+        $scope.formerror="";
+        socket.send(
+            'xmpp.buddycloud.config.get',
+            {
+                "node": $scope.node
+            },
+            function(error, data) { console.log("xmpp.buddycloud.config.get",error, data) 
+                
+                $scope.form=data;
+                $scope.$apply();
+            }
+        )
+    }
+    $scope.setConfig=function(form){
+        $scope.formerror="";
+        socket.send(
+            'xmpp.buddycloud.config.set',
+            {
+                "node": $scope.node,
+                "form": form
+            },
+            function(error, data) { console.log(error, data) 
+                if(error)$scope.formerror=error;
+                if(!error)$scope.form=null;  //close
+                $scope.$apply();
+            }
+        )
+    }
+
 
     $scope.opennode = function(name) {
         console.log(name);
