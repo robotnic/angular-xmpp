@@ -35,8 +35,17 @@ Roster
             });
             Xmpp.socket.on('xmpp.muc.roster', function(item) {
                 console.log("roster",item);
-                api.roster.push(item);
-                q.notify();
+                if(item.status=='unavailable'){
+                    for(var i=0;i<api.roster.length;i++){
+                        if(api.roster[i].nick==item.nick){
+                            api.roster.splice(i,1);
+                            break;
+                        }
+                    }
+                }else{
+                    api.roster.push(item);
+                    q.notify();
+                }
             })
             return q.promise;
         }

@@ -62,9 +62,9 @@ margin-bottom:10px;
 padding:10px;
 }
 .buddycloud .item .content{
-margin-top:10px;
-margin-bottom:10px;
-padding:10px;
+margin-top:0px;
+margin-bottom:0px;
+padding-left:10px;
 }
 
 .buddycloud .item .subitem{

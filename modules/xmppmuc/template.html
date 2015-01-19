@@ -47,15 +47,15 @@
 
             <div class="roster">
                 <div>
-                    <h4>Admin</h4>
+                    <h4>Admins</h4>
                     <div ng-repeat="item in roster" ng-if="item.role=='admin'">
                         {{item.nick}}
                     </div>
-                    <h4>Moderator</h4>
+                    <h4>Moderators</h4>
                     <div ng-repeat="item in roster" ng-if="item.role=='moderator'">
                         {{item.nick}}
                     </div>
-                    <h4>Participant</h4>
+                    <h4>Participants</h4>
                     <div ng-repeat="item in roster" ng-if="item.role=='participant'">
                         {{item.nick}}
                     </div>
