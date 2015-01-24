@@ -1,5 +1,5 @@
-var BC=null;
-var LIKE=null;
+var BC = null;
+var LIKE = null;
 
 
 angular.module('Buddycloud', [])
@@ -36,7 +36,7 @@ angular.module('Buddycloud', [])
 //todo: make factory, controll is tool long
 
 .controller('buddycloudController', function($scope, Xmpp) {
-    BC=$scope;
+    BC = $scope;
     var socket = Xmpp.socket;
     $scope.newitems = {};
 
@@ -45,31 +45,31 @@ angular.module('Buddycloud', [])
     //presence
     socket.send('xmpp.buddycloud.presence', {});
 
-    $scope.getConfig=function(){
-        $scope.formerror="";
+    $scope.getConfig = function() {
+        $scope.formerror = "";
         socket.send(
-            'xmpp.buddycloud.config.get',
-            {
+            'xmpp.buddycloud.config.get', {
                 "node": $scope.node
             },
-            function(error, data) { console.log("xmpp.buddycloud.config.get",error, data) 
-                
-                $scope.form=data;
+            function(error, data) {
+                console.log("xmpp.buddycloud.config.get", error, data)
+
+                $scope.form = data;
                 $scope.$apply();
             }
         )
     }
-    $scope.setConfig=function(form){
-        $scope.formerror="";
+    $scope.setConfig = function(form) {
+        $scope.formerror = "";
         socket.send(
-            'xmpp.buddycloud.config.set',
-            {
+            'xmpp.buddycloud.config.set', {
                 "node": $scope.node,
                 "form": form
             },
-            function(error, data) { console.log(error, data) 
-                if(error)$scope.formerror=error;
-                if(!error)$scope.form=null;  //close
+            function(error, data) {
+                console.log(error, data)
+                if (error) $scope.formerror = error;
+                if (!error) $scope.form = null; //close
                 $scope.$apply();
             }
         )
@@ -126,7 +126,7 @@ angular.module('Buddycloud', [])
                 console.log(error);
                 //            $scope.items=data;
                 $scope.tree = $scope.maketree(data);
-            //    $scope.getLikes(data);
+                //    $scope.getLikes(data);
                 $scope.$apply();
             }
         )
@@ -237,7 +237,7 @@ angular.module('Buddycloud', [])
 
     //add friend
     $scope.addFriend = function(node) {
-        console.log("add",node);
+        console.log("add", node);
         var jid = Xmpp.getOwnerFromNode(node).jid;
         console.log(jid);
         Xmpp.addFriend(jid);
@@ -245,7 +245,7 @@ angular.module('Buddycloud', [])
 
     //remove friend
     $scope.removeFriend = function(node) {
-        console.log("remove",node);
+        console.log("remove", node);
         var jid = Xmpp.getOwnerFromNode(node).jid;
         console.log(jid);
         Xmpp.removeFriend(jid);
@@ -256,7 +256,7 @@ angular.module('Buddycloud', [])
 
     //Buddycloud delete - not working
 
-    $scope.removeitem = function(ref,node) {
+    $scope.removeitem = function(ref, node) {
         console.log("delete", ref, node);
         var ar = ref.split(",");
         var id = ar[ar.length - 1];
@@ -313,10 +313,10 @@ angular.module('Buddycloud', [])
         socket.send(
             'xmpp.buddycloud.publish', stanza,
             function(error, data) {
-                if (error){
-                     console.error(stanza.node,error);
-                    $scope.create(stanza.node); 
-                }else {
+                if (error) {
+                    console.error(stanza.node, error);
+                    $scope.create(stanza.node);
+                } else {
                     $scope.newitems[ref] = "";
                     console.log("Message sent.");
                 }

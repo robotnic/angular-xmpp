@@ -1,90 +1,87 @@
-
-<div ng-show="connected"  class="buddycloud" >
-<br/>
-<br/>
-<div ng-show="form" style="position:absolute;top:100px;left:140px;z-index:1000;background-color:white;border:1px solid black;padding:10px">
-<table >
-<tr ng-repeat="field in form">
-<td> {{field.var}}</td>
-<td><input ng-model="field.value"/></td>
-</tr>
-<tr>
-<td></td>
-<td><button ng-click="setConfig(form)">save</button> <button ng-click="form=null">cancel</button>
-<div ng-show="formerror" style="color:red">{{formerror|json}}</div>
-</td>
-</tr>
-</table>
-</div>
-<br/>
-
-<div ng-if="node!='recent'">
-<button ng-click="subscribe()" class="btn btn-default">subscribe</button>
-<button ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
-<button ng-click="getConfig()" class="btn btn-default">
-<span class="glyphicon glyphicon-cog"></span></button>
-<button ng-click="addFriend(node)" class="pull-right btn btn-default">add Friend</button>
-<button ng-click="removeFriend(node)" class="pull-right btn btn-default">remove Friend</button>
-<br/>
-</div>
-<br/>
-<form ng-submit="publish()">
-<textarea ng-model="newtopic" placeholder="What's going on" ></textarea>
-<input ng-show="newtopic" type="submit"/>
-</form>
-
-
-
-<div  ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
-    <span class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
-    <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
-<img  ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
-<div class="person">
-<span class="name">
-<span ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
-<span ng-click="opennode(item.nodeowner)" ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
-</span>
-<span class="date">{{item.entry.atom.published | date:'medium'}}</span>
-<like node="{{item.id}}"></like>
-<!--
-<span ng-click="like(item.id)">like</span>
-<span title="Likers" data-content="{{likerList[item.id]}}" data-template="partials/likers.html" data-animation="am-flip-x" data-auto-close="1" bs-popover>
-<span ng-click="likers(item.id)" class="badge">{{likes[item.id]}}</span>
-</span>
-</span>
--->
-
-
-</div>
-<div class="content">
-<form ng-show="editmode" ng-submit="save()">
-<textarea  ng-model="item.entry.atom.content.content"></textarea>
-<input type="submit"/>
-</form>
-<div ng-show="!editmode" btf-markdown="item.entry.atom.content.content"></div>
-
-</div>
-<br/>
-<div ng-repeat="subitem in item.nodes|toArray|orderBy:'entry.atom.published'" class="subitem">
-
-    <span class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
-    <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
-    <img  ng-src="icons/avatars/{{subitem.entry.atom.author.image}}.png" />
-    <div class="person">
-    <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
-    <input ng-show="editmode" ng-model="subitem.entry.atom.content.content" />
-    <span ng-show="!editmode">{{subitem.entry.atom.content.content}}</span>
-
-    <span class="date">{{subitem.entry.atom.published | date:'medium'}}</span>
-    <like node="{{subitem.id}}"></like>
+<div ng-show="connected" class="buddycloud">
+    <br/>
+    <br/>
+    <div ng-show="form" style="position:absolute;top:100px;left:140px;z-index:1000;background-color:white;border:1px solid black;padding:10px">
+        <table>
+            <tr ng-repeat="field in form">
+                <td>{{field.var}}</td>
+                <td>
+                    <input ng-model="field.value" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button ng-click="setConfig(form)">save</button>
+                    <button ng-click="form=null">cancel</button>
+                    <div ng-show="formerror" style="color:red">{{formerror|json}}</div>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
-<form ng-submit="publish(item.entry.atom.id)" class="subitem">
-<img  ng-src="icons/avatars/{{jid.local}}.png" />
-    <div class="person">
-<input ng-model="newitems[item.entry.atom.id]" />
-</div>
-</form>
-</div>
+    <br/>
+
+    <div ng-if="node!='recent'">
+        <button ng-click="subscribe()" class="btn btn-default">subscribe</button>
+        <button ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
+        <button ng-click="getConfig()" class="btn btn-default">
+            <span class="glyphicon glyphicon-cog"></span>
+        </button>
+        <button ng-click="addFriend(node)" class="pull-right btn btn-default">add Friend</button>
+        <button ng-click="removeFriend(node)" class="pull-right btn btn-default">remove Friend</button>
+        <br/>
+    </div>
+    <br/>
+    <form ng-submit="publish()">
+        <textarea ng-model="newtopic" placeholder="What's going on"></textarea>
+        <input ng-show="newtopic" type="submit" />
+    </form>
+
+
+
+    <div ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
+        <span class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
+        <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+        <img ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />
+        <div class="person">
+            <span class="name">
+<span ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
+            <span ng-click="opennode(item.nodeowner)" ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
+            </span>
+            <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
+            <like node="{{item.id}}"></like>
+
+
+        </div>
+        <div class="content">
+            <form ng-show="editmode" ng-submit="save()">
+                <textarea ng-model="item.entry.atom.content.content"></textarea>
+                <input type="submit" />
+            </form>
+            <div ng-show="!editmode" btf-markdown="item.entry.atom.content.content"></div>
+
+        </div>
+        <br/>
+        <div ng-repeat="subitem in item.nodes|toArray|orderBy:'entry.atom.published'" class="subitem">
+
+            <span class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
+            <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+            <img ng-src="icons/avatars/{{subitem.entry.atom.author.image}}.png" />
+            <div class="person">
+                <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
+                <input ng-show="editmode" ng-model="subitem.entry.atom.content.content" />
+                <span ng-show="!editmode">{{subitem.entry.atom.content.content}}</span>
+
+                <span class="date">{{subitem.entry.atom.published | date:'medium'}}</span>
+                <like node="{{subitem.id}}"></like>
+            </div>
+        </div>
+        <form ng-submit="publish(item.entry.atom.id)" class="subitem">
+            <img ng-src="icons/avatars/{{jid.local}}.png" />
+            <div class="person">
+                <input ng-model="newitems[item.entry.atom.id]" />
+            </div>
+        </form>
+    </div>
 </div>
 
