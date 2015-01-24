@@ -33,9 +33,93 @@ angular.module('Buddycloud', [])
 })
 
 
+
+
+.factory('buddycloudFactory',function(Xmpp){
+
+
+
+    //Buddycloud publish
+    function publish(node,text,ref) {
+        console.log(node,text,ref);
+        var jid=Xmpp.jid;
+        //var node = $scope.node;
+        if (node == "recent") {
+            node = "/user/" + Xmpp.jid + "/posts";
+        }
+        if (ref) {
+            node = ref.substring(0, ref.lastIndexOf(","));
+            node = node.substring(node.lastIndexOf(",") + 1);
+            console.log(">>>>>>>>>>>", node);
+        }
+
+        
+        var stanza = {
+            "node": node,
+            "content": {
+                "atom": {
+                    "content": text
+                }
+            }
+        };
+        if (ref) {
+            stanza.content["in-reply-to"] = {
+                "ref": ref
+            }
+        }
+        Xmpp.socket.send(
+            'xmpp.buddycloud.publish', stanza,
+            function(error, data) {
+                if (error) {
+                    console.error(stanza.node, error);
+                    //$scope.create(stanza.node);
+                } else {
+                    //$scope.newitems[ref] = "";
+                    console.log("Message sent.");
+                }
+            }
+        );
+
+    }
+
+    function removeitem(ref, node) {
+        console.log("delete", ref, node);
+        var ar = ref.split(",");
+        var id = ar[ar.length - 1];
+        var stanza = {
+            node: node,
+            id: id
+        };
+        console.log(stanza);
+        socket.send(
+            'xmpp.buddycloud.item.delete', stanza,
+            function(error, data) {
+                if (error) console.error(error);
+                else {
+                    console.log("deleted .", data);
+                }
+            });
+
+    }
+
+
+
+
+    var api={
+        publish:function(node,text,ref){
+            publish(node,text,ref);
+        },
+        removeitem:function(ref,node){
+            removeitem(ref,node);
+        }
+    }
+    return api;
+})
+
+
 //todo: make factory, controll is tool long
 
-.controller('buddycloudController', function($scope, Xmpp) {
+.controller('buddycloudController', function($scope, Xmpp,buddycloudFactory) {
     BC = $scope;
     var socket = Xmpp.socket;
     $scope.newitems = {};
@@ -54,7 +138,7 @@ angular.module('Buddycloud', [])
             function(error, data) {
                 console.log("xmpp.buddycloud.config.get", error, data)
 
-                $scope.form = data;
+                $scope.formdata ={fields: data};
                 $scope.$apply();
             }
         )
@@ -258,6 +342,8 @@ angular.module('Buddycloud', [])
 
     $scope.removeitem = function(ref, node) {
         console.log("delete", ref, node);
+        buddycloudFactory.removeitem(ref,node);
+        /*
         var ar = ref.split(",");
         var id = ar[ar.length - 1];
         var stanza = {
@@ -273,6 +359,7 @@ angular.module('Buddycloud', [])
                     console.log("deleted .", data);
                 }
             });
+        */
 
     }
 
@@ -280,55 +367,16 @@ angular.module('Buddycloud', [])
 
     //Buddycloud publish
     $scope.publish = function(ref) {
-        console.log(ref);
         var node = $scope.node;
-        if ($scope.node == "recent") {
-            node = "/user/" + $scope.jid.user + "@" + $scope.jid.domain + "/posts";
-        }
-        if (ref) {
-            node = ref.substring(0, ref.lastIndexOf(","));
-            node = node.substring(node.lastIndexOf(",") + 1);
-            console.log(">>>>>>>>>>>", node);
-        }
 
-        console.log("publishing: ", $scope.newmessage);
         if (ref) {
             var text = $scope.newitems[ref];
+            $scope.newitems[ref]=""
         } else {
             var text = $scope.newtopic;
+            $scope.newtopic="";
         }
-        var stanza = {
-            "node": node,
-            "content": {
-                "atom": {
-                    "content": text
-                }
-            }
-        };
-        if (ref) {
-            stanza.content["in-reply-to"] = {
-                "ref": ref
-            }
-        }
-        socket.send(
-            'xmpp.buddycloud.publish', stanza,
-            function(error, data) {
-                if (error) {
-                    console.error(stanza.node, error);
-                    $scope.create(stanza.node);
-                } else {
-                    $scope.newitems[ref] = "";
-                    console.log("Message sent.");
-                }
-            }
-        );
-
-
-
-
-
-
-
+        buddycloudFactory.publish(node,text,ref);
     }
 
 

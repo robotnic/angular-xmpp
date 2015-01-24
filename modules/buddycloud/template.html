@@ -1,24 +1,7 @@
-<div ng-show="connected" class="buddycloud">
+
+
+<div ng-show="connected " class="buddycloud">
     <br/>
-    <br/>
-    <div ng-show="form" style="position:absolute;top:100px;left:140px;z-index:1000;background-color:white;border:1px solid black;padding:10px">
-        <table>
-            <tr ng-repeat="field in form">
-                <td>{{field.var}}</td>
-                <td>
-                    <input ng-model="field.value" />
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button ng-click="setConfig(form)">save</button>
-                    <button ng-click="form=null">cancel</button>
-                    <div ng-show="formerror" style="color:red">{{formerror|json}}</div>
-                </td>
-            </tr>
-        </table>
-    </div>
     <br/>
 
     <div ng-if="node!='recent'">
@@ -32,6 +15,16 @@
         <br/>
     </div>
     <br/>
+
+
+    <div class="form" ng-show="formdata" style="position:relative;height:1300px">
+            <xmppform formdata="formdata" onclose="formdata=null" onsave="setConfig"></xmppform>
+    </div>
+
+
+
+    <div ng-show="!formdata">
+
     <form ng-submit="publish()">
         <textarea ng-model="newtopic" placeholder="What's going on"></textarea>
         <input ng-show="newtopic" type="submit" />
@@ -82,6 +75,7 @@
                 <input ng-model="newitems[item.entry.atom.id]" />
             </div>
         </form>
+    </div>
     </div>
 </div>
 
