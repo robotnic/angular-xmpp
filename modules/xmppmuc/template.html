@@ -52,11 +52,11 @@
                         {{item.nick}}
                     </div>
                     <h4>Moderators</h4>
-                    <div ng-repeat="item in roster" ng-if="item.role=='moderator'">
+                    <div ng-repeat="item in roster" ng-if="item.role=='moderator'" ng-click="open(item)">
                         {{item.nick}}
                     </div>
                     <h4>Participants</h4>
-                    <div ng-repeat="item in roster" ng-if="item.role=='participant'">
+                    <div ng-repeat="item in roster" ng-if="item.role=='participant'" ng-click="open(item)">
                         {{item.nick}}
                     </div>
                 </div>

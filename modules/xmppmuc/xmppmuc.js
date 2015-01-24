@@ -24,6 +24,7 @@ Roster
         console.log("the muc factory");
         function watch(){ 
             console.log("start watching muc");
+            //notify is used to apply changes (render html);
             var q=$q.defer();
             Xmpp.socket.on('xmpp.muc.message', function(message) {
                 if(!message.delay){
@@ -34,18 +35,29 @@ Roster
                 q.notify();
             });
             Xmpp.socket.on('xmpp.muc.roster', function(item) {
+
                 console.log("roster",item);
-                if(item.status=='unavailable'){
-                    for(var i=0;i<api.roster.length;i++){
-                        if(api.roster[i].nick==item.nick){
+                var found=false;
+                for(var i=0;i<api.roster.length;i++){
+                    if(api.roster[i].nick==item.nick){
+                        found=true;
+                        if(item.status=='unavailable' || item.role=='none'){
+                            //user leaves chat
                             api.roster.splice(i,1);
-                            break;
+                        }else{
+                            //user changed
+                            for(var r in api.roster[i]){
+                                   api.roster[i][r] = item[r];
+                            }
                         }
+                        break;
                     }
-                }else{
-                    api.roster.push(item);
-                    q.notify();
                 }
+                if(!found){
+                    //new user
+                    api.roster.push(item);
+                }
+                q.notify();
             })
             return q.promise;
         }
@@ -182,10 +194,15 @@ Roster
         }
 
         $scope.getrolemembers=function(){
-            MucFactory.getRoleMembers('participants');
+            MucFactory.getRoleMembers('participant');
         }
         $scope.save=function(formdata){
             MucFactory.setConfig(formdata);
+        }
+        $scope.open=function(item){
+                console.log(item);
+                $rootScope.$broadcast('openchat',item.jid.user+"@"+item.jid.domain);
+
         }
     }
 ])

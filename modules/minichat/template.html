@@ -17,7 +17,7 @@
             </div>
 
         <form ng-submit="send(user,$event)">
-        <input ng-model="user.newtext"/>
+        <input ng-model="user.newtext" onload="console.log(999)"/>
         </form>
       </div>
     <div ng-if="user.style=='min'" ng-click="makebig(user)" class="min">

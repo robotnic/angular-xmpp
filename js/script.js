@@ -1,19 +1,23 @@
-var SCOPE = null;
+var APP = null;
 
 
 
 angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat','XmppMuc','XmppForm'])
-    .controller('pagecontroller', ['$scope','$rootScope','Xmpp',
-        function($scope,$rootScope,Xmpp) {
-            $scope.host="https://xmpp-ftw.jit.su/";
-            //$scope.host="https://laos.buddycloud.com";
+    .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage',
+        function($scope,$rootScope,Xmpp,XmppMessage) {
+            APP=$scope;
+            $scope.host="http://localhost:3000";
+            //$scope.host="https://xmpp-ftw.jit.su/";
+            ////$scope.host="https://laos.buddycloud.com";
             $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot post invisible?
             $scope.roster=Xmpp.roster;
             $scope.nodes=[
                 {name:"laos",node:"/user/laos@laos.buddycloud.com/posts" }
             ];
-            $scope.unreadmessages=0;
-            $scope.messages={};
+            
+            $scope.messages=XmppMessage.messages;
+            $scope.notifications=XmppMessage.notifications;
+
             $scope.friendRequests={};
             $scope.friendRequestsCount=0;
             $scope.open=function(node){
@@ -27,7 +31,11 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
               },
               {
                 "title": "Groupchat",
+              },
+              {
+                "title": "Develop",
               }
+
             ];
             $scope.tabs.activeTab = 0;
 
@@ -43,18 +51,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                     console.log(data);
                     alert(1);
                 })
-                Xmpp.socket.on('xmpp.chat.message', function(data) {
-                    console.log("THE MESSAGE",data);
-                    var jid=data.from.user+"@"+data.from.domain;
-                    if(jid!=$scope.excludejid){
-                        $scope.unreadmessages++;
-                        data.from.jid=jid;
-                        if(!$scope.messages[jid])$scope.messages[jid]=[];
-                        $scope.messages[jid].unshift(data);
-                        $scope.$apply();
-                    }
-                    
-                });
 
                 //friend request
                 //3:::{"type":0,"data":["xmpp.presence.subscribe",{"from":{"domain":"laos.buddycloud.com","user":"bill"}}]}
@@ -135,6 +131,9 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                     Xmpp.socket.on('xmpp.error.client', function (error) {
                         console.log('client error', error)
                     })
+                    Xmpp.socket.on('xmpp.muc.invite', function (data) {
+                        console.log("muc invitation",data);
+                    })
                 })
             });
 
@@ -157,12 +156,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             $scope.openchat=function(jid){
                 console.log("Open Minichat not implemented (communicate to roster controller ?)",jid);
                 $rootScope.$broadcast('openchat',jid);
-                /*
-                var jid=user.user+"@"+user.domain;
-                console.log("llll",$scope.messages[jid].length);
-                $scope.unreadmessages=-$scope.messages[jid].length ;  //does not calculater correct, you fix it
-                if($scope.unreadmessages<0)$scope.unreadmessages=0;
-                */
             }
         }
     ])
