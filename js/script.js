@@ -71,7 +71,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                 //subscribe, unsubscribe events (unsubsribe not firing bug)
                 Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
                     console.log("sub",data);
-                    var name=Xmpp.getOwnerFromNode(data.node).name;    
+                    var name=Xmpp.parseNodeString(data.node).name;    
                     console.log(name);
                     $scope.addNode({
                         node:data.node,
@@ -80,7 +80,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                     $scope.$apply();
                 });
 
-                //loged in
+                //logged in
                 Xmpp.socket.on('xmpp.connection', function(data) {
                     console.log("connect",data);
                     $scope.jid=data.jid;
@@ -100,17 +100,15 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                             }
 
 
-                            console.log("ask subscriptions");
                             Xmpp.socket.send(
                                 'xmpp.buddycloud.subscriptions', { },
                                 function(error, data) { 
                                     console.log("SUBSRIPTIONS",error, data,data.node) 
                                     for(var i=0;i<data.length;i++){
                                         var node=data[i].node;
-                                        var nodeObj=Xmpp.getOwnerFromNode(node);
+                                        var nodeObj=Xmpp.parseNodeString(node);
                                         var type = nodeObj.type;
                                         var name=nodeObj.name;
-                                        console.log(name,type,node);
                                         if(type=='posts'){
                                             $scope.addNode({
                                                 name:name,

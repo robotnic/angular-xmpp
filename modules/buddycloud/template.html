@@ -32,7 +32,7 @@
 
 
 
-    <div ng-repeat="item in tree |toArray|orderBy:'-entry.atom.published' " class="item">
+    <div ng-repeat="item in data.tree |toArray|orderBy:'-entry.atom.published' " class="item">
         <span class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
         <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
         <img ng-src="icons/avatars/{{item.entry.atom.author.image}}.png" />

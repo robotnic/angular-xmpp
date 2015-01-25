@@ -22,11 +22,9 @@ Roster
 .factory('XmppMessage',function(Xmpp,$q){
 
     function watch(){
-        console.log("start watching muc");
         //notify is used to apply changes (render html);
         var q=$q.defer();
         Xmpp.socket.on('xmpp.chat.message', function(message) {
-            console.log("message",message);
             if(!message.delay){
                 message.receivetime=(new Date()).getTime();
             }
@@ -41,7 +39,6 @@ Roster
                     api.notifications.unread[message.from.jid]=0;
                 }
                 api.notifications.unread[message.from.jid]++;
-                console.log("got message in factory",message);
             }
             q.notify(message);
         });
@@ -59,7 +56,6 @@ Roster
             return watch();
         },
         send:function(user, text, event) {
-            console.log(arguments, this);
             var message = {
                 to: user.jid,
                 type: "chat",
@@ -93,11 +89,7 @@ Roster
             function(end){},
             function(error){console.log(error)},
             function(notify){
-                console.log(notify);
-                console.log("============",$scope.chatwindows,notify.from.jid);
                 for(var i=0;i<$scope.chatwindows.length;i++){
-                        console.log("for",i);
-                        console.log($scope.chatwindows[i].jid,notify.from.jid); 
                         if($scope.chatwindows[i].jid==notify.from.jid){ 
                             XmppMessage.markread(notify.from.jid);
                         }
@@ -107,7 +99,6 @@ Roster
 
         //use broadcast to open chat window
         $rootScope.$on("openchat", function(data, jid) {
-            console.log("openchat", arguments);
             XmppMessage.markread(jid);
             $scope.me = Xmpp.jid.substring(0, Xmpp.jid.indexOf("@"));
             var fromname = jid.substring(0, jid.indexOf("@"));
@@ -122,20 +113,16 @@ Roster
                 style: "max",
                 name: fromname
             });
-            console.log($scope.chatwindows);
         });
 
 
         //big, small, close window
         $scope.makebig = function(user) {
-            console.log("open", user);
             user.style = "max";
         };
         $scope.close = function(user) {
             user.style = false;
             for(var i=0;i<$scope.chatwindows.length;i++){
-                console.log($scope.chatwindows[i]);
-                console.log($scope.chatwindows[i].jid,user.jid);
                 if($scope.chatwindows[i].jid==user.jid){
                     $scope.chatwindows.splice(i,1);
                 }
@@ -143,7 +130,6 @@ Roster
         }
         $scope.minify = function(user) {
             user.style = "min";
-            console.log("min", user);
         }
 
         //send chat message 

@@ -122,7 +122,7 @@ angular.module('XmppCore', [])
             api.socket.send('xmpp.chat.message', message);
 
         },
-        getOwnerFromNode:function(node){   //should be renamed
+        parseNodeString:function(node){   //should be renamed
                 var n = node.indexOf('@');
                 var name=node.substring(0,n);
                 var domain=node.substring(n+1);

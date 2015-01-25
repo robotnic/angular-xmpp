@@ -35,24 +35,22 @@ angular.module('Buddycloud', [])
 
 
 
-.factory('buddycloudFactory',function(Xmpp){
+.factory('buddycloudFactory',function(Xmpp,$q){
 
 
 
     //Buddycloud publish
     function publish(node,text,ref) {
-        console.log(node,text,ref);
+        
         var jid=Xmpp.jid;
-        //var node = $scope.node;
+
         if (node == "recent") {
             node = "/user/" + Xmpp.jid + "/posts";
         }
         if (ref) {
             node = ref.substring(0, ref.lastIndexOf(","));
             node = node.substring(node.lastIndexOf(",") + 1);
-            console.log(">>>>>>>>>>>", node);
         }
-
         
         var stanza = {
             "node": node,
@@ -74,7 +72,6 @@ angular.module('Buddycloud', [])
                     console.error(stanza.node, error);
                     //$scope.create(stanza.node);
                 } else {
-                    //$scope.newitems[ref] = "";
                     console.log("Message sent.");
                 }
             }
@@ -103,15 +100,92 @@ angular.module('Buddycloud', [])
     }
 
 
+    function maketree (data) {
+        console.log("maketree", data);
+        var tree = {};
+        if (!data) return tree;
+        for (var i = 0; i < data.length; i++) {
+            data[i].entry.atom.author.image = data[i].entry.atom.author.name.split("@")[0];
+            data[i].nodeowner = Xmpp.parseNodeString(data[i].node).jid;
+            var ar = data[i].entry.atom.id.split(",");
+            var id = ar.pop();
+
+            if (data[i].entry["in-reply-to"]) {
+                var ref = data[i].entry["in-reply-to"].ref;
+                var item = tree[ref];
+                if (item) {
+                    if (!item.nodes) item.nodes = [];
+                    item.nodes.push(data[i]);
+                }
+            } else {
+                tree[id] = data[i];
+            }
+        }
+        console.log("the tree", tree);
+        return tree;
+    }
+
+
+
 
 
     var api={
+        data:{},
         publish:function(node,text,ref){
             publish(node,text,ref);
         },
         removeitem:function(ref,node){
             removeitem(ref,node);
+        },
+        maketree:function(data){
+            return maketree(data);
+        },
+
+        getNodeItems : function(node) {
+            var q=$q.defer();
+            console.log('Retrieving node items')
+            //var node='/user/team@topics.buddycloud.org/posts';
+            Xmpp.socket.send(
+                'xmpp.buddycloud.retrieve', {
+                    node: node,
+                    rsm: {
+                        max: 55
+                    }
+                },
+                function(error, data) {
+                    if(error){
+                        q.reject(error);
+                    }else{
+                        api.data.tree = maketree(data);
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+        getRecentItems : function() {
+            var q=$q.defer();
+            console.log('Retrieving recent items')
+            Xmpp.socket.send(
+                'xmpp.buddycloud.items.recent', {
+                    rsm: {
+                        max: 55
+                    }
+                },
+                function(error, data) {
+                    if(error){
+                        q.reject(error);
+                    }else{
+                        api.data.tree = maketree(data);
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+
         }
+
+
     }
     return api;
 })
@@ -123,6 +197,7 @@ angular.module('Buddycloud', [])
     BC = $scope;
     var socket = Xmpp.socket;
     $scope.newitems = {};
+    $scope.data=buddycloudFactory.data;
 
     console.log("+++buddycloud controller+++");
     $scope.connected = true;
@@ -197,71 +272,23 @@ angular.module('Buddycloud', [])
     //Buddycloud timeline
 
     $scope.getNodeItems = function(node) {
-        console.log('Retrieving node items')
-        //var node='/user/team@topics.buddycloud.org/posts';
-        socket.send(
-            'xmpp.buddycloud.retrieve', {
-                node: node,
-                rsm: {
-                    max: 55
-                }
-            },
-            function(error, data) {
-                console.log(error);
-                //            $scope.items=data;
-                $scope.tree = $scope.maketree(data);
-                //    $scope.getLikes(data);
-                $scope.$apply();
-            }
-        )
-
+        buddycloudFactory.getNodeItems(node).then(function(data){
+            //$scope.$apply();
+        })
     }
 
 
     $scope.getRecentItems = function() {
-        console.log('Retrieving recent items')
-        //var node='/user/team@topics.buddycloud.org/posts';
-        socket.send(
-            'xmpp.buddycloud.items.recent', {
-                rsm: {
-                    max: 55
-                }
-            },
-            function(error, data) {
-                //            $scope.items=data;
-                $scope.tree = $scope.maketree(data);
-                $scope.$apply();
-            }
-        )
-
+        buddycloudFactory.getRecentItems().then(function(data){
+         //   $scope.$apply();
+        });
     }
 
 
 
 
     $scope.maketree = function(data) {
-        console.log("maketree", data);
-        var tree = {};
-        if (!data) return tree;
-        for (var i = 0; i < data.length; i++) {
-            data[i].entry.atom.author.image = data[i].entry.atom.author.name.split("@")[0];
-            data[i].nodeowner = Xmpp.getOwnerFromNode(data[i].node).jid;
-            var ar = data[i].entry.atom.id.split(",");
-            var id = ar.pop();
-
-            if (data[i].entry["in-reply-to"]) {
-                var ref = data[i].entry["in-reply-to"].ref;
-                var item = tree[ref];
-                if (item) {
-                    if (!item.nodes) item.nodes = [];
-                    item.nodes.push(data[i]);
-                }
-            } else {
-                tree[id] = data[i];
-            }
-        }
-        console.log("the tree", tree);
-        return tree;
+        return buddycloudFactory.maketree(data);
     }
 
 
@@ -281,10 +308,10 @@ angular.module('Buddycloud', [])
             if (data.entry["in-reply-to"]) {
                 var ref = data.entry["in-reply-to"].ref;
                 console.log("ref", ref);
-                if (!$scope.tree[ref].nodes) $scope.tree[ref].nodes = [];
-                $scope.tree[ref].nodes.push(data);
+                if (!$scope.data.tree[ref].nodes) $scope.data.tree[ref].nodes = [];
+                $scope.data.tree[ref].nodes.push(data);
             } else {
-                $scope.tree[id] = data;
+                $scope.data.tree[id] = data;
             }
             $scope.$apply();
         }
@@ -322,7 +349,7 @@ angular.module('Buddycloud', [])
     //add friend
     $scope.addFriend = function(node) {
         console.log("add", node);
-        var jid = Xmpp.getOwnerFromNode(node).jid;
+        var jid = Xmpp.parseNodeString(node).jid;
         console.log(jid);
         Xmpp.addFriend(jid);
     }
@@ -330,7 +357,7 @@ angular.module('Buddycloud', [])
     //remove friend
     $scope.removeFriend = function(node) {
         console.log("remove", node);
-        var jid = Xmpp.getOwnerFromNode(node).jid;
+        var jid = Xmpp.parseNodeString(node).jid;
         console.log(jid);
         Xmpp.removeFriend(jid);
     }
@@ -343,24 +370,6 @@ angular.module('Buddycloud', [])
     $scope.removeitem = function(ref, node) {
         console.log("delete", ref, node);
         buddycloudFactory.removeitem(ref,node);
-        /*
-        var ar = ref.split(",");
-        var id = ar[ar.length - 1];
-        var stanza = {
-            node: node,
-            id: id
-        };
-        console.log(stanza);
-        socket.send(
-            'xmpp.buddycloud.item.delete', stanza,
-            function(error, data) {
-                if (error) console.error(error);
-                else {
-                    console.log("deleted .", data);
-                }
-            });
-        */
-
     }
 
 
