@@ -8,7 +8,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             APP=$scope;
             $scope.host="http://localhost:3000";
             //$scope.host="https://xmpp-ftw.jit.su/";
-            ////$scope.host="https://laos.buddycloud.com";
+            //$scope.host="https://laos.buddycloud.com";
             $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot post invisible?
             $scope.roster=Xmpp.roster;
             $scope.nodes=[

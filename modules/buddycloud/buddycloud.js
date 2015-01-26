@@ -22,6 +22,8 @@ angular.module('Buddycloud', [])
             scope.node = attrs.node;
             scope.$watch("node", function() {
                 console.log("node changed");
+                scope.data.tree=null;
+                scope.formdata=null;
                 if (scope.node == "recent") {
                     scope.getRecentItems();
                 } else {
@@ -41,9 +43,7 @@ angular.module('Buddycloud', [])
 
     //Buddycloud publish
     function publish(node,text,ref) {
-        
         var jid=Xmpp.jid;
-
         if (node == "recent") {
             node = "/user/" + Xmpp.jid + "/posts";
         }
@@ -76,7 +76,6 @@ angular.module('Buddycloud', [])
                 }
             }
         );
-
     }
 
     function removeitem(ref, node) {
@@ -183,7 +182,45 @@ angular.module('Buddycloud', [])
             )
             return q.promise;
 
+        },
+        getConfig : function(node) {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.config.get', {
+                    "node": node
+                },
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+        setConfig : function(node,form) {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.config.set', {
+                    "node": node,
+                    "form":form
+                },
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
         }
+
+
+
 
 
     }
@@ -206,51 +243,29 @@ angular.module('Buddycloud', [])
 
     $scope.getConfig = function() {
         $scope.formerror = "";
-        socket.send(
-            'xmpp.buddycloud.config.get', {
-                "node": $scope.node
-            },
-            function(error, data) {
-                console.log("xmpp.buddycloud.config.get", error, data)
-
-                $scope.formdata ={fields: data};
-                $scope.$apply();
-            }
-        )
+        buddycloudFactory.getConfig($scope.node).then(function(data){
+            $scope.formdata ={fields: data};
+        },function(error){
+            $scope.formerror=error;
+        })
     }
     $scope.setConfig = function(form) {
         $scope.formerror = "";
-        socket.send(
-            'xmpp.buddycloud.config.set', {
-                "node": $scope.node,
-                "form": form
-            },
-            function(error, data) {
-                console.log(error, data)
-                if (error) $scope.formerror = error;
-                if (!error) $scope.form = null; //close
-                $scope.$apply();
-            }
-        )
+        buddycloudFactory.setConfig($scope.node,form).then(function(data){
+            $scope.form = null;
+        },function(error){
+            $scope.formerror=error;
+        })
     }
 
 
-    $scope.opennode = function(name) {
-        console.log(name);
-        var localname = name.substring(0, name.indexOf("@"));
-        var domain = name.substring(name.indexOf("@") + 1);
-        console.log(localname, domain);
-
-        var node = {
-            node: "/user/" + localname + "@" + domain + "/posts",
-            name: localname
-        }
-        $scope.changenode({
-            node: node
-        });
-        console.log({
-            node: node
-        });
+    $scope.opennode = function(jid) {
+        var user=Xmpp.parseJidString(jid);
+        //first "node" is paramater name
+        $scope.changenode({node:{
+            node: "/user/" + user.user + "@" + user.domain + "/posts",
+            name: user.user
+        }});
     }
 
 
@@ -267,6 +282,8 @@ angular.module('Buddycloud', [])
         );
         console.log("created");
     }
+
+
 
 
     //Buddycloud timeline

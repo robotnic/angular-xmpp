@@ -31,7 +31,9 @@ z-index:1;
 .leftcol{
 position:fixed;
 top:150px;
+bottom:10px;
 left:0px;
+overflow:auto;
 }
 
 #muc{

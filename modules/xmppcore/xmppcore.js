@@ -122,7 +122,7 @@ angular.module('XmppCore', [])
             api.socket.send('xmpp.chat.message', message);
 
         },
-        parseNodeString:function(node){   //should be renamed
+        parseNodeString:function(node){  
                 var n = node.indexOf('@');
                 var name=node.substring(0,n);
                 var domain=node.substring(n+1);
@@ -137,6 +137,22 @@ angular.module('XmppCore', [])
 
                 var jid=name+"@"+domain;
                 return {name:name,domain:domain,jid:jid,type:type};
+
+        },
+        parseJidString:function(jid){   
+            console.log(jid);
+            var parts=jid.split("@");
+            console.log(parts);
+            var user=parts[0];
+            var domainresource=parts[1];
+            var n = name.indexOf('/');
+            if(n==-1){
+                var domain=domainresource;
+            }else{
+                var domain=domainresource.substring(0,n);
+                var resource=domainresource.substring(n);
+            }
+            return({user:user,domain:domain,resource:resource});
 
         },
         confirmFriend:function(node){
