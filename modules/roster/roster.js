@@ -53,7 +53,7 @@ Roster
 
                 //vCard - not working
                 socket.send('xmpp.vcard.get', {}, function(error, data) {
-                    consle.log(error, data);
+                    console.log("vcard",error, data);
                 })
 
                 Xmpp.getRoster().then(function(data){

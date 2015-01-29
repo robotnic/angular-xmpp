@@ -5,8 +5,8 @@
     <br/>
 
     <div ng-if="node!='recent'">
-        <button ng-click="subscribe()" class="btn btn-default">subscribe</button>
-        <button ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
+        <button ng-if="!data.subscribed" ng-click="subscribe()" class="btn btn-default">subscribe</button>
+        <button ng-if="data.subscribed" ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
         <button ng-click="getConfig()" class="btn btn-default">
             <span class="glyphicon glyphicon-cog"></span>
         </button>
@@ -47,7 +47,7 @@
 
         </div>
         <div class="content">
-            <form ng-show="editmode" ng-submit="save()">
+            <form ng-show="editmode && data.subscribed" ng-submit="save()">
                 <textarea ng-model="item.entry.atom.content.content"></textarea>
                 <input type="submit" />
             </form>
@@ -69,7 +69,7 @@
                 <like node="{{subitem.id}}"></like>
             </div>
         </div>
-        <form ng-submit="publish(item.entry.atom.id)" class="subitem">
+        <form ng-if="data.subscribed" ng-submit="publish(item.entry.atom.id)" class="subitem">
             <img ng-src="icons/avatars/{{jid.local}}.png" />
             <div class="person">
                 <input ng-model="newitems[item.entry.atom.id]" />

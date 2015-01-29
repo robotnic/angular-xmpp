@@ -29,6 +29,11 @@
 <script src="bower_components/showdown/src/showdown.js"></script>
 <script src="bower_components/angular-markdown-directive/markdown.js"></script>
 
+<!-- map -->
+<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css">
+
 <!-- if you know grant, please help -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/buddycloud.css">
@@ -44,6 +49,7 @@
 <script src="modules/xmpplogin/xmpplogin.js"></script>
 <script src="modules/xmppmuc/xmppmuc.js"></script>
 <script src="modules/xmppform/xmppform.js"></script>
+<script src="modules/xmppmap/xmppmap.js"></script>
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
@@ -54,14 +60,14 @@
 
 
 <!-- xmpp login -->
-<div ng-if="!online">
+<div ng-show="!online">
 <br/>
 <br/>
 <br/>
 <br/>
 connecting ...
 </div>
-<div ng-if="online">
+<div ng-show="online">
 <xmpplogin></xmpplogin>
 </div>
 
@@ -83,7 +89,7 @@ connecting ...
 <img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
 <div style="font-size:7px">{{selectednode.node}}</div>
 <h4>Buddycloud nodes</h4>
-<div ng-repeat="node in nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
+<div ng-repeat="node in data.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
 {{node.name}}
 </div>
 </div>
@@ -111,12 +117,18 @@ connecting ...
 <br/>
 <br/>
 <pre>
-{{notifications|json}}
+<div ng-repeat="item in searchresult.data.items" ng-click="open('/user/'+item.jid+'/posts')">
+
+{{item|json}}
+</div>
 </pre>
  
 </div>
 
 
+<div id="map" ng-if="connected && tabs.activeTab==3">
+<xmppmap></xmppmap>
+</div>
 
 
 <!-- roster - the online users und friends -->

@@ -40,6 +40,26 @@ angular.module('Buddycloud', [])
 .factory('buddycloudFactory',function(Xmpp,$q){
 
 
+    function watch(){
+            var q=$q.defer();
+            Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
+                console.log("sub",data);
+                addToNodeList(data.node);
+                /*
+                var name=Xmpp.parseNodeString(data.node).name;
+                console.log(name);
+                api.data.nodes.push({
+                    node:data.node,
+                    name:name
+                });
+                */
+                q.notify();
+
+            });
+            return q.pomise;
+    }
+
+
 
     //Buddycloud publish
     function publish(node,text,ref) {
@@ -124,8 +144,39 @@ angular.module('Buddycloud', [])
         return tree;
     }
 
+    function makeNodeList(data){
+            api.data.nodes=[];
+            for(var i=0;i<data.length;i++){
+                var nodeObj=Xmpp.parseNodeString(data[i].node);
+                if(nodeObj.type=='posts'){
+                    addToNodeList(data[i].node);
+                }
+            }
 
+    }
 
+    function addToNodeList(node){
+        var name=Xmpp.parseNodeString(node).name;    
+        for(var i=0;i<api.data.nodes.length;i++){
+            if(api.data.nodes[i].node==node){
+                return;
+            }
+        }
+        api.data.nodes.push({name:name,node:node});
+
+    }
+
+    function isSubscribed(node){
+        console.log("----------------",node);
+        api.data.subscribed=false;
+        for(var i=0;i<api.data.nodes.length;i++){
+            if(api.data.nodes[i].node==node){
+                api.data.subscribed=true;
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     var api={
@@ -156,6 +207,7 @@ angular.module('Buddycloud', [])
                         q.reject(error);
                     }else{
                         api.data.tree = maketree(data);
+                        isSubscribed(node);
                         q.resolve(data);
                     }
                 }
@@ -183,6 +235,7 @@ angular.module('Buddycloud', [])
             return q.promise;
 
         },
+
         getConfig : function(node) {
             var q=$q.defer();
              Xmpp.socket.send(
@@ -217,7 +270,103 @@ angular.module('Buddycloud', [])
                 }
             )
             return q.promise;
+        },
+        discover : function() {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.discover', {},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+        getSubscriptions : function() {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.subscriptions', {},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        makeNodeList(data);
+                        q.resolve(data);
+    
+                    }
+                }
+            )
+            return q.promise;
+        },
+        register : function() {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.register', {},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+        subscribe : function(node) {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.subscribe', {node:node},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        addToNodeList(node);
+                        isSubscribed(node);
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+        unsubscribe : function(node) {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.unsubscribe', {node:node},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        for(var i=0;i<api.data.nodes.length;i++){
+                            if(api.data.nodes[i].node==node){
+                                api.data.nodes.splice(i,1);
+                                break;
+                            }
+                        }
+                        isSubscribed(node);
+                        q.resolve(data);
+                    }
+                }
+            )
+            return q.promise;
+        },
+ 
+ 
+        watch:function(){
+            return watch();
         }
+
+
+
+
+
 
 
 
@@ -235,6 +384,7 @@ angular.module('Buddycloud', [])
     var socket = Xmpp.socket;
     $scope.newitems = {};
     $scope.data=buddycloudFactory.data;
+    buddycloudFactory.watch();
 
     console.log("+++buddycloud controller+++");
     $scope.connected = true;
@@ -289,16 +439,12 @@ angular.module('Buddycloud', [])
     //Buddycloud timeline
 
     $scope.getNodeItems = function(node) {
-        buddycloudFactory.getNodeItems(node).then(function(data){
-            //$scope.$apply();
-        })
+        buddycloudFactory.getNodeItems(node).then(function(data){ })
     }
 
 
     $scope.getRecentItems = function() {
-        buddycloudFactory.getRecentItems().then(function(data){
-         //   $scope.$apply();
-        });
+        buddycloudFactory.getRecentItems().then(function(data){ });
     }
 
 
@@ -340,27 +486,13 @@ angular.module('Buddycloud', [])
     //subscribe to node
 
     $scope.subscribe = function() {
-        socket.send(
-            'xmpp.buddycloud.subscribe', {
-                "node": $scope.node
-            },
-            function(error, data) {
-                console.log(error, data)
-            }
-        )
+        buddycloudFactory.subscribe($scope.node).then();
     }
 
     //unsubscribe from node
 
     $scope.unsubscribe = function() {
-        socket.send(
-            'xmpp.buddycloud.unsubscribe', {
-                "node": $scope.node
-            },
-            function(error, data) {
-                console.log(error, data)
-            }
-        )
+        buddycloudFactory.unsubscribe($scope.node).then();
     }
 
     //add friend

@@ -24,7 +24,7 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
 .controller('XmppLoginController', ['$scope', '$rootScope', '$location', '$anchorScroll', 'Xmpp',
     function($scope, $rootScope, $location, $anchorScroll, Xmpp) {
         SCOPE = $scope;
-        $scope.username = "seppl";
+        $scope.username = "eva";
         $scope.password = "bbb";
         var socket = Xmpp.socket;
 

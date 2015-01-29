@@ -2,14 +2,16 @@ var APP = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat','XmppMuc','XmppForm'])
-    .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage',
-        function($scope,$rootScope,Xmpp,XmppMessage) {
+angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','XmppMap','btford.markdown','Minichat','XmppMuc','XmppForm','leaflet-directive'])
+    .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
+        function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
             APP=$scope;
-            $scope.host="http://localhost:3000";
+            //$scope.host="http://localhost:3000";
             //$scope.host="https://xmpp-ftw.jit.su/";
-            //$scope.host="https://laos.buddycloud.com";
+            $scope.host="https://laos.buddycloud.com";
             $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot post invisible?
+            $scope.data=buddycloudFactory.data;
+
             $scope.roster=Xmpp.roster;
             $scope.nodes=[
                 {name:"laos",node:"/user/laos@laos.buddycloud.com/posts" }
@@ -26,18 +28,26 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             }
 
             $scope.tabs = [
-              {
-                "title": "Buddycloud",
-              },
-              {
-                "title": "Groupchat",
-              },
-              {
-                "title": "Develop",
-              }
-
+              { "title": "Buddycloud" },
+              { "title": "Groupchat" },
+              { "title": "Develop" },
+              {"title":"Map"}
             ];
             $scope.tabs.activeTab = 0;
+
+            $scope.find=function(text){
+    
+                console.log(text);
+                $http.get("https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text).then(function(data){
+                        $scope.searchresult=data;
+                        $scope.tabs.activeTab = 2;
+                        console.log(data);
+                    },function(error){
+                        console.log(error);
+                    }
+                );
+            }
+
 
             Xmpp.connect($scope.host).then(function(){
                 $scope.online=true;
@@ -67,7 +77,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
 
                     $scope.$apply();
                 })
-
+                /*
                 //subscribe, unsubscribe events (unsubsribe not firing bug)
                 Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
                     console.log("sub",data);
@@ -79,49 +89,24 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                     });
                     $scope.$apply();
                 });
+                */
 
                 //logged in
                 Xmpp.socket.on('xmpp.connection', function(data) {
                     console.log("connect",data);
                     $scope.jid=data.jid;
-
-                     //discover Buddycloud - not in use
-                    Xmpp.socket.send(
-                        'xmpp.buddycloud.discover', {},
-                        function(error, data) {
-                            console.log(error, data);
-                            if (error) return console.error(error)
-
-
-                            console.log('Discovered Buddycloud server at', data);
-                            $scope.selectednode={
+                    buddycloudFactory.discover()
+                    .then(buddycloudFactory.register)
+                    .then(buddycloudFactory.getSubscriptions)
+                    .then(function(data){
+                        console.log("DURCH",data);
+                        $scope.selectednode={
                                 node:"recent",
                                 name:""
-                            }
-
-
-                            Xmpp.socket.send(
-                                'xmpp.buddycloud.subscriptions', { },
-                                function(error, data) { 
-                                    console.log("SUBSRIPTIONS",error, data,data.node) 
-                                    for(var i=0;i<data.length;i++){
-                                        var node=data[i].node;
-                                        var nodeObj=Xmpp.parseNodeString(node);
-                                        var type = nodeObj.type;
-                                        var name=nodeObj.name;
-                                        if(type=='posts'){
-                                            $scope.addNode({
-                                                name:name,
-                                                node:node
-                                            });
-                                        }
-                                    }
-                                    $scope.$apply();
-                                }
-                            )
-
-
-                    });
+                        }
+                    },function(error){
+                        console.log(error);
+                    })
 
                     Xmpp.socket.on('xmpp.error', function (error) {
                         console.log('error', error)
@@ -135,15 +120,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                 })
             });
 
-            $scope.addNode=function(node){
-                for(var i=0;i<$scope.nodes.length;i++){
-                    if($scope.nodes[i].node==node.node){
-                        return;
-                    }
-                }
-                $scope.nodes.push(node);
-
-            }
             $scope.addFriend=function(from){
                 Xmpp.addFriend(from.user+"@"+from.domain);
             }
