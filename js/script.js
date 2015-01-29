@@ -2,7 +2,7 @@ var APP = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','XmppMap','btford.markdown','Minichat','XmppMuc','XmppForm','leaflet-directive'])
+angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat','XmppMuc','XmppForm'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
         function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
             APP=$scope;
@@ -30,8 +30,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             $scope.tabs = [
               { "title": "Buddycloud" },
               { "title": "Groupchat" },
-              { "title": "Develop" },
-              {"title":"Map"}
+              { "title": "Develop" }
             ];
             $scope.tabs.activeTab = 0;
 
