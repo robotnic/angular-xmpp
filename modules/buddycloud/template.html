@@ -55,7 +55,7 @@
 
         </div>
         <br/>
-        <div ng-repeat="subitem in item.nodes|toArray|orderBy:'entry.atom.published'" class="subitem">
+        <div ng-repeat="subitem in item.nodes track by subitem.id|toArray|orderBy:'entry.atom.published'" class="subitem">
 
             <span class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
             <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>

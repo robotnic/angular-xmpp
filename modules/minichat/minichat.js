@@ -80,6 +80,10 @@ Roster
 })
 
 
+
+
+
+
 .controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp','XmppMessage',
     function($scope, $rootScope,  $anchorScroll, Xmpp, XmppMessage) {
         $scope.username = Xmpp.user;
