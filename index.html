@@ -45,6 +45,8 @@
 <script src="modules/xmpplogin/xmpplogin.js"></script>
 <script src="modules/xmppmuc/xmppmuc.js"></script>
 <script src="modules/xmppform/xmppform.js"></script>
+<script src="modules/xmpp/xmpp.js"></script>
+<script src="modules/buddycloudroster/buddycloudroster.js"></script>
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
@@ -82,11 +84,23 @@ connecting ...
 <div class="leftcol">
 
 <img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
-<div style="font-size:7px">{{selectednode.node}}</div>
-<h4>Buddycloud nodes</h4>
-<div ng-repeat="node in data.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
+
+
+
+
+<buddycloudroster></buddycloudroster>
+<!--
+<h4><span g-if="closed" class="closed">▸ </span>Online Contacts</h4>
+
+<div bs-collapse>
+<h4 bs-toggle><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Streams</h4>
+<div ng-repeat="node in data.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}" bs-target>
 {{node.name}}
 </div>
+</div>
+
+<h4><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Groupchats</h4>
+-->
 </div>
 
 
@@ -112,10 +126,10 @@ connecting ...
 <br/>
 <br/>
 <br/>
-<pre>
 <div ng-repeat="item in searchresult.data.items" ng-click="open('/user/'+item.jid+'/posts')">
-
-{{item|json}}
+{{item.title}}
+{{item.channelType}}
+<span ng-show="item.defaultAffiliation=='publisher'">✎</span>
 </div>
 </pre>
  
@@ -125,9 +139,11 @@ connecting ...
 
 
 <!-- roster - the online users und friends -->
+<!--
 <div>
 <xmpproster></xmpproster>
 </div>
+-->
 
 <!-- chat at the bottom -->
 <xmppminichat></xmppminichat>

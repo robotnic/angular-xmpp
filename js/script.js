@@ -2,20 +2,19 @@ var APP = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','XmppUI','XmppLogin','btford.markdown','Minichat','XmppMuc','XmppForm'])
+angular.module('MyApp', ['mgcrea.ngStrap','XmppUI','btford.markdown'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
         function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
             APP=$scope;
             //$scope.host="http://localhost:3000";
             //$scope.host="https://xmpp-ftw.jit.su/";
             $scope.host="https://laos.buddycloud.com";
-            $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot post invisible?
+            $scope.excludejid="likebot@laos.buddycloud.com";  // ----------- not perfect solution, how to make bot massages invisible?
             $scope.data=buddycloudFactory.data;
+            $scope.selectednode={}; 
 
             $scope.roster=Xmpp.roster;
-            $scope.nodes=[
-                {name:"laos",node:"/user/laos@laos.buddycloud.com/posts" }
-            ];
+            $scope.nodes=[];
             
             $scope.messages=XmppMessage.messages;
             $scope.notifications=XmppMessage.notifications;
@@ -24,7 +23,16 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             $scope.friendRequestsCount=0;
             $scope.open=function(node){
                 console.log(node);
-                $scope.selectednode=node;
+                //ugly programming
+                if(typeof(node)=="string"){
+                    //console.log("it's a string");
+                }else{
+                    if(typeof(node)=="object"){
+                        node=node.node;
+                    };
+                }
+                $scope.selectednode.node=node;
+                $scope.tabs.activeTab = 0;
             }
 
             $scope.tabs = [
@@ -37,7 +45,9 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
             $scope.find=function(text){
     
                 console.log(text);
-                $http.get("https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text).then(function(data){
+                //var url="https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text;
+                var url="https://demo.buddycloud.org/api/search?type=metadata&max=25&q="+text;
+                $http.get(url).then(function(data){
                         $scope.searchresult=data;
                         $scope.tabs.activeTab = 2;
                         console.log(data);
@@ -50,9 +60,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
 
             Xmpp.connect($scope.host).then(function(){
                 $scope.online=true;
-                Xmpp.socket.on('xmpp.connection', function(data) {
-                    $scope.connected=true;
-                });
 
 
                 //message tool in navbar
@@ -76,23 +83,11 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
 
                     $scope.$apply();
                 })
-                /*
-                //subscribe, unsubscribe events (unsubsribe not firing bug)
-                Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
-                    console.log("sub",data);
-                    var name=Xmpp.parseNodeString(data.node).name;    
-                    console.log(name);
-                    $scope.addNode({
-                        node:data.node,
-                        name:name
-                    });
-                    $scope.$apply();
-                });
-                */
 
                 //logged in
                 Xmpp.socket.on('xmpp.connection', function(data) {
                     console.log("connect",data);
+                    $scope.connected=true;
                     $scope.jid=data.jid;
                     buddycloudFactory.discover()
                     .then(buddycloudFactory.register)
@@ -107,15 +102,17 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                         console.log(error);
                     })
 
-                    Xmpp.socket.on('xmpp.error', function (error) {
-                        console.log('error', error)
-                    })
-                    Xmpp.socket.on('xmpp.error.client', function (error) {
-                        console.log('client error', error)
-                    })
-                    Xmpp.socket.on('xmpp.muc.invite', function (data) {
-                        console.log("muc invitation",data);
-                    })
+                })
+
+                //debug only
+                Xmpp.socket.on('xmpp.error', function (error) {
+                    console.log('error', error)
+                })
+                Xmpp.socket.on('xmpp.error.client', function (error) {
+                    console.log('client error', error)
+                })
+                Xmpp.socket.on('xmpp.muc.invite', function (data) {
+                    console.log("muc invitation",data);
                 })
             });
 
@@ -127,7 +124,6 @@ angular.module('MyApp', ['mgcrea.ngStrap','Buddycloud','XmppCore','XmppLike','Xm
                 $scope.connected=false;  //fake logout. Fixit!!
             }
             $scope.openchat=function(jid){
-                console.log("Open Minichat not implemented (communicate to roster controller ?)",jid);
                 $rootScope.$broadcast('openchat',jid);
             }
         }

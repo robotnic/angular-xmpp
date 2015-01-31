@@ -21,12 +21,13 @@ angular.module('Buddycloud', [])
             console.log("link", attrs.node);
             scope.node = attrs.node;
             scope.$watch("node", function() {
-                console.log("node changed");
+                console.log("node changed",scope.node);
                 scope.data.tree=null;
                 scope.formdata=null;
                 if (scope.node == "recent") {
                     scope.getRecentItems();
                 } else {
+                    console.log(scope.node);
                     scope.getNodeItems(scope.node);
                 }
             });
@@ -124,6 +125,8 @@ angular.module('Buddycloud', [])
         var tree = {};
         if (!data) return tree;
         for (var i = 0; i < data.length; i++) {
+            
+            if(!data[i].entry.atom.author.name)data[i].entry.atom.author.name="franz@.fehlerteufelcom"
             data[i].entry.atom.author.image = data[i].entry.atom.author.name.split("@")[0];
             data[i].nodeowner = Xmpp.parseNodeString(data[i].node).jid;
             var ar = data[i].entry.atom.id.split(",");
@@ -193,7 +196,7 @@ angular.module('Buddycloud', [])
 
         getNodeItems : function(node) {
             var q=$q.defer();
-            console.log('Retrieving node items')
+            console.log('Retrieving node items for ',node)
             //var node='/user/team@topics.buddycloud.org/posts';
             Xmpp.socket.send(
                 'xmpp.buddycloud.retrieve', {
@@ -413,10 +416,9 @@ angular.module('Buddycloud', [])
     $scope.opennode = function(jid) {
         var user=Xmpp.parseJidString(jid);
         //first "node" is paramater name
-        $scope.changenode({node:{
-            node: "/user/" + user.user + "@" + user.domain + "/posts",
-            name: user.user
-        }});
+        console.log("what is this?",{node: "/user/" + user.user + "@" + user.domain + "/posts" });
+        //$scope.changenode({node: "/user/" + user.user + "@" + user.domain + "/posts" });
+        $scope.changenode({node: "/user/" + user.user + "@" + user.domain + "/posts" });
     }
 
 
@@ -486,13 +488,15 @@ angular.module('Buddycloud', [])
         }else{
             for(var t in $scope.data.tree){
                 console.log(t,$scope.data.tree[t]);
-                for(var i=0;i<$scope.data.tree[t].nodes.length;i++){
-                    var node=$scope.data.tree[t].nodes[i];
-                    var ar = node.id.split(",");
-                    var id=ar[ar.length - 1];
-                    if(id==response.id){
-                        $scope.data.tree[t].nodes.splice(i,1);
-                        break;
+                if($scope.data.tree[t].nodes){
+                    for(var i=0;i<$scope.data.tree[t].nodes.length;i++){
+                        var node=$scope.data.tree[t].nodes[i];
+                        var ar = node.id.split(",");
+                        var id=ar[ar.length - 1];
+                        if(id==response.id){
+                            $scope.data.tree[t].nodes.splice(i,1);
+                            break;
+                        }
                     }
                 }
             }

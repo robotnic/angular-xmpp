@@ -1,6 +1,8 @@
 <!-- roster - the online users und friends -->
 <div class="roster" g-show="connected">
 <h4>Online Contacts</h4>
+
+
 <table >
 <tr ng-if="user.presence" ng-repeat="user in roster" ng-click="openchat(user)">
 <td>
@@ -11,6 +13,8 @@
 <p ng-if="user.name">{{user.name}}</p>
 <p>{{user.presence.status}}</p>
 </td></tr></table>
+
+
 <h4>Add JID</h4>
 <form ng-submit="addcontact(newjid)">
 <input ng-model="newjid"/>

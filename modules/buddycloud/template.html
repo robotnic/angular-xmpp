@@ -1,9 +1,9 @@
 
 
 <div ng-show="connected " class="buddycloud">
-    <br/>
-    <br/>
 
+    <div ng-show="!formdata">
+    <div class="streamheader">
     <div ng-if="node!='recent'">
         <button ng-if="!data.subscribed" ng-click="subscribe()" class="btn btn-default">subscribe</button>
         <button ng-if="data.subscribed" ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
@@ -14,7 +14,6 @@
         <button ng-click="removeFriend(node)" class="pull-right btn btn-default">remove Friend</button>
         <br/>
     </div>
-    <br/>
 
 
     <div class="form" ng-show="formdata" style="position:relative;height:1300px">
@@ -23,12 +22,11 @@
 
 
 
-    <div ng-show="!formdata">
-
     <form ng-submit="publish()">
         <textarea ng-model="newtopic" placeholder="What's going on"></textarea>
         <input ng-show="newtopic" type="submit" />
     </form>
+    </div>
 
     <div ng-if="!data.tree">loading...</div>
 

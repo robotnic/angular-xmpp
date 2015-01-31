@@ -1,4 +1,6 @@
-
+body{
+font:13px/17px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 
 .header{
 display:none;
@@ -15,6 +17,21 @@ position:absolute;
 font-size:20px;
 left:0px;
 }
+
+a{
+color:#4183c4
+}
+h4{
+font-size:14px;
+margin-left:4px;
+}
+h4 .open{
+font-size:12px;
+}
+h4 .closed{
+font-size:15px;
+}
+
 
 #tabs{
 position:fixed;
@@ -34,6 +51,10 @@ top:150px;
 bottom:10px;
 left:0px;
 overflow:auto;
+width:280px
+}
+.leftcol table{
+margin-left:10px;
 }
 
 #muc{
@@ -61,8 +82,8 @@ font-weight:bold;
 
 #buddycloud{
 position:absolute;
-top:90px;
-left:170px;
+top:140px;
+left:300px;
 right:240px;
 }
 
