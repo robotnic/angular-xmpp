@@ -47,7 +47,7 @@ z-index:1;
 
 .leftcol{
 position:fixed;
-top:150px;
+top:80px;
 bottom:10px;
 left:0px;
 overflow:auto;
@@ -82,7 +82,7 @@ font-weight:bold;
 
 #buddycloud{
 position:absolute;
-top:140px;
+top:80px;
 left:300px;
 right:240px;
 }

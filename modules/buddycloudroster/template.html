@@ -24,6 +24,6 @@
 <h4 ng-click="hidestreams=!hidestreams"><span ng-if="hidestreams" class="closed">▸ </span><span  ng-if="!hidestreams" class="open">▼ </span>Streams</h4>
 <div ng-if="!hidestreams">
 <div ng-repeat="node in bcdata.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}" >
-{{node.name}}
+{{node.name}} <span ng-show="bcdata.unread[node.node]" class="badge">{{bcdata.unread[node.node]}}</span>
 </div>
 </div>

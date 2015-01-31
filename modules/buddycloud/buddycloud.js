@@ -183,7 +183,9 @@ angular.module('Buddycloud', [])
 
 
     var api={
-        data:{},
+        data:{
+            unread:{}
+        },
         publish:function(node,text,ref){
             publish(node,text,ref);
         },
@@ -466,6 +468,10 @@ angular.module('Buddycloud', [])
 
     socket.on('xmpp.buddycloud.push.item', function(data) {
         console.log("==================", data.node);
+        if(!$scope.data.unread[data.node])$scope.data.unread[data.node]=0;
+        $scope.data.unread[data.node]++;
+        console.log($scope.data.unread);
+
         if (data.node == $scope.node || $scope.node == 'recent') {
             var ar = data.id.split(",");
             var id = ar[ar.length - 1];
