@@ -29,16 +29,27 @@ Roster
                 message.receivetime=(new Date()).getTime();
             }
             message.from.jid=message.from.user+"@"+message.from.domain;
-            message.unread=true;
-            api.messages.push(message);
+            console.log("message",message);
+            if(message.state){
+                if(message.state=="composing"){
+                    api.notifications.composing[message.from.jid]=true;
+                }
+                if(message.state=="paused"){
+                    api.notifications.composing[message.from.jid]=false;
+                }
+            }
 
-            if(!message.delay){
+            if(message.content){
+                message.unread=true;
+                api.messages.push(message);
+
                 api.notifications.unreadmessages++;
                 api.notifications.messages[message.from.jid]=message;
                 if(!api.notifications.unread[message.from.jid]){
                     api.notifications.unread[message.from.jid]=0;
                 }
                 api.notifications.unread[message.from.jid]++;
+                api.notifications.composing[message.from.jid]=false;
             }
             q.notify(message);
         });
@@ -50,7 +61,8 @@ Roster
         notifications: {
             unreadmessages:0,
             unread:{},
-            messages:{}
+            messages:{},
+            composing:{}
         },
         watch:function(){
             return watch();
@@ -89,6 +101,7 @@ Roster
         $scope.username = Xmpp.user;
         $scope.chatwindows = [];
         $scope.messages = XmppMessage.messages;
+        $scope.notifications = XmppMessage.notifications;
         XmppMessage.watch().then(
             function(end){},
             function(error){console.log(error)},

@@ -170,6 +170,9 @@ angular.module('XmppCore', [])
             api.socket.send( 'xmpp.presence.unsubscribe', { "to": jid })
             api.socket.send( 'xmpp.presence.unsubscribed', { "to": jid })
         },
+        isContact:function(node){
+            return true;
+        },
         getRoster:function(){
             var q=$q.defer();
             //ask for roster

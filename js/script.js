@@ -2,7 +2,7 @@ var APP = null;
 
 
 
-angular.module('MyApp', ['mgcrea.ngStrap','XmppUI','btford.markdown'])
+angular.module('MyApp', ['mgcrea.ngStrap','XmppUI','btford.markdown','tagged.directives.infiniteScroll'])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
         function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
             APP=$scope;
@@ -43,10 +43,11 @@ angular.module('MyApp', ['mgcrea.ngStrap','XmppUI','btford.markdown'])
             $scope.tabs.activeTab = 0;
 
             $scope.find=function(text){
-    
+                $scope.search=text; 
                 console.log(text);
-                //var url="https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text;
-                var url="https://demo.buddycloud.org/api/search?type=metadata&max=25&q="+text;
+                /*
+                var url="https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text;
+                //var url="https://demo.buddycloud.org/api/search?type=metadata&max=25&q="+text;
                 $http.get(url).then(function(data){
                         $scope.searchresult=data;
                         $scope.tabs.activeTab = 2;
@@ -55,6 +56,7 @@ angular.module('MyApp', ['mgcrea.ngStrap','XmppUI','btford.markdown'])
                         console.log(error);
                     }
                 );
+                */
             }
 
 

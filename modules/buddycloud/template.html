@@ -1,17 +1,17 @@
 
 
-<div ng-show="connected " class="buddycloud">
+<div ng-show="connected " class="buddycloud" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled" tagged-infinite-scroll-distance="00">
 
-    <div ng-show="!formdata">
+    <div g-show="!formdata">
     <div class="streamheader">
     <div ng-if="node!='recent'">
-        <button ng-if="!data.subscribed" ng-click="subscribe()" class="btn btn-default">subscribe</button>
-        <button ng-if="data.subscribed" ng-click="unsubscribe()" class="btn btn-default">unsubscribe</button>
-        <button ng-click="getConfig()" class="btn btn-default">
+        <button ng-if="!data.subscribed" ng-click="subscribe()" class="btn btn-link">subscribe</button>
+        <button ng-if="data.subscribed" ng-click="unsubscribe()" class="btn btn-link">unsubscribe</button>
+        <button ng-click="getConfig()" class="btn btn-link">
             <span class="glyphicon glyphicon-cog"></span>
         </button>
-        <button ng-click="addFriend(node)" class="pull-right btn btn-default">add Friend</button>
-        <button ng-click="removeFriend(node)" class="pull-right btn btn-default">remove Friend</button>
+        <button ng-if="isContact(node)" ng-click="addFriend(node)" class="pull-right btn btn-link">add Contact</button>
+        <button ng-if="!isContact(node)" ng-click="removeFriend(node)" class="pull-right btn btn-link">remove Contact</button>
         <br/>
     </div>
 

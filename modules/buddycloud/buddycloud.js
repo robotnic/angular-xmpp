@@ -10,6 +10,7 @@ angular.module('Buddycloud', [])
     return {
         'restrict': 'E',
         'scope': {
+            'search': '@',
             'node': '@',
             'jid': '=',
             'changenode': '&changenode'
@@ -20,16 +21,25 @@ angular.module('Buddycloud', [])
         'link': function(scope, element, attrs) {
             console.log("link", attrs.node);
             scope.node = attrs.node;
+            scope.$watch("search", function() {
+                console.log("searach");
+                scope.find(scope.search);
+            });
             scope.$watch("node", function() {
                 console.log("node changed",scope.node);
                 scope.data.tree=null;
+                scope.data.result=[];
                 scope.formdata=null;
+                scope.start=0;
+                scope.loadItems();
+                /*
                 if (scope.node == "recent") {
                     scope.getRecentItems();
                 } else {
                     console.log(scope.node);
                     scope.getNodeItems(scope.node);
                 }
+                */
             });
         }
     };
@@ -60,7 +70,56 @@ angular.module('Buddycloud', [])
             return q.pomise;
     }
 
+    function search(text){
+        console.log("====",text);
+        var stanza={
+            form: [
+                { var: 'content', value: text }
+            ]
+        }
+        Xmpp.socket.send(
+            'xmpp.buddycloud.search.do', stanza,
+            function(error, data) {
+                if (error) {
+                    console.error(stanza, error);
+                    //$scope.create(stanza.node);
+                } else {
+                    console.log("search result:",data);
+                }
+            }
+        );
 
+    }
+
+
+    function rate(node,ref){
+        var ar = ref.split(",");
+        var id = ar[ar.length - 1];
+        var stanza={
+            node:node,
+            "content": {
+                activity: {
+                    target: {
+                        id:id
+                    },
+                    verb: 'rated'
+
+                }
+            }
+        }
+        Xmpp.socket.send(
+            'xmpp.buddycloud.publish', stanza,
+            function(error, data) {
+                if (error) {
+                    console.error(stanza, error);
+                    //$scope.create(stanza.node);
+                } else {
+                    console.log("Message rated.");
+                }
+            }
+        );
+
+    }
 
     //Buddycloud publish
     function publish(node,text,ref) {
@@ -93,7 +152,8 @@ angular.module('Buddycloud', [])
                     console.error(stanza.node, error);
                     //$scope.create(stanza.node);
                 } else {
-                    console.log("Message sent.");
+                    console.log("Message sent.",data);
+        //            rate(node,data.id);
                 }
             }
         );
@@ -137,7 +197,16 @@ angular.module('Buddycloud', [])
                 var item = tree[ref];
                 if (item) {
                     if (!item.nodes) item.nodes = [];
-                    item.nodes.push(data[i]);
+                    var newitem=true;
+                    for(var j=0;j<item.nodes.length;j++){
+                        if(data[i].id==item.nodes[j].id){
+                            var newitem=false;
+                            break;
+                        }
+                    }
+                    if(newitem){
+                        item.nodes.push(data[i]);
+                    }
                 }
             } else {
                 tree[id] = data[i];
@@ -195,45 +264,76 @@ angular.module('Buddycloud', [])
         maketree:function(data){
             return maketree(data);
         },
-
-        getNodeItems : function(node) {
+        search:function(text){
+            return search(text);
+        },
+        getNodeItems : function(node,start,max) {
             var q=$q.defer();
+            var append=false;
             console.log('Retrieving node items for ',node)
+            if(start==0)api.data.rsm=null;
+            var rsm={max:max};
+            if(api.data.rsm){
+                rsm.after=api.data.rsm.last;
+                append=true;  //concat result
+            }
+ 
             //var node='/user/team@topics.buddycloud.org/posts';
             Xmpp.socket.send(
                 'xmpp.buddycloud.retrieve', {
                     node: node,
-                    rsm: {
-                        max: 55
-                    }
+                    rsm: rsm
                 },
-                function(error, data) {
+                function(error, data,rsm) {
                     if(error){
                         q.reject(error);
                     }else{
-                        api.data.tree = maketree(data);
+                        if(append){
+                            api.data.result=api.data.result.concat(data);
+                        }else{
+                            api.data.result=data;
+                        }
+ 
+                        console.log("++++++++++",rsm);
+                        api.data.tree = maketree(api.data.result);
                         isSubscribed(node);
+                        api.data.unread[node]=0;
                         q.resolve(data);
+                        api.data.rsm=rsm;
                     }
                 }
             )
             return q.promise;
         },
-        getRecentItems : function() {
+        getRecentItems : function(start,max) {
             var q=$q.defer();
+            var append=false;  //start new
             console.log('Retrieving recent items')
+            if(start==0)api.data.rsm=null;
+            var rsm={max:max};
+            if(api.data.rsm){
+                rsm.after=api.data.rsm.last;
+                append=true;  //concat result
+            }
+            console.log(">>>",rsm);
+        
             Xmpp.socket.send(
                 'xmpp.buddycloud.items.recent', {
-                    rsm: {
-                        max: 55
-                    }
+                    rsm: rsm
                 },
-                function(error, data) {
+                function(error, data,rsm) {
                     if(error){
                         q.reject(error);
                     }else{
-                        api.data.tree = maketree(data);
+                        if(append){
+                            api.data.result=api.data.result.concat(data);
+                        }else{
+                            api.data.result=data;
+                        }
+                        console.log("++++++++++",rsm);
+                        api.data.tree = maketree(api.data.result);
                         q.resolve(data);
+                        api.data.rsm=rsm;
                     }
                 }
             )
@@ -386,6 +486,8 @@ angular.module('Buddycloud', [])
 //todo: make factory, controll is tool long
 
 .controller('buddycloudController', function($scope, Xmpp,buddycloudFactory) {
+    $scope.max=5;
+    $scope.start=0;
     BC = $scope;
     var socket = Xmpp.socket;
     $scope.newitems = {};
@@ -443,13 +545,25 @@ angular.module('Buddycloud', [])
 
     //Buddycloud timeline
 
+    $scope.loadItems=function(){
+            if ($scope.node == "recent") {
+                $scope.getRecentItems();
+            } else {
+                console.log($scope.node);
+                $scope.getNodeItems($scope.node);
+            }
+    };
+
     $scope.getNodeItems = function(node) {
-        buddycloudFactory.getNodeItems(node).then(function(data){ })
+        buddycloudFactory.getNodeItems(node,$scope.start,$scope.max).then(function(data){ })
+        $scope.start+=$scope.max;
     }
 
 
     $scope.getRecentItems = function() {
-        buddycloudFactory.getRecentItems().then(function(data){ });
+        console.log($scope.start);
+        buddycloudFactory.getRecentItems($scope.start,$scope.max).then(function(data){ });
+        $scope.start+=$scope.max;
     }
 
 
@@ -457,6 +571,10 @@ angular.module('Buddycloud', [])
 
     $scope.maketree = function(data) {
         return buddycloudFactory.maketree(data);
+    }
+
+    $scope.find = function(data) {
+        return buddycloudFactory.search(data);
     }
 
 
@@ -485,8 +603,8 @@ angular.module('Buddycloud', [])
             } else {
                 $scope.data.tree[id] = data;
             }
-            $scope.$apply();
         }
+        $scope.$apply();
     });
     socket.on('xmpp.buddycloud.push.retract', function(response) {
         if($scope.data.tree[response.id]){
@@ -549,6 +667,9 @@ angular.module('Buddycloud', [])
     }
 
 
+    $scope.isContact=function(node){
+        return Xmpp.isContact(node);
+    }
 
     //Buddycloud publish
     $scope.publish = function(ref) {
@@ -563,7 +684,10 @@ angular.module('Buddycloud', [])
         }
         buddycloudFactory.publish(node,text,ref);
     }
-
+    $scope.getMore=function(){
+        console.log("getmore");
+        $scope.loadItems();
+    }
 
 
 })

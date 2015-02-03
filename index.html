@@ -47,6 +47,7 @@
 <script src="modules/xmppform/xmppform.js"></script>
 <script src="modules/xmpp/xmpp.js"></script>
 <script src="modules/buddycloudroster/buddycloudroster.js"></script>
+<script src="scripts/taggedInfiniteScroll.js"></script>
 <script src="js/script.js"></script>
 </head>
 <body ng-controller="pagecontroller">
@@ -109,7 +110,7 @@ connecting ...
 <!-- buddycloud timeline -->
 <div id="buddycloud" >
 {{selectednode.node}}
-<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid"></buddycloud>
+<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid" search="{{search}}"></buddycloud>{{search}}
 </div>
 </div>
 
