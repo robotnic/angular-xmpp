@@ -1,0 +1,8 @@
+{
+  "name": "ng-boilerplate",
+  "version": "0.3.2",
+  "dependencies": {
+    "angular-strap": "~2.1.6",
+    "angular-markdown-directive": "~0.3.1"
+  }
+}
