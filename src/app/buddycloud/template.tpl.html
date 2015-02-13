@@ -32,9 +32,10 @@
 <!--
     <div ng-repeat="item in data.tree |toArray|orderBy:'-entry.atom.published' " class="item">
 -->
-    <div ng-repeat="item in data.tree |toArray " class="item">
-        <span class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
-        <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+    <div ng-repeat="item in data.tree |toArray|orderBy:'entry.atom.published':true " class="item">
+        {{entry.atom.published}}
+        <span ng-if="item.rights.remove" class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
+        <span ng-if="item.rights.publish" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
         <img ng-src="assets/icons/avatars/{{item.entry.atom.author.image}}.png" />
         <div class="person">
             <span class="name">
@@ -54,11 +55,10 @@
             <div ng-show="!editmode" btf-markdown="item.entry.atom.content.content"></div>
 
         </div>
-        <br/>
-        <div ng-repeat="subitem in item.nodes track by subitem.id|toArray|orderBy:'entry.atom.published'" class="subitem">
-
-            <span class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
-            <span class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+        <br/> 
+        <div ng-repeat="subitem in item.nodes  |toArray|orderBy:'entry.atom.published'" class="subitem">
+            <span ng-if="subitem.rights.remove" class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
+            <span ng-if="subitem.rights.publish" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
             <img ng-src="assets/icons/avatars/{{subitem.entry.atom.author.image}}.png" />
             <div class="person">
                 <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
@@ -69,7 +69,7 @@
                 <like node="{{subitem.id}}"></like>
             </div>
         </div>
-        <form ng-if="data.subscribed" ng-submit="publish(item.entry.atom.id)" class="subitem">
+        <form ng-if="item.rights.publish" ng-submit="publish(item.entry.atom.id)" class="subitem">
             <img ng-src="assets/icons/avatars/{{jid.local}}.png" />
             <div class="person">
                 <input ng-model="newitems[item.entry.atom.id]" />

@@ -1,3 +1,4 @@
+
 angular.module('XmppLogin', ['XmppCore'])
 
 /*

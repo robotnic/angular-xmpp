@@ -1,4 +1,5 @@
 var BC = null;
+var BCAPI = null;
 var LIKE = null;
 
 
@@ -22,7 +23,6 @@ angular.module('Buddycloud', [])
             console.log("link", attrs.node);
             scope.node = attrs.node;
             scope.$watch("search", function() {
-                console.log("searach");
                 if(scope.search){
                     scope.find(scope.search);
                 }
@@ -33,6 +33,7 @@ angular.module('Buddycloud', [])
                 scope.data.result=[];
                 scope.formdata=null;
                 scope.start=0;
+                scope.loadFinished=false;
                 scope.loadItems();
                 /*
                 if (scope.node == "recent") {
@@ -68,6 +69,10 @@ angular.module('Buddycloud', [])
                 */
                 q.notify();
 
+            });
+            Xmpp.socket.on("xmpp.pubsub.push.affiliation",function(data){
+                console.log("affiliation changed");
+                q.notify();
             });
             return q.promise;
     }
@@ -184,9 +189,32 @@ angular.module('Buddycloud', [])
 
     }
 
+    function calcRights(item){
+        var write=false;
+        var remove=false;
+        var affiliation=api.data.affiliations[data[i].node].affiliation;
+        console.log("aff",affiliation);
+        write=false;
+        if(affiliation==="publisher" || affiliation==="owner" ||  affiliation==="moderator"){
+            write=true;
+        }
+        remove=false;
+        if(affiliation==="owner" ||  affiliation==="moderator"){
+            remove=true;
+            if(affiliation==="publisher"){
+                if(data[i].entry.atom.author.name==Xmpp.jid){
+                    remove=true;
+                }
+            }
+        }
+        data[i].rights={
+            publish:write,
+            remove:remove
+        }
+
+    }
 
     function maketree (data) {
-        console.log("maketree", data);
         var tree = {};
         if (!data){
              return tree;
@@ -196,6 +224,8 @@ angular.module('Buddycloud', [])
             if(!data[i].entry.atom.author.name){
                 data[i].entry.atom.author.name="franz@.fehlerteufelcom";
             }
+            console.log("maketree",data[i].node,api.data.affiliations[data[i].node].affiliation);
+            calcRights(data[i]);
             data[i].entry.atom.author.image = data[i].entry.atom.author.name.split("@")[0];
             data[i].nodeowner = Xmpp.parseNodeString(data[i].node).jid;
             var ar = data[i].entry.atom.id.split(",");
@@ -264,7 +294,8 @@ angular.module('Buddycloud', [])
 
     var api={
         data:{
-            unread:{}
+            unread:{},
+            affiliations:{}
         },
         publish:function(node,text,ref){
             publish(node,text,ref);
@@ -424,6 +455,27 @@ angular.module('Buddycloud', [])
             );
             return q.promise;
         },
+        getAffiliations : function() {
+            var q=$q.defer();
+             Xmpp.socket.send(
+                'xmpp.buddycloud.affiliations', {},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        console.log("affiliations",data);
+                        for(var i=0;i<data.length;i++){
+                            console.log("AFF",data[i]);
+                            api.data.affiliations[data[i].node]=data[i];
+                        }
+                        q.resolve(data);
+    
+                    }
+                }
+            );
+            return q.promise;
+        },
         register : function() {
             var q=$q.defer();
              Xmpp.socket.send(
@@ -484,6 +536,7 @@ angular.module('Buddycloud', [])
             return watch();
         }
     };
+    BCAPI=api;
     return api;
 }])
 
@@ -498,6 +551,11 @@ angular.module('Buddycloud', [])
     $scope.newitems = {};
     $scope.data=buddycloudFactory.data;
     buddycloudFactory.watch();
+    buddycloudFactory.getAffiliations();
+    Xmpp.socket.on('xmpp.connection', function(data) {
+        buddycloudFactory.watch();
+    });
+
 
     console.log("+++buddycloud controller+++");
     $scope.connected = true;
@@ -560,7 +618,11 @@ angular.module('Buddycloud', [])
     };
 
     $scope.getNodeItems = function(node) {
-        buddycloudFactory.getNodeItems(node,$scope.start,$scope.max).then(function(data){ });
+        buddycloudFactory.getNodeItems(node,$scope.start,$scope.max).then(function(data){ 
+            if(data.length===0){
+                $scope.loadFinished=true;
+            }
+        });
         $scope.start+=$scope.max;
         if(!$scope.initialized){
             //$scope.loadItems();
@@ -570,7 +632,12 @@ angular.module('Buddycloud', [])
 
     $scope.getRecentItems = function() {
         console.log($scope.start);
-        buddycloudFactory.getRecentItems($scope.start,$scope.max).then(function(data){ });
+        buddycloudFactory.getRecentItems($scope.start,$scope.max).then(function(data){ 
+            console.log(">>>>>>>>>>>>>>>>>",data.length);
+            if(data.length===0){
+                $scope.loadFinished=true;
+            }
+        });
         $scope.start+=$scope.max;
         if(!$scope.initialized){
             //$scope.loadItems();
@@ -706,7 +773,9 @@ angular.module('Buddycloud', [])
     $scope.getMore=function(){
         $scope.initialized=true;
         console.log("getmore");
-        $scope.loadItems();
+        if(!$scope.loadFinished){
+            $scope.loadItems();
+        }
     };
 
 

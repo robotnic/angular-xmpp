@@ -1,7 +1,7 @@
 {
-  "author": "Josh David Miller",
-  "name": "ngbp",
-  "version": "0.3.2",
+  "author": "Bernhard Zwischenbrugger",
+  "name": "angular-xmpp",
+  "version": "0.0.1",
   "homepage": "https://github.com/ngbp/ngbp",
   "licenses": {
     "type": "MIT",
