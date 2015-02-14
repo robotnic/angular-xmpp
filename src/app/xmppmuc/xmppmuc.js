@@ -39,6 +39,9 @@ MUC
             console.log("start watching muc");
             //notify is used to apply changes (render html);
             var q = $q.defer();
+            Xmpp.socket.on('xmpp.muc.subject', function(message) {
+                api.subject=message;
+            });
             Xmpp.socket.on('xmpp.muc.message', function(message) {
                 if (!message.delay) {
                     message.receivetime = (new Date()).getTime();
@@ -88,6 +91,7 @@ MUC
                     },
                     function(error, data) {
                         console.log("muc answer", error, data);
+                        api.getSubject(api.room);
                     }
                 );
             },
@@ -226,7 +230,6 @@ MUC
 
         $scope.join = function(nick) {
             console.log("join", nick);
-            MucFactory.getSubject($scope.node);
             MucFactory.join($scope.node, nick);
             $scope.joined = true;
             MucFactory.watch().then(
