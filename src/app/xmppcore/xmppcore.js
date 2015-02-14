@@ -96,6 +96,7 @@ Listen to incoming json stanzas
         * @method login
         */
         login:function(username,password,register,autologin){
+                var q=$q.defer();
                 var jid=null;
                 //api.user = username;  //--------for avatar image
                 if(username.indexOf("@")==-1){
@@ -111,13 +112,40 @@ Listen to incoming json stanzas
                     },
                     function(error, data) {
                         console.log(error, data);
+                        if(error){
+                            q.reject(error);
+                        }else{
+                            q.resolve(data);
+                        }
                     }
                 );
                 if(autologin){
                     localStorage.setItem("jid",jid);
                     localStorage.setItem("password",password);
                 }
+                return q.promise;
         },
+        anonymouslogin:function(){
+                var q=$q.defer();
+                var jid='laos.buddycloud.com';
+                api.socket.send('xmpp.login.anonymous', {
+                        jid: jid,
+                    },
+                    function(error, data) {
+                        console.log(error, data);
+                        if(error){
+                            q.reject(error);
+                        }else{
+                            q.resolve(data);
+                        }
+                    }
+                );
+                return q.promise;
+        },
+
+
+
+
         /**
         * @method logout
         */
