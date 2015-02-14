@@ -1,6 +1,13 @@
+// actions:
+// Actions for items: reply to item, delete, update, block user, like, make a user a moderator, change a user from a being able to post to being read-only
+
+
+
 var BC = null;
 var BCAPI = null;
 var LIKE = null;
+
+
 
 
 angular.module('Buddycloud', [])
@@ -35,14 +42,6 @@ angular.module('Buddycloud', [])
                 scope.start=0;
                 scope.loadFinished=false;
                 scope.loadItems();
-                /*
-                if (scope.node == "recent") {
-                    scope.getRecentItems();
-                } else {
-                    console.log(scope.node);
-                    scope.getNodeItems(scope.node);
-                }
-                */
             });
         }
     };
@@ -55,26 +54,81 @@ angular.module('Buddycloud', [])
 
 
     function watch(){
-            var q=$q.defer();
-            Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
-                console.log("sub",data);
-                addToNodeList(data.node);
-                /*
-                var name=Xmpp.parseNodeString(data.node).name;
-                console.log(name);
-                api.data.nodes.push({
-                    node:data.node,
-                    name:name
-                });
-                */
-                q.notify();
+        var q=$q.defer();
 
-            });
-            Xmpp.socket.on("xmpp.pubsub.push.affiliation",function(data){
-                console.log("affiliation changed");
+        Xmpp.socket.on('xmpp.buddycloud.push.item', function(data) {
+            console.log("==================", data.node);
+            if(!api.data.unread[data.node]){
+                api.data.unread[data.node]=0;
+            }
+            calcRights(data);
+            api.data.unread[data.node]++;
+            console.log(api.data.unread);
+
+            if (data.node == api.data.currentnode || api.data.currentnode  == 'recent') {
+                var ar = data.id.split(",");
+                var id = ar[ar.length - 1];
+                console.log("id", id);
+                data.entry.atom.author.image = data.entry.atom.author.name.split("@")[0];
+                if (data.entry["in-reply-to"]) {
+                    var ref = data.entry["in-reply-to"].ref;
+                    console.log("ref", ref);
+                    if (!api.data.tree[ref].nodes){
+                         api.data.tree[ref].nodes = [];
+                    }
+                    api.data.tree[ref].nodes.push(data);
+                } else {
+                    api.data.tree[id] = data;
+                }
+            }
+            console.log("notify");
+            q.notify();
+        });
+        Xmpp.socket.on('xmpp.buddycloud.push.retract', function(response) {
+            if(api.data.tree[response.id]){
+                delete api.data.tree[response.id];
+            }else{
+                for(var t in api.data.tree){
+                    console.log(t,api.data.tree[t]);
+                    if(api.data.tree[t].nodes){
+                        for(var i=0;i<api.data.tree[t].nodes.length;i++){
+                            var node=api.data.tree[t].nodes[i];
+                            var ar = node.id.split(",");
+                            var id=ar[ar.length - 1];
+                            if(id==response.id){
+                                api.data.tree[t].nodes.splice(i,1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            q.notify();
+        });
+
+
+
+        Xmpp.socket.on('xmpp.buddycloud.push.subscription', function(data) {
+            console.log("sub",data);
+            addToNodeList(data.node);
+            api.getAffiliations().then(function(){
+                api.maketree(api.data.result);
+                api.data.rights=isSubscribed(data.node);
                 q.notify();
+            },function(error){
+                console.log(error);
             });
-            return q.promise;
+
+        });
+        Xmpp.socket.on("xmpp.pubsub.push.affiliation",function(data){
+            console.log("affiliation changed");
+            q.notify();
+        });
+        Xmpp.socket.on("xmpp.buddycloud.push.affiliation",function(data){
+            console.log("affiliation changed2");
+            q.notify();
+        });
+        return q.promise;
     }
 
     function search(text){
@@ -192,24 +246,22 @@ angular.module('Buddycloud', [])
     function calcRights(item){
         var write=false;
         var remove=false;
-        var affiliation=api.data.affiliations[data[i].node].affiliation;
-        console.log("aff",affiliation);
-        write=false;
-        if(affiliation==="publisher" || affiliation==="owner" ||  affiliation==="moderator"){
-            write=true;
-        }
-        remove=false;
-        if(affiliation==="owner" ||  affiliation==="moderator"){
-            remove=true;
-            if(affiliation==="publisher"){
-                if(data[i].entry.atom.author.name==Xmpp.jid){
-                    remove=true;
-                }
+        if(api.data.affiliations[item.node]){
+            var affiliation=api.data.affiliations[item.node].affiliation;
+            if(affiliation==="publisher" || affiliation==="owner" ||  affiliation==="moderator"){
+                write=true;
+            }
+            if(affiliation==="owner" ||  affiliation==="moderator"){
+                remove=true;
             }
         }
-        data[i].rights={
+        if(item.entry.atom.author.name==Xmpp.jid){
+            remove=true;
+        }
+        item.rights={
             publish:write,
-            remove:remove
+            remove:remove,
+            update:remove
         }
 
     }
@@ -224,7 +276,7 @@ angular.module('Buddycloud', [])
             if(!data[i].entry.atom.author.name){
                 data[i].entry.atom.author.name="franz@.fehlerteufelcom";
             }
-            console.log("maketree",data[i].node,api.data.affiliations[data[i].node].affiliation);
+            //console.log("maketree",data[i].node,api.data.affiliations[data[i].node].affiliation);
             calcRights(data[i]);
             data[i].entry.atom.author.image = data[i].entry.atom.author.name.split("@")[0];
             data[i].nodeowner = Xmpp.parseNodeString(data[i].node).jid;
@@ -281,14 +333,34 @@ angular.module('Buddycloud', [])
 
     function isSubscribed(node){
         console.log("----------------",node);
-        api.data.subscribed=false;
+        var subscribed=false;
+        var publish=false;
+        var config=false;
+        if(api.data.affiliations[node]){
+            var affiliation=api.data.affiliations[node].affiliation
+            console.log("aFF",affiliation);
+
+            if(affiliation==="publisher" || affiliation==="owner" ||  affiliation==="moderator"){
+                publish=true;
+            }
+            if(affiliation==="owner" ||  affiliation==="moderator"){
+                config=true;
+            }
+
+        }
         for(var i=0;i<api.data.nodes.length;i++){
             if(api.data.nodes[i].node==node){
-                api.data.subscribed=true;
-                return true;
+                subscribed=true;
+                break;
             }
         }
-        return false;
+        var rights={
+            subscribed:subscribed,
+            publish:publish,
+            config:config,
+
+        }
+        return rights;
     }
 
 
@@ -340,10 +412,11 @@ angular.module('Buddycloud', [])
  
                         console.log("++++++++++",rsm);
                         api.data.tree = maketree(api.data.result);
-                        isSubscribed(node);
+                        api.data.rights=isSubscribed(node);
                         api.data.unread[node]=0;
                         q.resolve(data);
                         api.data.rsm=rsm;
+                        api.data.currentnode=node
                     }
                 }
             );
@@ -380,6 +453,7 @@ angular.module('Buddycloud', [])
                         api.data.tree = maketree(api.data.result);
                         q.resolve(data);
                         api.data.rsm=rsm;
+                        api.data.currentnode="recent";
                     }
                 }
             );
@@ -464,9 +538,8 @@ angular.module('Buddycloud', [])
                         console.log(error);
                         q.reject(error);
                     }else{
-                        console.log("affiliations",data);
+                        api.data.affiliations={};
                         for(var i=0;i<data.length;i++){
-                            console.log("AFF",data[i]);
                             api.data.affiliations[data[i].node]=data[i];
                         }
                         q.resolve(data);
@@ -475,6 +548,9 @@ angular.module('Buddycloud', [])
                 }
             );
             return q.promise;
+        },
+        presence:function(){
+            Xmpp.socket.send('xmpp.buddycloud.presence', {});
         },
         register : function() {
             var q=$q.defer();
@@ -501,7 +577,7 @@ angular.module('Buddycloud', [])
                         q.reject(error);
                     }else{
                         addToNodeList(node);
-                        isSubscribed(node);
+                        api.data.rights=isSubscribed(node);
                         q.resolve(data);
                     }
                 }
@@ -523,8 +599,15 @@ angular.module('Buddycloud', [])
                                 break;
                             }
                         }
-                        isSubscribed(node);
-                        q.resolve(data);
+                        api.getAffiliations().then(function(){
+                            console.log("got affiliations");
+                            api.maketree(api.data.result);
+                            api.data.rights=isSubscribed(node);
+                            q.resolve();
+                        },function(error){
+                            console.log(error);
+                        });
+
                     }
                 }
             );
@@ -550,17 +633,26 @@ angular.module('Buddycloud', [])
     var socket = Xmpp.socket;
     $scope.newitems = {};
     $scope.data=buddycloudFactory.data;
-    buddycloudFactory.watch();
+
+    //init
+    buddycloudFactory.watch().then(
+        function(){console.warn("should not happen")},
+        function(error){},
+        function(notification){console.log("updated");}  //render tick
+    );
     buddycloudFactory.getAffiliations();
     Xmpp.socket.on('xmpp.connection', function(data) {
         buddycloudFactory.watch();
     });
 
 
+
+
     console.log("+++buddycloud controller+++");
     $scope.connected = true;
     //presence
-    socket.send('xmpp.buddycloud.presence', {});
+    //socket.send('xmpp.buddycloud.presence', {});
+    buddycloudFactory.presence();
 
     $scope.getConfig = function() {
         $scope.formerror = "";
@@ -583,7 +675,7 @@ angular.module('Buddycloud', [])
     $scope.opennode = function(jid) {
         var user=Xmpp.parseJidString(jid);
         //first "node" is paramater name
-        console.log("what is this?",{node: "/user/" + user.user + "@" + user.domain + "/posts" });
+//        console.log("what is this?",{node: "/user/" + user.user + "@" + user.domain + "/posts" });
         //$scope.changenode({node: "/user/" + user.user + "@" + user.domain + "/posts" });
         $scope.changenode({node: "/user/" + user.user + "@" + user.domain + "/posts" });
     };
@@ -604,16 +696,15 @@ angular.module('Buddycloud', [])
     };
 
 
-
-
     //Buddycloud timeline
-
     $scope.loadItems=function(){
-            if ($scope.node == "recent") {
-                $scope.getRecentItems();
-            } else {
-                console.log($scope.node);
-                $scope.getNodeItems($scope.node);
+            if (!$scope.loadFinished){
+                if ($scope.node == "recent") {
+                    $scope.getRecentItems();
+                } else {
+                    console.log($scope.node);
+                    $scope.getNodeItems($scope.node);
+                }
             }
     };
 
@@ -645,8 +736,6 @@ angular.module('Buddycloud', [])
     };
 
 
-
-
     $scope.maketree = function(data) {
         return buddycloudFactory.maketree(data);
     };
@@ -660,58 +749,6 @@ angular.module('Buddycloud', [])
 
 
 
-
-
-
-    //buddycloud message listener. todo: move to factory
-
-    socket.on('xmpp.buddycloud.push.item', function(data) {
-        console.log("==================", data.node);
-        if(!$scope.data.unread[data.node]){
-            $scope.data.unread[data.node]=0;
-        }
-        $scope.data.unread[data.node]++;
-        console.log($scope.data.unread);
-
-        if (data.node == $scope.node || $scope.node == 'recent') {
-            var ar = data.id.split(",");
-            var id = ar[ar.length - 1];
-            console.log("id", id);
-            data.entry.atom.author.image = data.entry.atom.author.name.split("@")[0];
-            if (data.entry["in-reply-to"]) {
-                var ref = data.entry["in-reply-to"].ref;
-                console.log("ref", ref);
-                if (!$scope.data.tree[ref].nodes){
-                     $scope.data.tree[ref].nodes = [];
-                }
-                $scope.data.tree[ref].nodes.push(data);
-            } else {
-                $scope.data.tree[id] = data;
-            }
-        }
-        $scope.$apply();
-    });
-    socket.on('xmpp.buddycloud.push.retract', function(response) {
-        if($scope.data.tree[response.id]){
-            delete $scope.data.tree[response.id];
-        }else{
-            for(var t in $scope.data.tree){
-                console.log(t,$scope.data.tree[t]);
-                if($scope.data.tree[t].nodes){
-                    for(var i=0;i<$scope.data.tree[t].nodes.length;i++){
-                        var node=$scope.data.tree[t].nodes[i];
-                        var ar = node.id.split(",");
-                        var id=ar[ar.length - 1];
-                        if(id==response.id){
-                            $scope.data.tree[t].nodes.splice(i,1);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        $scope.$apply();
-    });
 
     //subscribe to node
 

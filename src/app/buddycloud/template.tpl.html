@@ -5,9 +5,9 @@
     <div g-show="!formdata">
     <div class="streamheader">
     <div ng-if="node!='recent'">
-        <button ng-if="!data.subscribed" ng-click="subscribe()" class="btn btn-link">subscribe</button>
-        <button ng-if="data.subscribed" ng-click="unsubscribe()" class="btn btn-link">unsubscribe</button>
-        <button ng-click="getConfig()" class="btn btn-link">
+        <button ng-if="!data.rights.subscribed" ng-click="subscribe()" class="btn btn-link">subscribe</button>
+        <button ng-if="data.rights.subscribed" ng-click="unsubscribe()" class="btn btn-link">unsubscribe</button>
+        <button ng-if="data.rights.config" ng-click="getConfig()" class="btn btn-link">
             <span class="glyphicon glyphicon-cog"></span>
         </button>
         <button ng-if="isContact(node)" ng-click="addFriend(node)" class="pull-right btn btn-link">add Contact</button>
@@ -20,9 +20,7 @@
             <xmppform formdata="formdata" onclose="formdata=null" onsave="setConfig"></xmppform>
     </div>
 
-
-
-    <form ng-submit="publish()">
+    <form ng-show="data.rights.publish || data.currentnode=='recent'" ng-submit="publish()">
         <textarea ng-model="newtopic" placeholder="What's going on"></textarea>
         <input ng-show="newtopic" type="submit" />
     </form>
@@ -35,7 +33,7 @@
     <div ng-repeat="item in data.tree |toArray|orderBy:'entry.atom.published':true " class="item">
         {{entry.atom.published}}
         <span ng-if="item.rights.remove" class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
-        <span ng-if="item.rights.publish" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+        <span ng-if="item.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
         <img ng-src="assets/icons/avatars/{{item.entry.atom.author.image}}.png" />
         <div class="person">
             <span class="name">
@@ -48,7 +46,7 @@
 
         </div>
         <div class="content">
-            <form ng-show="editmode && data.subscribed" ng-submit="save()">
+            <form ng-show="editmode && data.rights.subscribed" ng-submit="save()">
                 <textarea ng-model="item.entry.atom.content.content"></textarea>
                 <input type="submit" />
             </form>
@@ -58,7 +56,7 @@
         <br/> 
         <div ng-repeat="subitem in item.nodes  |toArray|orderBy:'entry.atom.published'" class="subitem">
             <span ng-if="subitem.rights.remove" class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
-            <span ng-if="subitem.rights.publish" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+            <span ng-if="subitem.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
             <img ng-src="assets/icons/avatars/{{subitem.entry.atom.author.image}}.png" />
             <div class="person">
                 <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
