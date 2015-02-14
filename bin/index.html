@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+<meta charset="utf-8"/>
+<!--
+<script src="scripts/primus.js" type="text/javascript"></script>
+<script src="scripts/scrollglue.js"></script>
+-->
+
+<script type="text/javascript" src="assets/scripts/primus.js"></script>
+
+<!-- compiled CSS -->
+<link rel="stylesheet" type="text/css" href="assets/angular-xmpp-0.0.1.css" />
+
+<!-- compiled JavaScript -->
+<script type="text/javascript" src="assets/angular-xmpp-0.0.1.js"></script>
+
+
+</head>
+<body ng-controller="pagecontroller">
+
+
+<div ng-include="'assets/partials/navbar.html'"></div>
+
+
+
+<!-- xmpp login -->
+<div ng-show="!online">
+<br/>
+<br/>
+<br/>
+<br/>
+connecting ...
+</div>
+<div ng-show="online && !connected">
+<xmpplogin></xmpplogin>
+</div>
+
+
+<div ng-show="connected">
+
+
+<!--
+<div  bs-active-pane="tabs.activeTab" bs-tabs id="tabs">
+  <div ng-repeat="tab in tabs" title="{{ tab.title }}"  bs-pane></div>
+</div>
+-->
+
+
+
+
+<div ng-show="tabs.activeTab==0">
+<!-- Left side, Avatar of node, list of nodes -->
+<div class="leftcol">
+
+<img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
+
+
+
+
+<buddycloudroster></buddycloudroster>
+<!--
+<h4><span g-if="closed" class="closed">▸ </span>Online Contacts</h4>
+
+<div bs-collapse>
+<h4 bs-toggle><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Streams</h4>
+<div ng-repeat="node in data.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}" bs-target>
+{{node.name}}
+</div>
+</div>
+
+<h4><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Groupchats</h4>
+-->
+</div>
+
+
+<!-- buddycloud timeline -->
+<div id="buddycloud" >
+{{selectednode.node}}
+<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid" search="{{search}}"></buddycloud>{{search}}
+</div>
+</div>
+
+
+<div id="muc" ng-show="connected && tabs.activeTab==1">
+<xmppmuc node="testing2@channels.buddycloud.com"></xmppmuc>
+</div>
+
+
+<div id="develop" ng-show="connected && tabs.activeTab==2">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div ng-repeat="item in searchresult.data.items" ng-click="open('/user/'+item.jid+'/posts')">
+{{item.title}}
+{{item.channelType}}
+<span ng-show="item.defaultAffiliation=='publisher'">✎</span>
+</div>
+</pre>
+ 
+</div>
+
+
+
+
+<!-- roster - the online users und friends -->
+<!--
+<div>
+<xmpproster></xmpproster>
+</div>
+-->
+
+<!-- chat at the bottom -->
+<xmppminichat></xmppminichat>
+
+</div>
+
+
+</body>
+
+</html>

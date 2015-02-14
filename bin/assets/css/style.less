@@ -1,0 +1,198 @@
+body{
+font:13px/17px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.header{
+display:none;
+background-color:lightblue;
+text-align:right;
+position:fixed;
+top:0px;
+left:0px;
+right:0px;
+z-index:1;
+}
+.header .logo{
+position:absolute;
+font-size:20px;
+left:0px;
+}
+
+a{
+color:#4183c4
+}
+h4{
+font-size:14px;
+margin-left:4px;
+}
+h4 .open{
+font-size:12px;
+}
+h4 .closed{
+font-size:15px;
+}
+
+
+#tabs{
+position:fixed;
+top:50px;
+padding-top:20px;
+left:10px;
+right:240px;
+height:70px;
+background-color:white;
+z-index:1;
+}
+
+
+.leftcol{
+position:fixed;
+top:80px;
+bottom:10px;
+left:0px;
+overflow:auto;
+width:280px
+}
+.leftcol table{
+margin-left:10px;
+}
+
+#muc{
+position:absolute;
+top:140px;
+left:10px;
+right:250px;
+bottom:10px;
+border:1px solid #efefef;
+}
+
+.menu:hover{
+color:black;
+}
+.menu{
+width:140px;
+padding:2px;
+padding-left:12px;
+color:gray;
+cursor:pointer;
+}
+.menu.selected{
+font-weight:bold;
+}
+
+#buddycloud{
+position:absolute;
+top:80px;
+left:300px;
+right:240px;
+}
+
+.loginform{
+position:absolute;
+top:140px;
+left:50%;
+width:300px;
+height:250px;
+margin-left:-150px;
+border:1px solid grey;
+background-color:#f4f4f4;
+padding:20px;
+}
+
+
+.roster{
+position:fixed;
+top:53px;
+right:10px;
+bottom:00px;
+border-left:1px solid lightgrey;
+width:200px;
+overflow:auto;
+}
+.roster table{
+width:100%;
+}
+.roster tr{
+border-top:1px solid rgba(0,0,0,0);
+border-bottom:1px solid rgba(0,0,0,0);
+}
+.roster tr:hover{
+background-color:#efefef;
+border-top-color:lightgrey;
+border-bottom-color:lightgrey;
+}
+.roster td{
+padding:2px;
+margin:0px;
+font-size:10px;
+
+}
+.roster td:first-child{
+width:10px;
+}
+.roster td p{
+font-size:15px;
+margin:0px;
+}
+.roster td img{
+border:1px solid lightgrey;
+}
+
+
+#bottomchat{
+position:fixed;
+bottom:0px;
+width:100%;
+text-align:right;
+padding-right:240px;
+}
+
+#bottomchat .minichat{
+background-color:white;
+display:inline-block;
+border:1px solid lightgrey;
+text-align:left;
+padding:0px;
+margin-left:4px;
+border-top-right-radius:5px;
+border-top-left-radius:5px;
+position:relative;
+}
+#bottomchat .minichat .min{
+width:100px;
+background-color:lightblue;
+padding-left:4px;
+color:white;
+}
+#bottomchat .minichat .title{
+background-color:lightblue;
+border-top-right-radius:4px;
+border-top-left-radius:4px;
+}
+#bottomchat .minichat .title p{
+font-size:20px;
+margin:0px;
+margin-left:4px;
+color:white;
+width:250px;
+}
+#bottomchat .minichat  .close{
+position:absolute;
+top:2px;
+right:4px;
+}
+#bottomchat .minichat .messages{
+padding:4px;
+height:100px;
+overflow:auto;
+}
+#bottomchat .minichat .messages img{
+padding:2px;
+height:25px;
+width:25px;
+}
+#bottomchat .minichat input{
+width:100%;
+border:1px solid lightgrey;
+}
+
