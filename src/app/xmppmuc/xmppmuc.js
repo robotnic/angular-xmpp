@@ -36,6 +36,7 @@ MUC
         receive incoming messages
         */
         function watch() {
+            api.getSubject(); 
             console.log("start watching muc");
             //notify is used to apply changes (render html);
             var q = $q.defer();
@@ -79,6 +80,7 @@ MUC
             messages: [],
             roster: [],
             room: null,
+            subject: "leer",
             join: function(room, nick) {
                 api.room = room;
                 Xmpp.socket.send(
@@ -159,6 +161,26 @@ MUC
                     }
                 );
                 return q.promise;
+
+            },
+            getSubject:function(){
+                var q = $q.defer();
+                Xmpp.socket.send(
+                    'xmpp.muc.subject', {
+                        "room": api.room,
+                    },
+                    function(error, data) {
+                        console.log("-----------SUBJECT config", error, data);
+                        if (error){
+                             q.reject(error);
+                        }
+                        if (data){
+                             q.resolve(data);
+                        }
+                    }
+                );
+                return q.promise;
+
 
             },
             getRoleMembers: function(role) {
