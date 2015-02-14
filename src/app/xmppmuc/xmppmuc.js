@@ -44,7 +44,6 @@ MUC
                     message.receivetime = (new Date()).getTime();
                 }
                 api.messages.push(message);
-                console.log("got message frm muc", message);
                 q.notify();
             });
             Xmpp.socket.on('xmpp.muc.roster', function(item) {
@@ -162,12 +161,12 @@ MUC
                 return q.promise;
 
             },
-            getSubject:function(){
-                console.log("getSubject");
+            getSubject:function(room){
+                console.log("getSubject",room);
                 var q = $q.defer();
                 Xmpp.socket.send(
                     'xmpp.muc.subject', {
-                        "room": api.room,
+                        "room": room,
                     },
                     function(error, data) {
                         console.log("-----------SUBJECT config", error, data);
@@ -227,7 +226,7 @@ MUC
 
         $scope.join = function(nick) {
             console.log("join", nick);
-            MucFactory.getSubject();
+            MucFactory.getSubject($scope.node);
             MucFactory.join($scope.node, nick);
             $scope.joined = true;
             MucFactory.watch().then(
