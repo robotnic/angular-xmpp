@@ -3,6 +3,11 @@
   "authors":["bernhard zwischenbrgger"],
   "version": "0.0.2",
   "main": "./bin/assets/angular-xmpp-0.0.1.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:robotnic/buddycloudclient.git"
+  },
+
   "devDependencies": {
     "angular-strap": "~2.1.6",
     "angular-markdown-directive": "~0.3.1",
