@@ -1,9 +1,13 @@
 {
   "name": "ng-boilerplate",
   "version": "0.3.2",
-  "dependencies": {
+  "main": "bin/assets/angular-xmpp-0.0.1.js",
+  "files":"bin/**/*",
+  "devDependencies": {
     "angular-strap": "~2.1.6",
     "angular-markdown-directive": "~0.3.1",
-    "angular-bootstrap": "~0.12.0"
+    "angular-bootstrap": "~0.12.0",
+    "showdown": "~0.3.4",
+    "jquery": "~2.1.3"
   }
 }

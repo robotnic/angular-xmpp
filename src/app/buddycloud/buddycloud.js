@@ -590,10 +590,33 @@ waiting for incomming json stranzas
         presence:function(){
             Xmpp.socket.send('xmpp.buddycloud.presence', {});
         },
+        /*
         register : function() {
             var q=$q.defer();
              Xmpp.socket.send(
                 'xmpp.buddycloud.register', {},
+                function(error, data) {
+                    if(error){
+                        console.log(error);
+                        q.reject(error);
+                    }else{
+                        q.resolve(data);
+                    }
+                }
+            );
+            return q.promise;
+        },
+        */
+        register:function(){
+            return api.raw('xmpp.buddycloud.register');
+        },
+        raw:function(namespace,request){
+            if(!request){
+                request={};
+            }
+            var q=$q.defer();
+             Xmpp.socket.send(
+                namespace, request,
                 function(error, data) {
                     if(error){
                         console.log(error);
