@@ -1,5 +1,7 @@
-/*
-factory:XmppCore
+/**
+XmppCore
+@module
+@params 9
 */
 
 var API=null;  //global for debugging
@@ -13,6 +15,11 @@ angular.module('XmppCore', [])
     //var socket = new Primus("https://xmpp-ftw.jit.su/");   //--------------- put to config
     //var socket = new Primus("https://laos.buddycloud.com");   //--------------- put to config
     //var socket = new Primus("http://localhost:3000");
+
+/**
+Listen to incoming json stanzas
+@method watch
+*/    
 
     function watch(q){
         //roster change
@@ -30,20 +37,6 @@ angular.module('XmppCore', [])
         });
 
 
-        /*
-        //collect messages and add it to the roster
-        socket.on('xmpp.chat.message', function(data) {
-            if(api.roster){
-                for (var i = 0; i < api.roster.length; i++) {
-                    if (api.roster[i].jid.user == data.from.user) {
-                        if (!api.roster[i].messages) api.roster[i].messages = [];
-                        api.roster[i].messages.push(data);
-                    }
-                }
-                q.notify("message");
-            }
-        });
-        */
 
         //presence handling
         api.socket.on('xmpp.presence', function(data) {
@@ -70,6 +63,7 @@ angular.module('XmppCore', [])
 
     }
 
+    
 
     var api={
         jid:null,
@@ -98,6 +92,9 @@ angular.module('XmppCore', [])
             });
             return q.promise;
         },
+        /**
+        * @method login
+        */
         login:function(username,password,register,autologin){
                 var jid=null;
                 //api.user = username;  //--------for avatar image
@@ -121,6 +118,9 @@ angular.module('XmppCore', [])
                     localStorage.setItem("password",password);
                 }
         },
+        /**
+        * @method logout
+        */
         logout:function(){
                 api.socket.send(
                     'xmpp.logout',
@@ -131,6 +131,9 @@ angular.module('XmppCore', [])
                 );
 
         },
+        /**
+        * @method send
+        */
         send:function(user,message){
             if (!user.messages){
                  user.messages = [];
@@ -139,6 +142,9 @@ angular.module('XmppCore', [])
             api.socket.send('xmpp.chat.message', message);
 
         },
+        /**
+        * @method parseNodeString
+        */
         parseNodeString:function(node){  
                 var n = node.indexOf('@');
                 var name=node.substring(0,n);
@@ -156,6 +162,9 @@ angular.module('XmppCore', [])
                 return {name:name,domain:domain,jid:jid,type:type};
 
         },
+        /**
+        * @method parseJidString
+        */
         parseJidString:function(jid){   
             var domain=null;
             var resource=null;
@@ -172,14 +181,23 @@ angular.module('XmppCore', [])
             return({user:user,domain:domain,resource:resource});
 
         },
+        /**
+        * @method confirmContact
+        */
         confirmFriend:function(node){
             api.socket.send( 'xmpp.presence.subscribe', { "to": jid });
             api.socket.send( 'xmpp.presence.subscribed', { "to": jid });
         },
+        /**
+        * @method addContact
+        */
         addFriend:function(jid){
             api.socket.send('xmpp.presence.subscribe', { "to": jid });
             api.socket.send( 'xmpp.presence.subscribed', { "to": jid });
         },
+        /**
+        * @method removeContact
+        */
         removeFriend:function(jid){
             console.log("remove",jid);
             api.socket.send( 'xmpp.presence.unsubscribe', { "to": jid });
@@ -188,6 +206,9 @@ angular.module('XmppCore', [])
         isContact:function(node){
             return true;
         },
+        /**
+        * @method getRoster
+        */
         getRoster:function(){
             var q=$q.defer();
             //ask for roster
@@ -206,6 +227,11 @@ angular.module('XmppCore', [])
             );
             return q.promise;
         },
+        /**
+        * @method setPresence
+        * @param {string} show - online status (online, available,...)
+        * @param {string} status - free status text
+        */
         setPresence:function(){
                 api.socket.send(
                     'xmpp.presence', {
@@ -225,6 +251,34 @@ angular.module('XmppCore', [])
     };
     API=api;
     return api;
+})
+
+
+
+
+
+/*
+To Array filter is hidden here
+*/
+
+
+.filter('toArray', function() {
+    'use strict';
+
+    return function(obj) {
+        if (!(obj instanceof Object)) {
+            return obj;
+        }
+
+        return Object.keys(obj).filter(function(key) {
+            if (key.charAt(0) !== "$") {
+                return key;
+            }
+        }).map(function(key) {
+            return Object.defineProperty(obj[key], '$key', {
+                __proto__: null,
+                value: key
+            });
+        });
+    };
 });
-
-

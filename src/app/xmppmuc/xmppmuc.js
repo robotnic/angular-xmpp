@@ -1,7 +1,12 @@
 angular.module('XmppMuc', ['XmppCore', 'luegg.directives'])
 
-/*
-Roster
+/**
+MUC
+@module XmppMuc
+*/
+
+/**
+@class  XmppMuc.directive
 */
 
 .directive('xmppmuc', function() {
@@ -19,10 +24,17 @@ Roster
     };
 })
 
+/**
+@class  XmppMuc.factory
+@memberOf XmppMuc
+*/
 .factory("MucFactory", ['Xmpp', '$q',
     function(Xmpp, $q) {
         console.log("the muc factory");
 
+        /**
+        receive incoming messages
+        */
         function watch() {
             console.log("start watching muc");
             //notify is used to apply changes (render html);
@@ -79,6 +91,9 @@ Roster
                     }
                 );
             },
+            /**
+            @method send
+            */
             send: function(message) {
                 Xmpp.socket.send(
                     'xmpp.muc.message', {
@@ -91,6 +106,9 @@ Roster
 
                 );
             },
+            /**
+            @method getConfig
+            */
             getConfig: function(message) {
                 var q = $q.defer();
                 Xmpp.socket.send(
@@ -109,6 +127,10 @@ Roster
                 );
                 return q.promise;
             },
+            /**
+            @method setConfig
+            */
+
             setConfig: function(formdata) {
                 Xmpp.socket.send(
                     'xmpp.muc.room.config.set', {

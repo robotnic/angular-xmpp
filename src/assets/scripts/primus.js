@@ -4213,7 +4213,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
   /**
    * This class represents a faux web socket.
    * @param {string} url
-   * @param {array or string} protocols
+   * @param {array | string} protocols
    * @param {string} proxyHost
    * @param {int} proxyPort
    * @param {string} headers

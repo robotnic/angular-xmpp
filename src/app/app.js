@@ -1,9 +1,27 @@
 var APP = null;
 
 
+/**
+* @fileOverview
+* @author <a href="mailto:ovaraksin@googlemail.com">Oleg Varaksin</a>
+* @version 0.2
+*/
+
+
+/**
+ * Description
+ * @ngdoc directive
+ * @class
+ * @tutorial tutorial-1
+ * @tutorial tutorial-2
+ * @param {string} title - The title of the book.
+ * @param {string} author - The author of the book.
+ */
+
 
 angular.module('MyApp', [
-  'templates-app', 'templates-common','mgcrea.ngStrap','XmppUI','btford.markdown','tagged.directives.infiniteScroll'])
+  'templates-app', 'templates-common','XmppUI','btford.markdown','tagged.directives.infiniteScroll','ngSanitize','ui.bootstrap'
+    ])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
         function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
             console.log("--pagecontroller--")
@@ -23,6 +41,9 @@ angular.module('MyApp', [
 
             $scope.friendRequests={};
             $scope.friendRequestsCount=0;
+            /**
+            @method open
+            */
             $scope.open=function(node){
                 console.log(node);
                 //ugly programming
@@ -44,10 +65,10 @@ angular.module('MyApp', [
             ];
             $scope.tabs.activeTab = 0;
 
+/*
             $scope.find=function(text){
                 $scope.search=text; 
                 console.log(text);
-                /*
                 var url="https://laos.buddycloud.com/api/search?type=metadata&max=5&q="+text;
                 //var url="https://demo.buddycloud.org/api/search?type=metadata&max=25&q="+text;
                 $http.get(url).then(function(data){
@@ -58,8 +79,8 @@ angular.module('MyApp', [
                         console.log(error);
                     }
                 );
-                */
             };
+*/
 
             console.log("vor connect");
             Xmpp.connect($scope.host).then(function(){
@@ -121,14 +142,22 @@ angular.module('MyApp', [
                 });
             });
 
+            /** 
+            adding contact 
+            @method addFriend
+            */
             $scope.addFriend=function(from){
                 Xmpp.addFriend(from.user+"@"+from.domain);
             };
+            /** xmpp logout 
+            @method logout
+            */
             $scope.logout=function(jid){
                 Xmpp.logout();
                 localStorage.removeItem("password");
                 $scope.connected=false;  //fake logout. Fixit!!
             };
+            //open chat window
             $scope.openchat=function(jid){
                 $rootScope.$broadcast('openchat',jid);
             };

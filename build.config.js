@@ -71,7 +71,9 @@ module.exports = {
         'vendor/angular-markdown-directive/markdown.js',
         'vendor/angular-sanitize/angular-sanitize.js',
         'vendor/angular-animate/angular-animate.js',
-        'vendor/showdown/src/showdown.js'
+        'vendor/showdown/src/showdown.js',
+'vendor/angular-bootstrap/ui-bootstrap.min.js',
+'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js'
     ],
     css: [
     ],

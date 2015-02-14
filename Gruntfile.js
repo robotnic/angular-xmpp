@@ -18,6 +18,7 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   /**
    * Load in our build configuration file.
@@ -545,9 +546,20 @@ module.exports = function ( grunt ) {
           livereload: false
         }
       }
+    
+    },
+    jsdoc : {
+        dist : {
+            src: ['src/**/*.js', 'README.md'],
+            options: {
+                destination: 'doc',
+                template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                configure : "jsdoc.conf.json"
+            }
+        }
     }
   };
-
+ 
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
 
   /**
@@ -572,7 +584,7 @@ module.exports = function ( grunt ) {
     'clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build',
     'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
     'copy:build_appjs', 'copy:build_vendorjs', 'copy:build_vendorcss', 'index:build', 'karmaconfig',
-    'karma:continuous' 
+    'karma:continuous','jsdoc' 
   ]);
 
   /**

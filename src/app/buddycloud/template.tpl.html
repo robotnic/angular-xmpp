@@ -1,7 +1,8 @@
 
 
-<div ng-show="connected " class="buddycloud" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled" tagged-infinite-scroll-distance="500">
+<div ng-show="data " class="buddycloud" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled" tagged-infinite-scroll-distance="500">
 
+    <!-- header -->
     <div g-show="!formdata">
     <div class="streamheader">
     <div ng-if="node!='recent'">
@@ -15,26 +16,29 @@
         <br/>
     </div>
 
-
+    <!-- config form -->
     <div class="form" ng-show="formdata" style="position:relative;height:1300px">
             <xmppform formdata="formdata" onclose="formdata=null" onsave="setConfig"></xmppform>
     </div>
 
+    <!-- main post form -->
     <form ng-show="data.rights.publish || data.currentnode=='recent'" ng-submit="publish()">
-        <textarea ng-model="newtopic" placeholder="What's going on"></textarea>
-        <input ng-show="newtopic" type="submit" />
+        <textarea ng-model="newtopic.value" placeholder="What's going on" ng-class="{'saving': newtopic.status == 'saving'}"></textarea>{{newtopic.status}}
+        <input ng-show="newtopic.value" type="submit" />
     </form>
     </div>
 
     <div ng-if="!data.tree">loading...</div>
-<!--
-    <div ng-repeat="item in data.tree |toArray|orderBy:'-entry.atom.published' " class="item">
--->
+
+
+    <!-- the item loop -->
     <div ng-repeat="item in data.tree |toArray|orderBy:'entry.atom.published':true " class="item">
         {{entry.atom.published}}
         <span ng-if="item.rights.remove" class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
         <span ng-if="item.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
         <img ng-src="assets/icons/avatars/{{item.entry.atom.author.image}}.png" />
+
+        <!-- head -->
         <div class="person">
             <span class="name">
 <span ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
@@ -42,9 +46,9 @@
             </span>
             <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
             <like node="{{item.id}}"></like>
-
-
         </div>
+
+        <!-- content -->
         <div class="content">
             <form ng-show="editmode && data.rights.subscribed" ng-submit="save()">
                 <textarea ng-model="item.entry.atom.content.content"></textarea>
@@ -54,9 +58,33 @@
 
         </div>
         <br/> 
+
+
+        <!-- subitem loop -->
         <div ng-repeat="subitem in item.nodes  |toArray|orderBy:'entry.atom.published'" class="subitem">
+
+            <!--  subitem -->
+<!--
             <span ng-if="subitem.rights.remove" class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
             <span ng-if="subitem.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
+-->
+
+<div class="tool btn-group pull-right" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-link dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+         <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Like</a></li>
+        <li><a href="#">Edit action</a></li>
+        <li><a href="#">Block user</a></li>
+        <li><a href="#">Make user node manager</a></li>
+        <li><a href="#">Make user readonly</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Delete</a></li>
+      </ul>
+    </div>
+
+
             <img ng-src="assets/icons/avatars/{{subitem.entry.atom.author.image}}.png" />
             <div class="person">
                 <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
@@ -67,10 +95,12 @@
                 <like node="{{subitem.id}}"></like>
             </div>
         </div>
+
+        <!-- post replay -->
         <form ng-if="item.rights.publish" ng-submit="publish(item.entry.atom.id)" class="subitem">
             <img ng-src="assets/icons/avatars/{{jid.local}}.png" />
             <div class="person">
-                <input ng-model="newitems[item.entry.atom.id]" />
+                <input ng-model="newitems[item.entry.atom.id].value" ng-class="{'saving': newitems[item.entry.atom.id].status == 'saving'}" class="form-control"/>
             </div>
         </form>
     </div>

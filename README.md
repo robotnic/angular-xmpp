@@ -16,7 +16,13 @@ Test here:  http://datenkueche.com/buddycloud/
 <script type="text/javascript" src="../assets/ngbp-0.3.2.js"></script>
 ```
 
+## directives
+```
+<xmpplogin></xmpplogin>
+<roster></roster>
+```
 
+tet
 
 
 
