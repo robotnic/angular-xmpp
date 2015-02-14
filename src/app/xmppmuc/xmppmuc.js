@@ -36,7 +36,6 @@ MUC
         receive incoming messages
         */
         function watch() {
-            api.getSubject(); 
             console.log("start watching muc");
             //notify is used to apply changes (render html);
             var q = $q.defer();
@@ -164,6 +163,7 @@ MUC
 
             },
             getSubject:function(){
+                console.log("getSubject");
                 var q = $q.defer();
                 Xmpp.socket.send(
                     'xmpp.muc.subject', {
@@ -227,6 +227,7 @@ MUC
 
         $scope.join = function(nick) {
             console.log("join", nick);
+            MucFactory.getSubject();
             MucFactory.join($scope.node, nick);
             $scope.joined = true;
             MucFactory.watch().then(
