@@ -1,6 +1,6 @@
 {
-  "name": "ng-boilerplate",
-  "version": "0.3.2",
+  "name": "angular-xmpp",
+  "version": "0.0.2",
   "main": "bin/assets/angular-xmpp-0.0.1.js",
   "files":"bin/**/*",
   "devDependencies": {
