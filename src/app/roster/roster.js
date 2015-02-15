@@ -10,7 +10,7 @@ Roster
         'scope': {
         },
         'transclude': false,
-        'templateUrl': 'modules/roster/template.tpl.html',
+        'templateUrl': 'roster/template.tpl.html',
         'controller': 'XmppUiRoster',
         'link': function(scope, element, attrs) {
             console.log("roster");
