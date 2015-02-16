@@ -386,10 +386,12 @@ waiting for incomming json stranzas
             }
 
         }
-        for(var i=0;i<api.data.nodes.length;i++){
-            if(api.data.nodes[i].node==node){
-                subscribed=true;
-                break;
+        if(api.data.nodes){ 
+            for(var i=0;i<api.data.nodes.length;i++){
+                if(api.data.nodes[i].node==node){
+                    subscribed=true;
+                    break;
+                }
             }
         }
         var rights={
@@ -405,6 +407,7 @@ waiting for incomming json stranzas
     var api={
         data:{
             unread:{},
+            nodes:[],
             affiliations:{}
         },
         publish:function(node,text,ref){

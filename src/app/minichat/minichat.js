@@ -14,7 +14,7 @@ Roster
         'templateUrl': 'minichat/template.tpl.html',
         'controller': 'XmppUiMinichat',
         'link': function(scope, element, attrs) {
-            console.log("minichat");
+            console.log("minichat directive");
         }
     };
 })
@@ -105,6 +105,7 @@ function beep() {
 
 .controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp','XmppMessage',
     function($scope, $rootScope,  $anchorScroll, Xmpp, XmppMessage) {
+        console.log("minichatcontroller");
         $scope.username = Xmpp.user;
         $scope.chatwindows = [];
         $scope.messages = XmppMessage.messages;
@@ -125,6 +126,7 @@ function beep() {
 
         //use broadcast to open chat window
         $rootScope.$on("openchat", function(data, jid) {
+            console.log("inside minichat");
             XmppMessage.markread(jid);
             $scope.me = Xmpp.jid.substring(0, Xmpp.jid.indexOf("@"));
             var fromname = jid.substring(0, jid.indexOf("@"));

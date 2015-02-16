@@ -1,0 +1,145 @@
+
+            .header
+            {
+                padding: 10px;
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                background-color: #6d84b4;
+            }
+
+            .messages
+            {
+                padding: 10px;
+                height: 200px;
+                background-color: green;
+                background-color: rgb(237, 239, 244);
+                border-width: 1px;
+                border-color: black;
+                border-style: solid;
+                overflow-y: scroll;
+            }
+
+            .messages ul
+            {
+                padding: 0px;
+                list-style-type: none;
+            }
+
+            .messages ul li
+            {
+                height: auto;
+                margin-bottom: 10px;
+                clear: both;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .messages ul li span
+            {
+                display: inline-block;
+                max-width: 200px;
+                background-color: white;
+                padding: 5px;
+                border-radius: 4px;
+                position: relative;
+                border-width: 1px;
+                border-style: solid;
+                border-color: grey;
+            }
+
+            .messages ul li span.left
+            {
+                float: left;
+            }
+
+            .messages ul li span.left:after
+            {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                left: -8.5px;
+                top: 7px;
+                height: 0px;
+                width: 0px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                border-right: 8px solid white;
+            }
+
+            .messages ul li span.left:before
+            {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                left: -9px;
+                top: 7px;
+                height: 0px;
+                width: 0px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                border-right: 8px solid black;
+            }
+
+            .messages ul li span.right:after
+            {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                right: -8px;
+                top: 6px;
+                height: 0px;
+                width: 0px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                border-left: 8px solid #dbedfe;
+            }
+
+            .messages ul li span.right:before
+            {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                right: -9px;
+                top: 6px;
+                height: 0px;
+                width: 0px;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                border-left: 8px solid black;
+            }
+
+            .messages ul li span.right
+            {
+                float: right;
+                background-color: #dbedfe;
+            }
+
+            .clear
+            {
+                clear: both;
+            }
+
+            .input-box
+            {
+                background-color: white;
+                height: 50px;
+                padding: 0px;
+            }
+
+            .input-box textarea
+            {
+                padding: 0px;
+                width: 278px;
+                height: 100%;
+                display: inline-block;
+                outline: 0px;
+                border-width: 0px;
+                resize: none;
+                border-width: 1px;
+                border-color: black;
+                border-style: solid;
+                font-size: 12px;
+                padding: 10px;
+                border-top-width: 0px;
+            }
