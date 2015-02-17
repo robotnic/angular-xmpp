@@ -17,14 +17,52 @@
 
 
 </head>
-<body ng-controller="pagecontroller">
+<body >
+<div style="position:absolute;top:0px;left:0px;width:50%">
+<div style="position:relative">
+<xmpp host="https://laos.buddycloud.com">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<div style="width:400px;margin:10px;">
+<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid"></buddycloud>
+</div>
+<!--
+<xmppmuc room="testing4@channels.buddycloud.com"></xmppmuc>
+-->
+</xmpp>
+</div>
+</div>
+<div style="position:absolute;top:0px;left:50%;width:50%">
+<div style="position:relative">
+
+<xmpp host="https://laos.buddycloud.com">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<div style="width:400px;margin:10px;">
+<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid" ></buddycloud>
+</div>
+</xmpp>
+
+<!--
+<xmpp host="https://xmpp-ftw.jit.su/">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<xmppmuc room="testing4@channels.buddycloud.com" style="width:300px"></xmppmuc>
+</xmpp>
+-->
+</div>
+</div>
+
+
+
+<!--
 
 
 <div ng-include="'assets/partials/navbar.html'"></div>
 
-
-
-<!-- xmpp login -->
 <div ng-show="!online">
 <br/>
 <br/>
@@ -40,41 +78,19 @@ connecting ...
 <div ng-show="connected">
 
 
-<!--
-<div  bs-active-pane="tabs.activeTab" bs-tabs id="tabs">
-  <div ng-repeat="tab in tabs" title="{{ tab.title }}"  bs-pane></div>
-</div>
--->
-
-
 
 
 <div ng-show="tabs.activeTab==0">
-<!-- Left side, Avatar of node, list of nodes -->
+
 <div class="leftcol">
 
 <img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
 
 
-
-
 <buddycloudroster></buddycloudroster>
-<!--
-<h4><span g-if="closed" class="closed">▸ </span>Online Contacts</h4>
-
-<div bs-collapse>
-<h4 bs-toggle><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Streams</h4>
-<div ng-repeat="node in data.nodes" ng-click="open(node)" class="menu" ng-class="{'selected':selectednode.node==node.node}" bs-target>
-{{node.name}}
-</div>
-</div>
-
-<h4><span ng-if="closed" class="closed">▸ </span><span class="open">▼ </span>Groupchats</h4>
--->
 </div>
 
 
-<!-- buddycloud timeline -->
 <div id="buddycloud" >
 {{selectednode.node}}
 <buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid" search="{{search}}"></buddycloud>{{search}}
@@ -108,16 +124,8 @@ connecting ...
 
 
 
-<!-- roster - the online users und friends -->
-<!--
-<div>
-<xmpproster></xmpproster>
-</div>
--->
-
-<!-- chat at the bottom -->
 <xmppminichat></xmppminichat>
-
+-->
 </div>
 
 

@@ -1,4 +1,4 @@
-<div id="bottomchat" >
+<div class="bottomchat" >
   <div class="minichat"  ng-repeat="user in chatwindows" title="{{ user.jid }}"  >
     <div ng-if="user.style=='max'">
         <div class="title" ng-click="minify(user)"><p>{{user.name}} </p><span class="close" ng-click="close(user)">×</span></div>

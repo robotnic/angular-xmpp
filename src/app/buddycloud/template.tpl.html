@@ -45,7 +45,6 @@
             <span ng-click="opennode(item.nodeowner)" ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
             </span>
             <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
-            <like node="{{item.id}}"></like>
         </div>
 
         <!-- content -->
@@ -74,13 +73,12 @@
          <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Like</a></li>
-        <li><a href="#">Edit action</a></li>
-        <li><a href="#">Block user</a></li>
-        <li><a href="#">Make user node manager</a></li>
-        <li><a href="#">Make user readonly</a></li>
+        <li><a href="#" ng-click="edititem(editmode=!editmode)">Edit action</a></li>
+        <li><a href="#" ng-click="blockuser(subitem.entry.atom.id,subitem.node)">Block user</a></li>
+        <li><a href="#" ng-click="makeusermanager(subitem.entry.atom.id,subitem.node)">Make user node manager</a></li>
+        <li><a href="#" ng-click="makeuserreadonly(subitem.entry.atom.id,subitem.node)">Make user readonly</a></li>
         <li class="divider"></li>
-        <li><a href="#">Delete</a></li>
+        <li><a href="#" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">Delete</a></li>
       </ul>
     </div>
 
@@ -92,7 +90,6 @@
                 <span ng-show="!editmode">{{subitem.entry.atom.content.content}}</span>
 
                 <span class="date">{{subitem.entry.atom.published | date:'medium'}}</span>
-                <like node="{{subitem.id}}"></like>
             </div>
         </div>
 

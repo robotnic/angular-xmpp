@@ -9,22 +9,35 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
 
 .directive('xmpplogin', function() {
     return {
+        'require': '^xmpp',
         'restrict': 'E',
         'scope': {},
         'transclude': false,
         'templateUrl': 'xmpplogin/template.tpl.html',
         'controller': 'XmppLoginController',
-        'link': function(scope, element, attrs) {
-            console.log("minichat");
+        'link': function(scope, element, attrs,xmppController) {
+            console.log("login",arguments);
+            scope.xmpp=xmppController.xmpp;
+            console.log("have it",scope.xmpp);
+            xmppController.on("connected",function(){
+                    scope.connected=true; 
+            });
         }
     };
 })
 
 
 
-.controller('XmppLoginController', ['$scope', '$rootScope', '$location', '$anchorScroll', 'Xmpp',
-    function($scope, $rootScope, $location, $anchorScroll, Xmpp) {
-        console.log("XmppLoginController");
+.controller('XmppLoginController', ['$scope', 
+    function($scope) {
+        console.log("XmppLoginController",$scope.xmpp);
+        $scope.login = function() {
+            $scope.xmpp.login($scope.username, $scope.password, $scope.register,$scope.autologin);
+        };
+        $scope.username = "eva";
+        $scope.password = "bbb";
+
+/*
         SCOPE = $scope;
         $scope.username = "arni";
         $scope.password = "bbb";
@@ -33,7 +46,6 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
         //Xmpp.connect();
         //watch roster - not really clear what it's doing
 
-            console.log("after connect",Xmpp);
             Xmpp.watch().then(function() {
                 console.log("watch roster stopped");
             },
@@ -45,17 +57,6 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
                 //                $scope.$apply();
             });
 
-            // socket!!!!
-            /*
-            socket.on("open", function() {
-                console.log("connected, ready for login");
-                if ($scope.connected) {
-                    $scope.login(); //just poking with that
-                }
-                $scope.connection_open = true;
-                $scope.$apply();
-            });
-            */
 
             socket.on('end', function() {
                 console.log('Connection closed');
@@ -64,7 +65,6 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
 
 
             $scope.login = function() {
-                console.log("autologin",$scope.autologin);
                 Xmpp.login($scope.username, $scope.password, $scope.register,$scope.autologin);
             };
 
@@ -82,6 +82,6 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
      
             });
 
-
+*/
     }
 ]);

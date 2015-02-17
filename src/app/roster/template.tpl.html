@@ -4,7 +4,7 @@
 
 
 <table >
-<tr ng-if="user.presence" ng-repeat="user in roster" ng-click="openchat(user)">
+<tr ng-if="user.presence" ng-repeat="user in xmpp.roster" ng-click="xmpp.openchat(user)">
 <td>
 <img ng-src="assets/icons/avatars/{{user.jid.user}}.png" style="height:40px"/>
 </td>
@@ -16,7 +16,7 @@
 
 
 <h4>Add JID</h4>
-<form ng-submit="addcontact(newjid)">
+<form ng-submit="xmpp.addContact(newjid)">
 <input ng-model="newjid"/>
 </form>
 <br/>
@@ -27,7 +27,7 @@
 <br/>
 offline contacts</button>
 <table ng-if="offlineusers">
-<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in roster" ng-click="openchat(user)"><td>
+<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in xmpp.roster" ng-click="xmpp.openchat(user)"><td>
 <img ng-src="assets/icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>

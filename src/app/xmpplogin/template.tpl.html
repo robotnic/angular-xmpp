@@ -1,4 +1,4 @@
-<form class="loginform"  ng-submit="login()">
+<form ng-show="!connected" class="loginform"  ng-submit="login()">{{connected}}
 <table>
 <tr><td>username</td><td><input ng-model="username"/></td></tr>
 <tr><td>password</td><td><input type="password" ng-model="password"/></td></tr>
