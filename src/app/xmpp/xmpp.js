@@ -7,7 +7,8 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
     return {
         'restrict': 'E',
         'scope': {
-            host:"@"
+            host:"@",
+            oninit:"&"
         },
         'transclude': false,
         'controller': 'xmppController',
@@ -52,5 +53,6 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
         $scope.$on.apply($scope,arguments);
     }
     console.log("xmpp",this.xmpp);
+    $scope.oninit({xmpp:this.xmpp});
 });
 console.log(2);

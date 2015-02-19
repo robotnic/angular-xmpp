@@ -2,132 +2,86 @@
 <html ng-app="MyApp">
 <head>
 <meta charset="utf-8"/>
-<!--
-<script src="scripts/primus.js" type="text/javascript"></script>
-<script src="scripts/scrollglue.js"></script>
--->
-
 <script type="text/javascript" src="assets/scripts/primus.js"></script>
-
 <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
 <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
-
 <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
 <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
+<script>
+var SCOPE=null;
+function page($scope,$rootScope,$location){
+    console.log("ääääääääää");
+    SCOPE=$scope;
+    $scope.node="recent";
+    $scope.openchat=function(node){
+        console.log("want to chat",node);
+        $scope.xmpp.openchat($scope.xmpp.parseNodeString(node).jid);
+    }
+    $scope.changenode=function(node){
+            console.log("nodechange");
+        console.log(arguments,node);
+        $scope.node=node;
+        $location.hash(node);
+    }
+    $scope.initbuddycloud=function(bc){
+        console.log("================",bc,"==========");
+        $scope.buddycloud=bc;
+    }
+    $scope.initxmpp=function(xmpp){
+        $scope.xmpp=xmpp;
+        console.log(xmpp);
+        $scope.xmpp.setPresence();
+    }
+    $scope.showxmpp=function(){
+        console.log("xmpp",$scope.xmpp,$scope.buddycloud);
+    }
+    $scope.initchat=function(chat){
+        console.log("<<<<<<<<<<<<<<<<<<<<<<",chat);
+        $scope.chat=chat;
+    }
+    
+    $rootScope.$on('$locationChangeSuccess', function (data) {
+        console.log(arguments,$location.hash());
+        $scope.changenode($location.hash());
+    });
+}
+</script>
+
 
 </head>
-<body >
-<div style="position:absolute;top:0px;left:0px;width:50%">
-<div style="position:relative">
-<xmpp host="https://laos.buddycloud.com">
-<xmpplogin></xmpplogin>
-<xmpproster ></xmpproster>
-<xmppminichat></xmppminichat>
-<div style="width:400px;margin:10px;">
-<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid"></buddycloud>
-</div>
-<!--
-<xmppmuc room="testing4@channels.buddycloud.com"></xmppmuc>
--->
-</xmpp>
-</div>
-</div>
-<div style="position:absolute;top:0px;left:50%;width:50%">
-<div style="position:relative">
-
-<xmpp host="https://laos.buddycloud.com">
-<xmpplogin></xmpplogin>
-<xmpproster ></xmpproster>
-<xmppminichat></xmppminichat>
-<div style="width:400px;margin:10px;">
-<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid" ></buddycloud>
-</div>
-</xmpp>
-
-<!--
-<xmpp host="https://xmpp-ftw.jit.su/">
-<xmpplogin></xmpplogin>
-<xmpproster ></xmpproster>
-<xmppminichat></xmppminichat>
-<xmppmuc room="testing4@channels.buddycloud.com" style="width:300px"></xmppmuc>
-</xmpp>
--->
-</div>
-</div>
-
-
-
-<!--
-
-
+<body ng-controller="page">
 <div ng-include="'assets/partials/navbar.html'"></div>
 
-<div ng-show="!online">
-<br/>
-<br/>
-<br/>
-<br/>
-connecting ...
+<div style="margin-top:100px">
+<h4 ng-click="hidestreams=!hidestreams"><span ng-if="hidestreams" class="closed">▸ </span><span  ng-if="!hidestreams" class="open">▼ </span>Streams</h4>
+<div ng-if="!hidestreams">
+<div ng-repeat="node in buddycloud.data.nodes" ng-click="changenode(node.node)" class="menu" ng-class="{'selected':selectednode.node==node.node}" >
+<img ng-src="assets/icons/avatars/{{node.name}}.png" style="height:25px"/>
+{{node.name}} <span ng-show="buddycloud.data.unread[node.node]" class="badge">{{buddycloud.data.unread[node.node]}}</span>
+<button class="btn btn-xs btn-link  pull-right" ng-click="xmpp.openchat(node.jid)" style="position:relative">
+<span class="glyphicon glyphicon-envelope " aria-hidden="true" ></span>
+<span ng-show="chat.notifications.unread[node.jid]" class="label label-success label-as-badge" style="position:absolute;top:-2px;left:12px;font-size:9px;backgroung-color:yellow">{{chat.notifications.unread[node.jid]}}</span>
+</button>
 </div>
-<div ng-show="online && !connected">
+</div>
+</div>
+
+
+<div style="position:absolute;right:00px;left:200px;top:80px;">
+<div style="position:relative">
+<xmpp host="https://laos.buddycloud.com" oninit="initxmpp(xmpp)">
 <xmpplogin></xmpplogin>
+<xmppminichat oninit="initchat(scope)"></xmppminichat>
+<div style="margin-right:300px;">
+<buddycloud node="{{node}}" jid="jid" changenode="changenode(node,bc)" oninit="initbuddycloud(scope)"></buddycloud>
+
 </div>
-
-
-<div ng-show="connected">
-
-
-
-
-<div ng-show="tabs.activeTab==0">
-
-<div class="leftcol">
-
-<img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
-
-
-<buddycloudroster></buddycloudroster>
-</div>
-
-
-<div id="buddycloud" >
-{{selectednode.node}}
-<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid" search="{{search}}"></buddycloud>{{search}}
+</xmpp>
 </div>
 </div>
 
-
-<div id="muc" ng-show="connected && tabs.activeTab==1">
-<xmppmuc node="testing2@channels.buddycloud.com"></xmppmuc>
 </div>
-
-
-<div id="develop" ng-show="connected && tabs.activeTab==2">
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<div ng-repeat="item in searchresult.data.items" ng-click="open('/user/'+item.jid+'/posts')">
-{{item.title}}
-{{item.channelType}}
-<span ng-show="item.defaultAffiliation=='publisher'">✎</span>
-</div>
-</pre>
- 
-</div>
-
-
-
-
-<xmppminichat></xmppminichat>
--->
-</div>
-
 
 </body>
 

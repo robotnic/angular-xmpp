@@ -29,7 +29,8 @@ Directive
             'search': '@',
             'node': '@',
             'jid': '=',
-            'changenode': '&changenode'
+            'changenode': '&changenode',
+            'oninit': '&oninit'
         },
         'transclude': false,
         'templateUrl': 'buddycloud/template.tpl.html',
@@ -67,7 +68,7 @@ Directive
                     console.log("connected buddycloud", xmppController, scope);
                     scope.init(xmppController.xmpp);
 
-                    //watch();
+                    watch();
                 });
 
             }
@@ -94,6 +95,7 @@ Directive
                 var q = $q.defer();
 
                 api.getAffiliations();
+                console.log("asking for affiliations");
 
                 Xmpp.socket.on('xmpp.buddycloud.push.item', function(data) {
                     console.log("==================", data.node);
@@ -392,7 +394,9 @@ Directive
         @method addToNodeList
         */
             function addToNodeList(node) {
+                console.log("%%",node);
                 var name = Xmpp.parseNodeString(node).name;
+                var jid = Xmpp.parseNodeString(node).jid;
                 for (var i = 0; i < api.data.nodes.length; i++) {
                     if (api.data.nodes[i].node == node) {
                         return;
@@ -400,7 +404,8 @@ Directive
                 }
                 api.data.nodes.push({
                     name: name,
-                    node: node
+                    node: node,
+                    jid: jid
                 });
 
             }
@@ -610,11 +615,41 @@ Directive
                     );
                     return q.promise;
                 },
-                getAffiliations: function() {
+                getSubscribers: function(node) {
                     var q = $q.defer();
                     Xmpp.socket.send(
-                        'xmpp.buddycloud.affiliations', {},
+                        'xmpp.buddycloud.subscriptions', {
+                            node: node,
+                            owner:true
+                            
+                        },
                         function(error, data) {
+                            if (error) {
+                                console.log(error);
+                                q.reject(error);
+                            } else {
+                                console.log("suscribers", data);
+                                api.getAffiliations(node).then(function(data){
+                                    api.data.subscribers=data;
+                                });
+                                q.resolve(data);
+
+                            }
+                        }
+                    );
+                    return q.promise;
+                },
+ 
+                getAffiliations: function(node) {
+                    var q = $q.defer();
+                    var request={};
+                    if(node){
+                        request.node=node;
+                    }
+                    Xmpp.socket.send(
+                        'xmpp.buddycloud.affiliations', request,
+                        function(error, data) {
+                            console.log(">>affiliations<<",node,error,data);
                             if (error) {
                                 console.log(error);
                                 q.reject(error);
@@ -675,7 +710,9 @@ Directive
                             } else {
                                 addToNodeList(node);
                                 api.data.rights = isSubscribed(node);
-                                q.resolve(data);
+                                api.getSubscribers(node).then(function(){
+                                    q.resolve(data);
+                                });
                             }
                         }
                     );
@@ -698,11 +735,13 @@ Directive
                                         break;
                                     }
                                 }
-                                api.getAffiliations().then(function() {
+                                api.getAffiliations(node).then(function() {
                                     console.log("got affiliations");
                                     api.maketree(api.data.result);
                                     api.data.rights = isSubscribed(node);
-                                    q.resolve();
+                                    api.getSubscribers(node).then(function(){
+                                        q.resolve(data);
+                                    });
                                 }, function(error) {
                                     console.log(error);
                                 });
@@ -744,7 +783,7 @@ Directive
                         node: "recent",
                         name: ""
                     };
-                    $scope.start(Xmpp);
+                    $scope.startup(Xmpp);
                     $scope.loadItems();
                 }, function(error) {
                     console.log(error);
@@ -752,7 +791,7 @@ Directive
 
 
         }
-        $scope.start = function(Xmpp) {
+        $scope.startup = function(Xmpp) {
             $scope.max = 25;
             $scope.start = 0;
             BC = $scope;
@@ -779,6 +818,7 @@ Directive
             //presence
             //socket.send('xmpp.buddycloud.presence', {});
             buddycloudFactory.presence();
+            $scope.oninit({scope:$scope});
 
             /**
             * @method getConfig
@@ -812,10 +852,16 @@ Directive
             * @param jid
             */
             $scope.opennode = function(jid) {
-                var user = Xmpp.parseJidString(jid);
+                var user=null;
+                if(typeof(jid)=="object"){
+                    user = jid;
+                }else{
+                    user = Xmpp.parseJidString(jid);
+                }
                 console.log(jid);
                 $scope.changenode({
-                    node: "/user/" + user.user + "@" + user.domain + "/posts"
+                    node: "/user/" + user.user + "@" + user.domain + "/posts",
+                    bc:$scope
                 });
             };
 
@@ -830,6 +876,9 @@ Directive
                     } else {
                         console.log($scope.node);
                         $scope.getNodeItems($scope.node);
+                        buddycloudFactory.getSubscribers($scope.node).then(function(data){
+                            console.log(data);
+                        });
                     }
                 }
             };

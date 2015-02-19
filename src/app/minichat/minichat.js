@@ -10,7 +10,9 @@ Roster
     return {
         'require': '^xmpp',
         'restrict': 'E',
-        'scope': {},
+        'scope': {
+            'oninit':'&'
+        },
         'transclude': false,
         'templateUrl': 'minichat/template.tpl.html',
         'controller': 'XmppUiMinichat',
@@ -123,6 +125,7 @@ Roster
             $scope.chatwindows = [];
             $scope.messages = chat.messages;
             $scope.notifications = chat.notifications;
+            $scope.oninit({scope:$scope});
             chat.watch().then(
                 function(end){},
                 function(error){

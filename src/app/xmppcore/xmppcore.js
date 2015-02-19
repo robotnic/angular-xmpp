@@ -187,7 +187,9 @@ angular.module('XmppCore', [])
                     name=name.substring(n+1);
 
                     n = domain.indexOf('/');
-                    domain=domain.substring(0,n);
+                    if(n!==-1){
+                        domain=domain.substring(0,n);
+                    }
 
                     n = node.lastIndexOf('/');
                     var type = node.substring(n + 1);

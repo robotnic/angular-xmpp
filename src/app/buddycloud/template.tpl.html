@@ -102,5 +102,32 @@
         </form>
     </div>
     </div>
+
+
+    <!-- affiliations -->
+    <div class="rightside">
+    <h4>Owner</h4>
+    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
+    <img ng-if="item.affiliation=='owner' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
+    </div>
+
+
+    <h4>Moderator</h4>
+    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
+    <img ng-if="item.affiliation=='moderator' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
+    </div>
+
+    <h4>Publisher</h4>
+    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
+    <img ng-if="item.affiliation=='publisher' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
+    </div>
+
+    <h4>Member</h4>
+    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
+    <img ng-if="item.affiliation=='member' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
+    </div>
+    </div>
+
+
 </div>
 
