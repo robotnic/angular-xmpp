@@ -1,0 +1,116 @@
+@import "normalize.css";
+@import "reset.css";
+@import "helpers.css";
+@import "grid.css";
+@import "button.css";
+@import "form.css";
+@import "sidebar.css";
+@import "channel.css";
+@import "channelDetails.css";
+@import "dropzone.css";
+@import "overlay.css";
+@import "edit.css";
+@import "startpage.css";
+@import "discover.css";
+@import "bubbling.css";
+@import "singlePost.css";
+@import "anon.css";
+@import "popup.css";
+@import "homepage.css";
+@import "login.css";
+@import "spinner.css";
+/*@import "lightSidebar.css";*/
+
+pre,textarea {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url("fonts/Nunito-Regular-webfont.eot");
+  src: url("fonts/Nunito-Regular-webfont.eot?#iefix") format('embedded-opentype'),url("fonts/Nunito-Regular-webfont.woff") format('woff'),url("fonts/Nunito-Regular-webfont.ttf") format('truetype'),url("fonts/Nunito-Regular-webfont.svg#NunitoRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  font: 13px/17px "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+body {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  background: hsl(0,0%,95%);
+  -webkit-text-size-adjust: none;
+}
+h1 {
+  font-size: 34px;
+  font-family: "Nunito",sans-serif;
+}
+h2 {
+  font-size: 26px;
+  font-family: "Nunito",sans-serif;
+}
+h3 {
+  font-size: 18px;
+  font-family: "Nunito",sans-serif;
+}
+h4 {
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgba(0,0,0,0.89);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+h5 {
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+ul {
+  list-style-type: none;
+}
+p.error {
+  color: #AC1D21;
+  display: none
+}
+a {
+  color: hsl(81, 53%, 44%);
+  text-decoration: none;
+}
+a:hover, a:visited:hover {
+  text-decoration: underline;
+}
+a.internal, a:visited.internal {
+  padding-left: 12px;
+  background: url("/img/beagle.png") no-repeat left 4px;
+}
+.hint { color: #bbb; }
+table td:not(:last-child) {
+  padding-right: 13px;
+}
+
+.loader {
+  /* bug in firefox where it doesnt start from the top */
+  vertical-align: top;
+}
+.throbber {
+  font-size: 2em;
+  color: rgba(0,0,0,.55);
+  position: relative;
+  opacity: 0;
+  -webkit-animation: throb 1s linear infinite alternate;
+}
+
+@-webkit-keyframes throb {
+  to { opacity: 1; }
+}

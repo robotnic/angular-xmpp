@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="Minichat">
+<head>
+<meta charset="utf-8"/>
+
+
+
+<script type="text/javascript" src="https://rawgit.com/robotnic/angular-xmpp/master/bin/assets/scripts/primus.js"></script>
+<!-- compiled CSS -->
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/robotnic/angular-xmpp/master/bin/assets/angular-xmpp-0.0.2.js"/>
+<!-- compiled JavaScript -->
+<script type="text/javascript" src="https://rawgit.com/robotnic/angular-xmpp/master/bin/assets/angular-xmpp-0.0.2.js"></script>
+
+
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+</head>
+<body ng-controller="pagecontroller">
+
+<div class="groupchat" ng-if="connected">
+<xmppmuc   node="testing42@channels.buddycloud.com"></xmppmuc>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+<meta charset="utf-8"/>
+<!--
+<script src="scripts/primus.js" type="text/javascript"></script>
+<script src="scripts/scrollglue.js"></script>
+-->
+
+<script type="text/javascript" src="assets/scripts/primus.js"></script>
+
+<!-- compiled CSS -->
+<link rel="stylesheet" type="text/css" href="assets/angular-xmpp-0.0.2.css" />
+
+<!-- compiled JavaScript -->
+<script type="text/javascript" src="assets/angular-xmpp-0.0.2.js"></script>
+
+
+</head>
+<body >
+<div style="position:absolute;top:0px;left:0px;width:50%">
+<div style="position:relative">
+<xmpp host="https://laos.buddycloud.com">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<div style="width:400px;margin:10px;">
+<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid"></buddycloud>
+</div>
+<!--
+<xmppmuc room="testing4@channels.buddycloud.com"></xmppmuc>
+-->
+</xmpp>
+</div>
+</div>
+<div style="position:absolute;top:0px;left:50%;width:50%">
+<div style="position:relative">
+
+<xmpp host="https://laos.buddycloud.com">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<div style="width:400px;margin:10px;">
+<buddycloud node="/user/eva@laos.buddycloud.com/posts" jid="jid" ></buddycloud>
+</div>
+</xmpp>
+
+<!--
+<xmpp host="https://xmpp-ftw.jit.su/">
+<xmpplogin></xmpplogin>
+<xmpproster ></xmpproster>
+<xmppminichat></xmppminichat>
+<xmppmuc room="testing4@channels.buddycloud.com" style="width:300px"></xmppmuc>
+</xmpp>
+-->
+</div>
+</div>
+
+
+
+<!--
+
+
+<div ng-include="'assets/partials/navbar.html'"></div>
+
+<div ng-show="!online">
+<br/>
+<br/>
+<br/>
+<br/>
+connecting ...
+</div>
+<div ng-show="online && !connected">
+<xmpplogin></xmpplogin>
+</div>
+
+
+<div ng-show="connected">
+
+
+
+
+<div ng-show="tabs.activeTab==0">
+
+<div class="leftcol">
+
+<img  ng-if="selectednode.name" ng-src="icons/avatars/{{selectednode.name}}.png" style="width:140px;margin:5px;" />
+
+
+<buddycloudroster></buddycloudroster>
+</div>
+
+
+<div id="buddycloud" >
+{{selectednode.node}}
+<buddycloud ng-if="selectednode.node"  node="{{selectednode.node}}" changenode="open(node)" jid="jid" search="{{search}}"></buddycloud>{{search}}
+</div>
+</div>
+
+
+<div id="muc" ng-show="connected && tabs.activeTab==1">
+<xmppmuc node="testing2@channels.buddycloud.com"></xmppmuc>
+</div>
+
+
+<div id="develop" ng-show="connected && tabs.activeTab==2">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div ng-repeat="item in searchresult.data.items" ng-click="open('/user/'+item.jid+'/posts')">
+{{item.title}}
+{{item.channelType}}
+<span ng-show="item.defaultAffiliation=='publisher'">✎</span>
+</div>
+</pre>
+ 
+</div>
+
+
+
+
+<xmppminichat></xmppminichat>
+-->
+</div>
+
+
+</body>
+
+</html>

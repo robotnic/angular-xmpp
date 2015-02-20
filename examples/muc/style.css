@@ -1,0 +1,67 @@
+.groupchat{
+width:500px;
+height:300px;
+border:1px solid lightgrey;
+position:relative;
+padding:10px;
+box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
+.muc h4{
+padding:0px;
+margin:0px;
+}
+.muc .header{
+height:40px;
+width;100%;
+color:black;
+font-size:20px;
+line-height:20px;
+padding:4px;
+font-weight:bold;
+}
+.muc .messages{
+position:absolute;
+top:50px;
+left:5px;
+width:300px;
+bottom:50px;
+overflow:auto;
+margin:10px;
+}
+.muc .roster{
+position:absolute;
+top:50px;
+left:320px;
+right:10px;
+height:250px;
+margin:10px;
+}
+
+
+.muc .newmessage {
+position:absolute;
+bottom:5px;
+left:5px;
+width:300px;
+margin:10px;
+}
+.muc .newmessage input{
+width:300px;
+}
+.muc .configbuttons{
+position:absolute;
+bottom:5px;
+right:5px;
+padding:10px;
+position:absolute;
+}
+
+.muc .xmppform{
+background-color:white;
+position:absolute;
+top:5px;
+left:5px;
+bottom:5px;
+right:5px;
+overflow:auto;
+}

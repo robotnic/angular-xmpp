@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="Miniapp">
+<head>
+<meta charset="utf-8"/>
+
+
+
+<script type="text/javascript" src="https://rawgit.com/robotnic/angular-xmpp/master/bin/assets/scripts/primus.js"></script>
+<!-- compiled CSS -->
+<link rel="stylesheet" type="text/css" href="../../angular-xmpp/bin/assets/angular-xmpp-0.0.1.css"/>
+<!-- compiled JavaScript -->
+<script type="text/javascript" src="../../angular-xmpp/bin/assets/angular-xmpp-0.0.1.js"></script>
+
+
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+</head>
+<body ng-controller="pagecontroller">
+<xmpplogin ng-if="!connected"></xmpplogin>
+<xmpproster></xmpproster>
+<xmppminichat></xmppminichat>
+
+
+</body>
+</html>
