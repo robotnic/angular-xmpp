@@ -24,7 +24,7 @@ angular.module('MyApp', [
     ])
     .controller('pagecontroller', ['$scope','$rootScope','Xmpp','XmppMessage','buddycloudFactory','$http',
         function($scope,$rootScope,Xmpp,XmppMessage,buddycloudFactory,$http) {
-            console.log("--pagecontroller--")
+            console.log("--pagecontroller--");
             APP=$scope;
             //$scope.host="http://localhost:3000";
             //$scope.host="https://xmpp-ftw.jit.su/";

@@ -16,14 +16,14 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
             console.log("eh da");
             scope.host=attrs.host;
         }
-    }
+    };
 
 })
 .controller('xmppController',function($scope,Xmpp){
     console.log($scope.host);
     this.init=function(){
         console.log($scope.host);
-    }
+    };
     this.xmpp=new Xmpp($scope.host);
 /*
     this.xmpp.connect().then(function(data){
@@ -40,18 +40,18 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
         if(notification.status){
             $scope.$emit("connected",notification);
         }
-    })
+    });
     this.xmpp.openchat=function(jid){
             console.log("openchat",jid);
             $scope.$emit("openchat",jid);
-    }
+    };
     this.xmpp.addContact=function(jid){
             $scope.$emit("addcontact",jid);
-    }
+    };
 
     this.on=function(){
         $scope.$on.apply($scope,arguments);
-    }
+    };
     console.log("xmpp",this.xmpp);
     $scope.oninit({scope:this.xmpp});
 });

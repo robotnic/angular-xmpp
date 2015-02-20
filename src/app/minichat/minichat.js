@@ -25,7 +25,7 @@ Roster
             xmppController.on("openchat",function(event,status){
                 console.log("realopenchat",event,status);
                 scope.openchat(event,status);
-            })
+            });
 
         }
     };
@@ -108,7 +108,7 @@ Roster
         };
         MESSAGES=api;  //debug only;
         return api;
-    }
+    };
 }])
 
 
@@ -187,6 +187,6 @@ Roster
                 user.newtext = "";
             };
 
-        }
+        };
     }
 ]);

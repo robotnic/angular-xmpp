@@ -50,7 +50,9 @@ Directive
                 });
                 scope.$watch("node", function() {
                     console.log("node changed", scope.node);
-                    if (!scope.data) scope.data = {};
+                    if (!scope.data){
+                         scope.data = {};
+                    }
                     scope.data.tree = null;
                     scope.data.result = [];
                     scope.formdata = null;
@@ -325,7 +327,7 @@ Directive
                     publish: write,
                     remove: remove,
                     update: remove
-                }
+                };
 
             }
 
@@ -418,7 +420,7 @@ Directive
                 var publish = false;
                 var config = false;
                 if (api.data.affiliations[node]) {
-                    var affiliation = api.data.affiliations[node].affiliation
+                    var affiliation = api.data.affiliations[node].affiliation;
                     console.log("aFF", affiliation);
 
                     if (affiliation === "publisher" || affiliation === "owner" || affiliation === "moderator") {
@@ -440,9 +442,9 @@ Directive
                 var rights = {
                     subscribed: subscribed,
                     publish: publish,
-                    config: config,
+                    config: config
 
-                }
+                };
                 return rights;
             }
 
@@ -502,7 +504,7 @@ Directive
                                 api.data.unread[node] = 0;
                                 q.resolve(data);
                                 api.data.rsm = rsm;
-                                api.data.currentnode = node
+                                api.data.currentnode = node;
                             }
                         }
                     );
@@ -785,7 +787,7 @@ Directive
             };
             BCAPI = api;
             return api;
-        }
+        };
     }
 ])
 
@@ -816,7 +818,7 @@ Directive
                 });
 
 
-        }
+        };
         $scope.startup = function(Xmpp) {
             $scope.max = 25;
             $scope.start = 0;
@@ -830,7 +832,7 @@ Directive
             //watch incoming events
             buddycloudFactory.watch().then(
                 function() {
-                    console.warn("should not happen")
+                    console.warn("should not happen");
                 },
                 function(error) {},
                 function(notification) {
@@ -939,7 +941,7 @@ Directive
                 buddycloudFactory.search(searchtext).then(function(data) {
                     console.log(data, data.results);
                     $scope.data.tree = data;
-                })
+                });
             };
 
 
@@ -1036,4 +1038,4 @@ Directive
 
 
     }
-])
+]);

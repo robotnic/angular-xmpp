@@ -89,7 +89,7 @@ angular.module('XmppCore', [])
                 api.socket = new Primus(host);
                 api.socket.on("open", function() {
                     var jid=localStorage.getItem("jid");
-                    var password=localStorage.getItem("password")
+                    var password=localStorage.getItem("password");
                     if(jid && password){
                         api.login(jid,password);
                     }
@@ -135,7 +135,7 @@ angular.module('XmppCore', [])
                     var q=$q.defer();
                     var jid='laos.buddycloud.com';
                     api.socket.send('xmpp.login.anonymous', {
-                            jid: jid,
+                            jid: jid
                         },
                         function(error, data) {
                             console.log(error, data);
@@ -290,7 +290,7 @@ angular.module('XmppCore', [])
         console.log("---------",host);
         api.connect(host);
         return api;
-    }
+    };
 })
 
 

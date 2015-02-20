@@ -181,7 +181,7 @@ MUC
                     var q = $q.defer();
                     xmpp.socket.send(
                         'xmpp.muc.subject', {
-                            "subject": "nix nixn nixn  nix",
+                            "subject": "nix nixn nixn  nix"
                         },
                         function(error, data) {
                             console.log("-----------SUBJECT config", error, data);

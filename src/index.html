@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0051)https://demo.buddycloud.org/prototypes/private.html -->
-<html lang="en" class=" js history csstransforms csstransforms3d fontface localstorage" ng-app="MyApp">
+<html lang="en" class=" js history csstransforms csstransforms3d fontface localstorage" ng-app="XmppApp">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,14 +16,21 @@
         <% }); %>
     <!-- compiled JavaScript -->
     <% scripts.forEach( function ( file ) { %>
-    <script type="text/javascript" src="<%= file %>"></script>
-    <% }); %>
+        <script type="text/javascript" src="<%= file %>"></script>
+        <% }); %>
 
-    <link rel="stylesheet" href="assets/css/style.less" type="text/css" media="screen">
-    <script>
+    <link rel="stylesheet" href="assets/css/style.less" type="text/css" media="screen"/>
+    <script  type="text/javascript">
         var SCOPE = null;
 
-        function page($scope, $rootScope, $location) {
+angular.module('XmppApp', [
+  'templates-app', 'templates-common','XmppUI','btford.markdown','tagged.directives.infiniteScroll','ngSanitize','ui.bootstrap'
+    ])
+
+
+.controller('page', ['$scope','$rootScope', '$location', function($scope,$rootScope, $location) {
+
+//        function page($scope, $rootScope, $location) {
             SCOPE = $scope;
             $scope.node = "recent";
             $scope.openchat = function(node) {
@@ -59,12 +66,12 @@
                 $scope.changenode(node);
 
             });
-        }
+        }]);
     </script>
 </head>
 
 <body ng-controller="page">
-    <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
+        <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
         <div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
             <xmpplogin></xmpplogin>
             <div style="display:none">

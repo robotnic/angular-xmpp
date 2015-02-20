@@ -53,6 +53,6 @@ Roster
                     Xmpp.setPresence();
                 });
             });
-        }
+        };
     }
 ]);
