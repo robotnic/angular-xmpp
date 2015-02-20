@@ -34,7 +34,7 @@ This modul needs cleanup. The session is not stable. Reconnect doesn't really wo
         $scope.login = function() {
             $scope.xmpp.login($scope.username, $scope.password, $scope.register,$scope.autologin);
         };
-        $scope.username = "eva";
+        $scope.username = "elke";
         $scope.password = "bbb";
 
 /*

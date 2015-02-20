@@ -5,7 +5,7 @@
     <!-- header -->
     <div g-show="!formdata">
     <div class="streamheader">
-    <div ng-if="node!='recent'">
+    <div g-if="node!='recent'">
         <button ng-if="!data.rights.subscribed" ng-click="subscribe()" class="btn btn-link">subscribe</button>
         <button ng-if="data.rights.subscribed" ng-click="unsubscribe()" class="btn btn-link">unsubscribe</button>
         <button ng-if="data.rights.config" ng-click="getConfig()" class="btn btn-link">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- content -->
-        <div class="content">
+        <div class="buddycloudcontent">
             <form ng-show="editmode && data.rights.subscribed" ng-submit="save()">
                 <textarea ng-model="item.entry.atom.content.content"></textarea>
                 <input type="submit" />
@@ -95,16 +95,15 @@
 
         <!-- post replay -->
         <form ng-if="item.rights.publish" ng-submit="publish(item.entry.atom.id)" class="subitem">
-            <img ng-src="assets/icons/avatars/{{jid.local}}.png" />
+            <img ng-src="assets/icons/avatars/{{me.jid.user}}.png" />
             <div class="person">
                 <input ng-model="newitems[item.entry.atom.id].value" ng-class="{'saving': newitems[item.entry.atom.id].status == 'saving'}" class="form-control"/>
             </div>
         </form>
     </div>
     </div>
+<!--
 
-
-    <!-- affiliations -->
     <div class="rightside">
     <h4>Owner</h4>
     <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
@@ -127,7 +126,7 @@
     <img ng-if="item.affiliation=='member' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
     </div>
     </div>
-
+-->
 
 </div>
 

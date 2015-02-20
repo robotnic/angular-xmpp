@@ -402,6 +402,8 @@ Directive
                         return;
                     }
                 }
+                console.log("999999999",node);
+                api.getAffiliations(node);
                 api.data.nodes.push({
                     name: name,
                     node: node,
@@ -639,7 +641,29 @@ Directive
                     );
                     return q.promise;
                 },
+                getMySubscriptions: function() {
+                    var q = $q.defer();
+                    Xmpp.socket.send(
+                        'xmpp.buddycloud.subscriptions', {
+                        },
+                        function(error, data) {
+                            if (error) {
+                                console.log(error);
+                                q.reject(error);
+                            } else {
+                                console.log("my suscriptions", data);
+                                api.getAffiliations().then(function(data){
+                                    api.data.mysubscriptions=data;
+                                });
+                                q.resolve(data);
+
+                            }
+                        }
+                    );
+                    return q.promise;
+                },
  
+
                 getAffiliations: function(node) {
                     var q = $q.defer();
                     var request={};
@@ -654,10 +678,11 @@ Directive
                                 console.log(error);
                                 q.reject(error);
                             } else {
-                                api.data.affiliations = {};
+//                                api.data.affiliations = {};
                                 for (var i = 0; i < data.length; i++) {
                                     api.data.affiliations[data[i].node] = data[i];
                                 }
+                                console.log("==========",api.data.affiliations);
                                 q.resolve(data);
 
                             }
@@ -737,6 +762,7 @@ Directive
                                 }
                                 api.getAffiliations(node).then(function() {
                                     console.log("got affiliations");
+                                    delete api.data.affiliations[node];
                                     api.maketree(api.data.result);
                                     api.data.rights = isSubscribed(node);
                                     api.getSubscribers(node).then(function(){
@@ -798,6 +824,7 @@ Directive
             var socket = Xmpp.socket;
             $scope.newitems = {};
             $scope.data = buddycloudFactory.data;
+            $scope.me = Xmpp.me;
 
 
             //watch incoming events

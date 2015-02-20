@@ -25,7 +25,8 @@ angular.module('XmppCore', [])
         function watch(q){
             //roster change
             api.socket.on('xmpp.connection', function(data) {
-                console.log("loged in");
+                console.log("loged in",data);
+                api.me=data;
                 api.connected=true;
                 q.notify(data);
             });
@@ -115,7 +116,6 @@ angular.module('XmppCore', [])
                             register: register
                         },
                         function(error, data) {
-                            console.log(error, data);
                             if(error){
                                 q.reject(error);
                             }else{
@@ -156,6 +156,7 @@ angular.module('XmppCore', [])
             * @method logout
             */
             logout:function(){
+                    console.log("logout");
                     api.socket.send(
                         'xmpp.logout',
                         {},
@@ -195,7 +196,7 @@ angular.module('XmppCore', [])
                     var type = node.substring(n + 1);
 
                     var jid=name+"@"+domain;
-                    return {name:name,domain:domain,jid:jid,type:type};
+                    return {name:name,user:name,domain:domain,jid:jid,type:type};
 
             },
             /**
@@ -320,4 +321,7 @@ To Array filter is hidden here
             });
         });
     };
-});
+})
+
+
+

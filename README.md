@@ -16,13 +16,16 @@ Test here:  http://datenkueche.com/buddycloud/
 <script type="text/javascript" src="../assets/ngbp-0.3.2.js"></script>
 ```
 
-## directives
-```
-<xmpplogin></xmpplogin>
-<roster></roster>
+## xmpp chat
 ```
 
-tet
+<xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
+<div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
+    <xmpplogin></xmpplogin>
+    <div style="display:none">
+        <xmpproster></xmpproster>
+    </div>
+</div>
+<xmppminichat oninit="initchat(scope)"></xmppminichat>
 
-
-
+```

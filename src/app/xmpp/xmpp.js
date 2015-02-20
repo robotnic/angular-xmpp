@@ -53,6 +53,6 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
         $scope.$on.apply($scope,arguments);
     }
     console.log("xmpp",this.xmpp);
-    $scope.oninit({xmpp:this.xmpp});
+    $scope.oninit({scope:this.xmpp});
 });
 console.log(2);
