@@ -16,16 +16,40 @@ Test here:  http://datenkueche.com/buddycloud/
 <script type="text/javascript" src="../assets/ngbp-0.3.2.js"></script>
 ```
 
-## xmpp chat
+## example xmpp chat
 ```
 
-<xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
-<div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
+<xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
-    <div style="display:none">
-        <xmpproster></xmpproster>
-    </div>
-</div>
-<xmppminichat oninit="initchat(scope)"></xmppminichat>
+    <xmpproster></xmpproster>
+    <xmppminichat></xmppminichat>
+</xmpp>
 
 ```
+
+## example xmpp muc
+```
+
+<xmpp host="https://laos.buddycloud.com">
+    <xmpplogin></xmpplogin>
+    <xmppmuc room="seehaus@channels.buddycloud.com"></xmppmuc>
+</xmpp>
+
+```
+
+## example xmpp buddycloud
+```
+
+<xmpp host="https://laos.buddycloud.com">
+    <xmpplogin></xmpplogin>
+    <buddycloud room="robotnic@laos.buddycloud.com"></buddycloud>
+</xmpp>
+
+```
+
+
+
+The templates include alle the javascript that has to be done and tries to keep the html simple.
+Your part ist to give them a style.
+
+## javascipt
