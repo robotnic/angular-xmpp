@@ -42,7 +42,7 @@ Test here:  http://datenkueche.com/buddycloud/
 
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
-    <buddycloud room="robotnic@laos.buddycloud.com"></buddycloud>
+    <buddycloud room="/user/robotnic@laos.buddycloud.com/posts"></buddycloud>
 </xmpp>
 
 ```
@@ -52,4 +52,22 @@ Test here:  http://datenkueche.com/buddycloud/
 The templates include alle the javascript that has to be done and tries to keep the html simple.
 Your part ist to give them a style.
 
-## javascipt
+## Angular binding exampe
+```
+<input ng-mode="node"/>
+<buddycloud room="{{node}}" changenode="nodechangedinsidedirective(node)"></buddycloud>
+```
+
+In your controller
+```
+...
+$scope.node="/user/robotnic@laos.buddycloud.com/posts";
+$scope.nodechangedinsidedirective=function(node){
+    //change hashtag or whatever
+}
+
+```
+
+
+
+
