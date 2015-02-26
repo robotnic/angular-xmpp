@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Angluar-xmpp Tutorial Example</title>
 <script src="primus.js"></script>
-<script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+<script src="angular-xmpp-0.0.2.js"></script>
 <style type="text/css">
 td{
 vertical-align:top;
@@ -15,7 +15,9 @@ vertical-align:top;
 <body ng-controller="test">
 <div style="position:fixed;top:0px;left:0px;width:100%;padding:5px;box-shadow:1px 1px 1px black;background-color:white;">
 <h3>Testcenter: XmppCore ({{counter  +1}}/{{expected.length}}/<span style="color:green">{{good}}</span>/<span style="color:red">{{bad}}</span>)</h3>
+<!--
 <button ng-click="next()">next</button>
+-->
 <button ng-click="login()">login</button>
 <button ng-click="loadcoretest()">test core</button>
 <button ng-click="loadbuddycloudtest()">test buddycloud</button>
