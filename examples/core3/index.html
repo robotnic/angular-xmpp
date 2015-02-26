@@ -14,7 +14,7 @@ vertical-align:top;
 </head>
 <body ng-controller="test">
 <div style="position:fixed;top:0px;left:0px;width:100%;padding:5px;box-shadow:1px 1px 1px black;background-color:white;">
-<h3>Testcenter: XmppCore ({{counter  +1}}/{{expected.length}}/<span style="color:green">{{good}}</span>/<span style="color:red">{{bad}}</span>)</h3>
+<h3>Testcenter: XmppCore ({{counter  }}/{{expected.length}}/<span style="color:green">{{good}}</span>/<span style="color:red">{{bad}}</span>)</h3>
 <!--
 <button ng-click="next()">next</button>
 -->
@@ -30,12 +30,12 @@ vertical-align:top;
 <h3>{{xmpp.data.me.jid.user}}@{{xmpp.data.me.jid.domain}}</h3>
 <div ng-repeat="item in check">
 <h4>{{$index}}. {{item}} 
-<span ng-if="allcommands[counter].checkresults[$index][item]" style="color:green">✓ </span>
-<span ng-if="!allcommands[counter].checkresults[$index][item]" style="color:red">✖ </span>
+<span ng-if="allcommands[counter -1].checkresults[$index][item]" style="color:green">✓ </span>
+<span ng-if="!allcommands[counter -1].checkresults[$index][item]" style="color:red">✖ </span>
 </h4>
 <div ng-click="toggle=!toggle">
 <pre ng-if="toggle" style="color:blue">{{expected[counter][rowIndex][item]|json}}</pre>
-<pre ng-if="!toggle">{{results[counter][rowIndex][item]|json}} </pre>
+<pre ng-if="!toggle">{{results[counter -1][rowIndex][item]|json}} </pre>
 </div>
 </div>
 

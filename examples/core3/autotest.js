@@ -1,14 +1,16 @@
 var SCOPE=null;  //debug
     var xmpps=[];
     var buddyclouds=[];
-
+/*
     var testaccount1="test1@buddycloud.org";
     var testaccount2="test2@buddycloud.org";
     var testaccount3="test3@buddycloud.org";
+*/
 
     var testaccount1="test1@laos.buddycloud.com";
     var testaccount2="test2@laos.buddycloud.com";
     var testaccount3="test3@laos.buddycloud.com";
+
 
 
 
@@ -25,6 +27,7 @@ angular.module('Test', ['AngularXmpp'])
     $scope.commands=[];
     before(3);
     $scope.allcommands=[];
+
 
 /**
 The xmpp websocket connections
@@ -45,6 +48,7 @@ login
     $scope.login=function(){
         $scope.good=0;
         $scope.bad=0;
+        $scope.counter=0;
         $scope.check=["me"]
 
         $q.all({
@@ -59,6 +63,7 @@ login
     }
 
 
+    $scope.login();
 /**
 xmppcore
 */
@@ -67,6 +72,8 @@ xmppcore
     $scope.loadcoretest=function(){ 
         $scope.good=0;
         $scope.bad=0;
+        $scope.counter=0;
+        $scope.allcommands.length=0;
         $scope.check=["me","roster","connected"];
 
         $q.all({
@@ -104,6 +111,7 @@ $scope.loadbuddycloudtest=function(){
         console.log("dada");
         $scope.good=0;
         $scope.bad=0;
+        $scope.counter=0;
         $scope.check=["nodes","unread","affiliations"];
 
         $q.all({
@@ -139,6 +147,11 @@ common
 $scope.results=[];
 
 function starttest(prefix,commands,expected){
+
+        for(var i=0;i< 3;i++){
+            $scope.commands[i]=[];
+        }
+
     commands=replaceTestAccount(commands);
     expected=replaceTestAccount(expected);
     $scope.expected=expected;
@@ -162,11 +175,11 @@ function testit(i,c,command,type){
        $scope.allcommands.push(comm);
     },i*steptime);
     $timeout(function(){
-        $scope.counter=i;
         var good=0;
         var bad=0;
+        $scope.counter++;
        if(!$scope.results[i])$scope.results[i]=[];
-        console.log("--------data",xmpps[c].data,buddyclouds);
+        console.log("--------data",xmpps[c].data,buddyclouds,i,$scope.counter);
         $scope.allcommands[i].checkresults=[];
 
                 console.log(" A C H T U N G  type",type);
