@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+<meta charset="utf-8">
+<title>Angluar-xmpp Tutorial Example</title>
+<script src="primus.js"></script>
+<script src="angular-xmpp-0.0.2.js"></script>
+<style>
+.muc{
+width:500px;
+height:400px;
+border:1px solid black;
+position:relative;
+padding:10px;
+}
+.muc .header{
+font-size:20px;
+}
+.muc h4{
+margin-top:4px;
+margin-bottom:2px;
+}
+.muc .messages{
+position:absolute;
+top:45px;
+left:5px;
+bottom:40px;
+right:120px;
+overflow-y:scroll;
+}
+.muc .roster{
+position:absolute;
+top:45px;
+right:5px;
+bottom:40px;
+width:100px;
+overflow:hidden;
+}
+.muc .newmessage{
+position:absolute;
+bottom:5px;
+left:5px;
+right:120px;
+}
+
+.muc .newmessage input{
+width:100%;
+}
+.muc .configbuttons{
+position:absolute;
+top:5px;
+right:5px;
+}
+</style>
+</head>
+<body>
+<h4>Multi User Chat</h4>
+<xmpp host="https://xmpp-ftw.jit.su/" anonymous="true">
+    <xmppmuc  room="test123@channels.buddycloud.com"></xmppmuc>
+</xmpp>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html ng-app="Test">
+<head>
+<meta charset="utf-8">
+<title>Angluar-xmpp Tutorial Example</title>
+<script src="primus.js"></script>
+<script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+<style type="text/css">
+td{
+vertical-align:top;
+}
+</style>
+<script type="text/javascript">
+var SCOPE=null;  //debug
+angular.module('Test', ['AngularXmpp'])
+.controller("test",function($scope,Xmpp,$timeout){
+    SCOPE=$scope;
+    var testdirs=["core","buddycloud","muc"];
+    $scope.errors=0;
+    $scope.passes=0;
+    var steptime=2000;
+    var expect=JSON.parse(localStorage.getItem("results"));
+    $scope.expect=expect;
+    var u1="test1@laos.buddycloud.com";
+    var u2="test2@laos.buddycloud.com";
+    var u3="test3@laos.buddycloud.com";
+    var u4="robotnic@buddycloud.org";
+    var users=[u1,u2,u3];
+    $scope.check=["me","roster"];
+
+    function test(){
+        var xmpp=new Xmpp("https://laos.buddycloud.com/");
+        xmpp.watch().then(function(data){
+            console.log("destroy xmpp");
+        },function(error){
+            console.log("xmpp error",error);
+        },function(notification ){
+            console.log("xmpp update",notification);  //$apply
+        });
+        console.log("startwatch");
+        return xmpp;
+    }
+
+    var xmpps=[];
+    for(var i=0;i<users.length;i++){
+        xmpps[i]=test();
+    }
+    $scope.xmpps=xmpps;
+
+
+    tests=[
+        "xmpps[0].login('"+u1+"/test','bbb',true)",
+        "xmpps[1].login('"+u2+"/test','bbb',true)",
+        "xmpps[2].login('"+u3+"/test','bbb',true)",
+        "xmpps[0].roster.get()",
+        "xmpps[0].presence.set({'status':'bored to death'})",
+        "xmpps[1].roster.get()",
+        "xmpps[1].presence.subscribe('"+u1+"')",
+        "xmpps[0].presence.subscribed('"+u2+"')",
+        "xmpps[0].presence.subscribe('"+u2+"')",
+        "xmpps[1].presence.subscribed('"+u1+"')",
+        "xmpps[0].presence.subscribe('"+u3+"')",
+        "xmpps[2].presence.subscribe('"+u1+"')",
+        "xmpps[2].presence.subscribed('"+u1+"')",
+        "xmpps[0].presence.subscribed('"+u3+"')",
+        "xmpps[1].presence.set({'status':'Cool that'})",
+        "xmpps[1].presence.set({'status':'Cool that2'})",
+        "xmpps[0].presence.set({'status':'I also haz new status'})",
+        "xmpps[1].roster.remove('"+u1+"')",
+        "xmpps[0].roster.remove('"+u2+"')",
+        "xmpps[0].roster.remove('"+u3+"')",
+        "xmpps[0].roster.remove('"+u3+"')",
+        "xmpps[2].roster.remove('"+u1+"')",
+        "xmpps[0].logout()",
+        "xmpps[1].logout()",
+        "xmpps[2].logout()"
+    ] 
+    $scope.tests=tests;
+$scope.play=function(){
+    for(var i=0;i< tests.length;i++){
+        dotest(i);
+    }
+    $timeout(function(){
+        save();
+    },(tests.length+2)*steptime);
+
+    function dotest(i){
+        $timeout(function(){
+            run(i);
+        },(i+1)*steptime);
+    }
+}
+
+var results=[];
+$scope.results=results;
+var checkstate=[];
+
+function run(i){
+        $scope.counter=i;
+        var num=parseCommand(tests[i]);
+        if(!$scope.commands[num]){
+            $scope.commands[num]=[];
+        }
+        $scope.commands[num].push(tests[i]);
+        console.log(tests[i]);
+        eval(tests[i]);
+        check(i);
+}
+
+function check(i){
+    $timeout(function(){
+        var result=collect(i);
+        results.push(JSON.parse(JSON.stringify(result)));
+    },steptime - 100);
+}
+
+function parseCommand(text){
+    var matches = text.match(/\[(.*?)\]/);
+    var submatch = null;
+    if (matches) {
+        submatch = matches[1];
+    }
+    return parseInt(submatch);
+}
+
+//record results to compare later
+$scope.testresults=[];
+function collect(n){
+    var result=[];
+    var checkstates=[];
+    $scope.testresults[n]={
+        errors:0,
+        passes:0
+    };
+    $scope.checkstates=checkstates;
+    for(var i=0;i< xmpps.length;i++){
+        result[i]={} 
+        checkstates[i]={} 
+        for(var j=0;j< $scope.check.length;j++){
+            var key=$scope.check[j];
+            var r=xmpps[i].data[key];
+            if(expect && expect[n] && expect[n][i]){
+                var er=expect[n][i][key];
+            }
+            var checkresult=angular.equals(r, er)
+            checkstates[i][key]=checkresult;
+            console.log(i,key,checkresult);
+            if(!checkresult){
+                console.log(r,er);
+                $scope.errors++;
+                $scope.testresults[n].errors++;
+            }else{
+                $scope.passes++;
+                $scope.testresults[n].passes++;
+            }
+            result[i][key]=r;
+        }
+    }
+    
+    return result;
+}
+
+i=0;
+$scope.commands=[];
+$scope.next=function(){
+        if(tests[i]){
+            run(i);
+        }
+        i++;
+}
+
+function save(){
+console.log("save it",results);
+    var resultstring=JSON.stringify(results,null,"  ");
+    localStorage.setItem("results",resultstring);
+}
+
+
+});
+</script>
+</head>
+<body ng-controller="test">
+<div style="position:fixed;top:0px;left:0px;width:100%;padding:5px;box-shadow:1px 1px 1px black;background-color:white;">
+<h3>Testcenter: XmppCore ({{counter +1}}/{{tests.length}}/<span style="color:green">{{passes}}</span>/<span style="color:red">{{errors}}</span>)</h3>
+<button ng-click="next()">next</button>
+<button ng-click="play()">play</button>
+</div>
+<table style="width:100%;margin-top:100px;">
+<tr>
+<td ng-repeat="xmpp in xmpps" ng-init="rowIndex = $index">
+<h3>{{xmpp.jid}}</h3>
+<div ng-repeat="item in check">
+<h4>{{$index}}. {{item}} 
+<span ng-if="checkstates[rowIndex][item]" style="color:green">✓ </span>
+<span ng-if="!checkstates[rowIndex][item]" style="color:red">✖ </span>
+</h4>
+<div ng-click="toggle=!toggle">
+<pre ng-if="toggle" style="color:blue">{{expect[counter][rowIndex][item]|json}}</pre>
+<pre ng-if="!toggle">{{xmpp.data[item]|json}} </pre>
+</div>
+</div>
+
+<h4>commands</h4>
+<p ng-repeat="command in commands[$index] track by $index" >
+{{command}}
+<span style="color:green">{{testresults[$index].passes}}</span>
+<span style="color:red">{{testresults[$index].errors}}</span>
+</p>
+</td>
+</tr>
+</body>
+</html>

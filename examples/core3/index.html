@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Angluar-xmpp Tutorial Example</title>
 <script src="primus.js"></script>
-<script src="angular-xmpp-0.0.2.js"></script>
+<script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
 <style type="text/css">
 td{
 vertical-align:top;
@@ -54,11 +54,13 @@ vertical-align:top;
 </div>
 
 <h1>Automatic testing</h1>
-<p>This is an automatic test client for angular-xmpp. It works with 3 accounts and sends commands to the websocket. After sending the command if waits for ~2 seconds, tests the angular-xmpp state and then sends the next command.</p>
-<p>When the test is finished, all created data should be removed from server. If you cancel a test, there will be remaining data on the server and the next test can nor succeed. If you see an error, please wait until the testrun is finished and then start again.</p>
+<p>This is an automatic test client for angular-xmpp. It works with 3 xmpp accounts and sends commands to the websocket. After sending the command it waits for ~2 seconds, tests the angular-xmpp state and then sends the next command.</p>
+<p>When the test is finished, all created data should be removed from server. If you cancel a test, there will be remaining data on the server and the next test can not succeed. If you see an error, please wait until the testrun is finished and then start again.</p>
 <h2>Possible Problems</h2>
 This Test system works with real accounts. The accounts should be in the same state as after creating the account. If not, the tests WILL FAIL.
-
+<h2>For funny persons</h2>
+If you are very smart, you can change to passwords of the testaccounts. 
+This online test-tool is broken then until somebody repairs it.
 <h2>Creating new tests</h2>
 
 The testfiles are very big and it's not really possible to generate by hand. The purpose is to keep the API consistent. The testfiles (expected.json) can be generated automaticaliy (textarea)

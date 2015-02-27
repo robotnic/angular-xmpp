@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="Muc">
+<head>
+<meta charset="utf-8">
+<title>Angluar-xmpp Tutorial Example</title>
+<script src="primus.js"></script>
+<script src="angular-xmpp-0.0.2.js"></script>
+<script type="text/javascript">
+var SCOPE=null;  //debug
+angular.module('Muc', ['XmppUI'])
+.controller("mymuc",function($scope,MucFactory){
+    SCOPE=$scope;
+    $scope.room="test123@channels.buddycloud.com";
+    $scope.xmppinit=function(xmpp){
+        $scope.xmpp=xmpp;
+        $scope.muc = new MucFactory(xmpp);
+        $scope.muc.watch().then(function(){},function(){},function(){ 
+            console.log("ui update");
+        });
+    }
+});
+</script>
+</head>
+<body>
+<h4>Multi User Chat</h4>
+<div ng-controller="mymuc">
+<xmpp host="https://xmpp-ftw.jit.su/" anonymous="true" oninit="xmppinit(scope)">
+</xmpp>
+<h4>Login</h4>
+<form ng-submit="muc.join(room,nick)">
+<input ng-model="room"/>
+<input ng-model="nick"/>
+<input type="submit"/>
+</form>
+<h4>messages</h4>
+<div ng-repeat="message in muc.messages">
+{{message}}
+</div>
+<h4>roster</h4>
+<div ng-repeat="user in muc.roster">
+{{user|json}}
+</div>
+<h4>Send message</h4>
+<form ng-submit="muc.send(newmessage)"/>
+<input ng-model="newmessage"/>
+</form>
+</div>
+
+
+</body>
+</html>

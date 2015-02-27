@@ -1,5 +1,5 @@
 [
-  [0,"send('xmpp.login',{jid:'test1@laos.buddycloud.com',password:'bbb',resource:'test',register:true})"],
-  [1,"send('xmpp.login',{jid:'test2@laos.buddycloud.com',password:'bbb',resource:'test',register:true})"],
-  [2,"send('xmpp.login',{jid:'test3@laos.buddycloud.com',password:'bbb',resource:'test',register:true})"]
+  [0,"send('xmpp.login',{jid:'test1@laos.buddycloud.com',password:'bbb',resource:'test',register:false})"],
+  [1,"send('xmpp.login',{jid:'test2@laos.buddycloud.com',password:'bbb',resource:'test',register:false})"],
+  [2,"send('xmpp.login',{jid:'test3@laos.buddycloud.com',password:'bbb',resource:'test',register:false})"]
 ]
