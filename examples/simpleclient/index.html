@@ -104,7 +104,7 @@ background-color:yellow;
                     <h4>subscriptions</h4>
                     <json-formatter ng-if="debug" open="0" json="buddycloud.data.subscriptions"></json-formatter>
                     <div ng-repeat="item in buddycloud.data.subscriptions"  ng-click="item.open()" class="stream" ng-class="{selected:item.node==buddycloud.data.currentnode}">
-                        {{item.node|getUser}} <span ng-if="buddycloud.data.unread[item.node]">({{buddycloud.data.unread[item.node]}})</span>
+                        {{item.node|getUser}} <span ng-if="buddycloud.data.unread[item.node]">({{buddycloud.data.unread[item.node]}})</span>{{item.subscription}}
                     </div>
 
 
@@ -113,10 +113,11 @@ background-color:yellow;
                     <h4>affiliations</h4>
                     <json-formatter ng-if="debug" open="0" json="buddycloud.data.affiliations[buddycloud.data.currentnode]"></json-formatter>
                     <div ng-repeat="node in buddycloud.data.affiliations[buddycloud.data.currentnode]|orderBy:'affiliation' | groupBy:['affiliation']" 
-                        ng-class="{avatar:!node.group_by_CHANGED}" 
-                        ng-click="buddycloud.open({'node':'/user/'+node.jid.user+'@'+node.jid.domain+'/posts'})">
+                        ng-class="{avatar:!node.group_by_CHANGED}" >
  <h5 ng-if="node.group_by_CHANGED">{{node.affiliation}} &#160; &#160; &#160; &#160; &#160; &#160; </h5>
-                         <div style="background-image:url('avatars/{{node.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px"></div>
+                         <div style="background-image:url('avatars/{{node.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px"  ng-click="buddycloud.open({'node':'/user/'+node.jid.user+'@'+node.jid.domain+'/posts'})"></div>
+                        <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner'" ng-click="buddycloud.affiliation(node.jid,'moderator')">make mod</button>
+                        <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'publisher')">make pub</button>
                     </div>
  
                 </div>
