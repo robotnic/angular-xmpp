@@ -20,10 +20,10 @@
   [0,"send('xmpp.buddycloud.unsubscribe',{'node':'/user/test2@laos.buddycloud.com/posts'})"],
   [1,"open({'node':'/user/test1@laos.buddycloud.com/posts'})"],
   [0,"open({'node':'/user/test1@laos.buddycloud.com/posts'})"],
-  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test2@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Hi Anna' }}})"],
-  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test2@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Nice to meet you Erik.' }}})"],
-  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test2@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Whats goin on?' }}})"],
+  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test1@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Hi Anna' }}})"],
+  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test1@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Nice to meet you Erik.' }}})"],
+  [0,"send( 'xmpp.buddycloud.publish', { 'node': '/user/test1@laos.buddycloud.com/posts', 'content': { 'atom': { 'content': 'Whats goin on?' }}})"],
   [0,"data.items[21].reply('böse')"],
   [0,"data.items[21].reply('böse')"],
-  [1,"send( 'xmpp.buddycloud.subscription', { 'node': '/user/test2@laos.buddycloud.com/posts', 'jid': 'test1@laos.buddycloud.com','subscription':'invited'})"]
+  [1,"send( 'xmpp.buddycloud.subscription', { 'node': '/user/test1@laos.buddycloud.com/posts', 'jid': 'test1@laos.buddycloud.com','subscription':'invited'})"]
 ]
