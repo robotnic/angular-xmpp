@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html ng-app="Test">
+
+<head>
+    <meta charset="utf-8">
+    <title>Angluar-xmpp Tutorial Example</title>
+
+    <script src="primus.js"></script>
+<!--
+    <script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+-->
+<script src="angular-xmpp-0.0.2.js"></script>
+    <script src="bower_components/json-formatter/dist/json-formatter.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <link rel="stylesheet" href="bower_components/json-formatter/dist/json-formatter.css" />
+    <link rel="stylesheet" href="animate.css" />
+
+    <style type="text/css">
+        body {
+            padding: 20px;
+            font-family:sans-serif;
+        }
+        h5{
+            margin:0px;
+        }
+        td {
+            vertical-align: top;
+            position: relative;
+        }
+        .bc{
+            border:1px solid lightgrey;
+            margin:14px;
+            padding:14px;
+        }
+        .nodepanel {
+            margin-left: 160px;
+        }
+        .item {
+            margin: 5px;
+            padding: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .item .time {
+            color: gray;
+            font-size: 10px;
+        }
+        .nodes {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            width: 100px;
+        }
+        .stream {
+            width: 140px;
+            color:blue;
+            cursor:pointer;
+        }
+        .stream.selected {
+            font-weight:bold;
+        }
+        .stream:hover {
+           color:red;
+        }
+
+        .avatar{
+            display:inline-block;
+            width:30px;
+            height:30px;
+            margin:3px;
+        }
+json-formatter{
+background-color:yellow;
+}
+    </style>
+    <script type="text/javascript" src="autotest.js">
+    </script>
+</head>
+
+<body ng-controller="test">
+    <div style="position:fixed;top:0px;left:0px;width:100%;padding:5px;box-shadow:1px 1px 1px black;background-color:white;z-index:10">
+        <h3>Testcenter: XmppCore ({{counter  }}/{{expected.length}}/<span style="color:green">{{good}}</span>/<span style="color:red">{{bad}}</span>)</h3>
+        <button ng-click="login()">login</button>
+        <button ng-click="loadcoretest()">test core</button>
+        <button ng-click="loadbuddycloudtest('buddycloud')">test buddycloud</button>
+        <button ng-click="loadbuddycloudtest('buddyclouderrors')">buddycloud bugs</button>
+        API:<input type="checkbox" ng-model="debug"/>
+    </div>
+    <table style="width:100%;margin-top:50px;table-layout: fixed;">
+        <tr>
+            <pre>
+</pre>
+            <td ng-repeat="buddycloud in buddyclouds" ng-init="rowIndex = $index" class="bc">
+
+                <!-- own image and name -->
+                <h3>
+<div style="background-image:url('avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;display:inline-block;"></div>
+<span>{{buddycloud.xmpp.data.me.jid.user}}@{{buddycloud.xmpp.data.me.jid.domain}}</span> {{ticks[$index]}}
+</h3>
+
+
+                <!-- subscribed nodes -->
+                <div class="nodes">
+                    <h4>subscriptions</h4>
+                    <json-formatter ng-if="debug" open="0" json="buddycloud.data.subscriptions"></json-formatter>
+                    <div ng-repeat="item in buddycloud.data.subscriptions"  ng-click="item.open()" class="stream" ng-class="{selected:item.node==buddycloud.data.currentnode}">
+                        {{item.node|getUser}} <span ng-if="buddycloud.data.unread[item.node]">({{buddycloud.data.unread[item.node]}})</span>
+                    </div>
+
+
+
+                    <!-- node affiliations -->
+                    <h4>affiliations</h4>
+                    <json-formatter ng-if="debug" open="0" json="buddycloud.data.affiliations[buddycloud.data.currentnode]"></json-formatter>
+                    <div ng-repeat="node in buddycloud.data.affiliations[buddycloud.data.currentnode]|orderBy:'affiliation' | groupBy:['affiliation']" 
+                        ng-class="{avatar:!node.group_by_CHANGED}" 
+                        ng-click="buddycloud.open({'node':'/user/'+node.jid.user+'@'+node.jid.domain+'/posts'})">
+ <h5 ng-if="node.group_by_CHANGED">{{node.affiliation}} &#160; &#160; &#160; &#160; &#160; &#160; </h5>
+                         <div style="background-image:url('avatars/{{node.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px"></div>
+                    </div>
+ 
+                </div>
+
+
+                <!-- timeline -->
+                <div class="nodepanel">
+
+                    <!-- the node buttons -->
+                    <button  ng-if="buddycloud.subscribe" ng-click="buddycloud.subscribe()" >follow</button>
+                    <button ng-if="buddycloud.unsubscribe" ng-click="buddycloud.unsubscribe()" >unfollow</button>
+                    <button  ng-if="buddycloud.config" ng-click="buddycloud.config()">config</button>
+                    {{buddycloud.data.currentnode}}
+                    <json-formatter ng-if="debug"  open="0" json="buddycloud"></json-formatter>
+
+
+
+                    <!-- main textarea -->
+                    <form ng-if="buddycloud.sendMessage" ng-submit="buddycloud.sendMessage(content)">
+                        <textarea ng-model="content.atom.content"></textarea>
+                        <br/>
+                        <input type="submit" value="send" />
+                    </form>
+
+
+
+                    <!-- item loop -->
+                    <div ng-repeat="item in buddycloud.data.items | orderBy:'entry.atom.published':true" class="item" ng-if="!item.entry['in-reply-to']">
+
+                        <button ng-click="item.remove()">remove</button>
+                        <button ng-click="edit=!edit">edit</button>
+                        <button ng-if="edit" ng-click="item.save();edit=false">save</button>
+                        <json-formatter ng-if="debug" open="0" json="item"></json-formatter>
+                        <table>
+                            <!-- img,author,time -->
+                            <tr>
+                                <td>
+                                    <div style="background-image:url('avatars/{{item.entry.atom.author.name|getUser}}.png');background-size:cover;width:40px;height:40px;border:1px solid black"></div>
+                                </td>
+                                <td>
+                                    <h4 style="margin:0px" ng-click="buddycloud.open({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</h4>
+                                    <span class="time" am-time-ago="item.entry.atom.published"></span>
+                                </td>
+                            </tr>
+                            <!--text -->
+                            <tr>
+                                <td colspan="2">
+                                    <textarea ng-if="edit" ng-model="item.entry.atom.content.content"></textarea>
+                                    {{item.entry.atom.content.content}}
+
+                                </td>
+                            </tr>
+
+                           <!-- subitem loop -->
+                            <tr ng-repeat="subitem in buddycloud.data.items | orderBy:'entry.atom.published'" ng-if="item.id == subitem.entry['in-reply-to'].ref"  >
+                                <td>
+                                    <div style="background-image:url('avatars/{{subitem.entry.atom.author.name|getUser}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;float:right"></div>
+                                </td>
+                                <td>
+                                    <p style="margin:0px">{{subitem.entry.atom.content.content}}</p>
+                                    <span class="time" am-time-ago="subitem.entry.atom.published"></span>
+                                        <button ng-click="subitem.remove()">remove</button>
+                                </td>
+                            </tr>
+
+                            <!-- reply form -->
+                            <tr>
+                                <td>
+                                    <div style="background-image:url('avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;float:right"></div>
+                                </td>
+                                <td>
+                                    <form ng-submit='item.reply(subtext)'>
+                                        <input ng-model="subtext" />
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+<br/> <br/> <br/> <br/> <br/>
+<br/> <br/> <br/> <br/> <br/>
+<br/> <br/> <br/> <br/> <br/>
+                <hr/>
+                <h4>commands</h4>
+                <p ng-repeat="command in commands[$index] track by $index" ng-click="$parent.$parent.counter=command.i">
+                    {{command.i +1}}: {{command.command}}
+                    <span style="color:green">{{command.good}}</span>
+                    <span style="color:red">{{command.bad}}</span>
+                </p>
+                </div>
+
+                <!--
+      <json-formatter open="1" json="buddyclouds[0].data"></json-formatter>
+-->
+
+</body>
+
+</html>

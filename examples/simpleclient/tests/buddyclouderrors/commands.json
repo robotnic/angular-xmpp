@@ -1,0 +1,9 @@
+[
+  [0,"send('xmpp.buddycloud.discover',{id:3})"],
+  [1,"send('xmpp.buddycloud.discover',{id:3})"],
+  [0,"send('xmpp.buddycloud.register',{})"],
+  [1,"send('xmpp.buddycloud.register',{})"],
+  [0,"send('xmpp.buddycloud.create', {'node':'/user/weather77@laos.buddycloud.com/posts'})"],
+  [1,"send('xmpp.buddycloud.unsubscribe',{'node':'/user/test1@laos.buddycloud.com/posts'})"],
+  [0,"send( 'xmpp.buddycloud.item.delete', { 'node': '/user/test1@buddycloud.org/posts', 'id': '8c0561fa-e10a-4657-88e8-ccab544a2066' })"]
+]
