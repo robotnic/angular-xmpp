@@ -135,7 +135,7 @@ background-color:yellow;
 
 
                     <!-- main textarea -->
-                    <form ng-if="buddycloud.sendMessage" ng-submit="buddycloud.sendMessage(content)">
+                    <form ng-if="buddycloud.publish" ng-submit="buddycloud.sendMessage(content)">
                         <textarea ng-model="content.atom.content"></textarea>
                         <br/>
                         <input type="submit" value="send" />

@@ -173,7 +173,7 @@ common
         function testit(i, c, command, type) {
             console.log(arguments);
             $timeout(function() {
-                console.log("eval", command);
+                console.log("================eval", command);
                 console.log(buddyclouds[0]);
                 window.eval(command);
                 var comm = {
