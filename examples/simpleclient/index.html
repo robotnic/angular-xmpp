@@ -117,7 +117,8 @@ background-color:yellow;
  <h5 ng-if="node.group_by_CHANGED">{{node.affiliation}} &#160; &#160; &#160; &#160; &#160; &#160; </h5>
                          <div style="background-image:url('avatars/{{node.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px"  ng-click="buddycloud.open({'node':'/user/'+node.jid.user+'@'+node.jid.domain+'/posts'})"></div>
                         <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner'" ng-click="buddycloud.affiliation(node.jid,'moderator')">make mod</button>
-                        <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'publisher')">make pub</button>
+                        <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'publisher')">make publisher</button>
+                        <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'member')">make member</button>
                     </div>
  
                 </div>
@@ -136,7 +137,7 @@ background-color:yellow;
 
 
                     <!-- main textarea -->
-                    <form ng-if="buddycloud.publish" ng-submit="buddycloud.sendMessage(content)">
+                    <form ng-if="buddycloud.publish" ng-submit="buddycloud.publish(content)">
                         <textarea ng-model="content.atom.content"></textarea>
                         <br/>
                         <input type="submit" value="send" />
