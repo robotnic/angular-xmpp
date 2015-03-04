@@ -7,7 +7,7 @@
   "main": [
     "bin/assets/angular-xmpp-0.0.1.js"
   ],
-  "ignore":"**/*",
+  "ignore":["**/*"],
   "repository": {
     "type": "git",
     "url": "git@github.com:robotnic/angular_xmpp.git"
