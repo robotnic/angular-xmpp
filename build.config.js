@@ -61,29 +61,16 @@ module.exports = {
    * recommended that you use wildcards.
    */
   vendor_files: {
+    main:[
+        dist:
+    ],
     js: [
-        'vendor/jquery/dist/jquery.js',
         'vendor/angular/angular.js',
         'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
-        'vendor/bootstrap/dist/js/bootstrap.js',
-        'vendor/angular-strap/dist/angular-strap.js',
-        'vendor/angular-strap/dist/angular-strap.tpl.min.js',
-        'vendor/angular-markdown-directive/markdown.js',
-        'vendor/angular-sanitize/angular-sanitize.js',
-        'vendor/angular-animate/angular-animate.js',
-        'vendor/showdown/src/showdown.js',
-        'vendor/angular-bootstrap/ui-bootstrap.min.js',
-        'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        'vendor/modernizr/modernizr.js'
     ],
     css: [
     ],
     assets: [
-  'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',
-      'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff2'
     ]
   },
 };

@@ -6,11 +6,10 @@
   "version": "0.0.2",
   "main": [
     "bin/assets/angular-xmpp-0.0.1.js",
-    "bin/assets/angular-xmpp-0.0.1.css"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:robotnic/buddycloudclient.git"
+    "url": "git@github.com:robotnic/angular_xmpp.git"
   },
   "devDependencies": {
     "angular-strap": "~2.1.6",

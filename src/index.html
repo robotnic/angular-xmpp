@@ -19,7 +19,7 @@
         <script type="text/javascript" src="<%= file %>"></script>
         <% }); %>
 
-    <link rel="stylesheet" href="assets/css/style.less" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen"/>
     <script  type="text/javascript">
         var SCOPE = null;
 
@@ -71,7 +71,7 @@ angular.module('XmppApp', [
 </head>
 
 <body ng-controller="page">
-        <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
+        <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)" >
         <div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
             <xmpplogin></xmpplogin>
             <div style="display:none">
@@ -303,7 +303,7 @@ angular.module('XmppApp', [
             <div class="content">
                 <div class="channelView personal clearfix">
                     <header class="channelHeader justify">
-                        <div class="avatar" style="background-image: url(assets/icons/avatars/{{nodeuser.user}}@{{nodeuser.domain}}.png);background-size: cover;"></div>
+                        <div class="avatar" style="background-image: url(assets/icons/avatars/{{nodeuser.user}}.png);background-size: cover;"></div>
                         <div class="flex titleText">
                             <h2 class="owner" data-editmode="singleLine">{{node}}</h2>
                             <div class="about" data-editmode="multiLine">I'm Vera, I love to cook, I love clothes and most of all, I love my boyfriend.</div>
@@ -351,6 +351,12 @@ angular.module('XmppApp', [
                                     </p>
                                 </section>
                                 <section class="channelList">
+                                        <div ng-repeat="(key,value) in buddycloud.data.subscribertree">
+                                                    <h3>{{key}} <span class="count">{{value.length}}</span></h3>
+                                                    <img ng-repeat="item in value" ng-click="opennode(item.jid)"
+                                                     ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
+                                        </div>
+<!--
                                     <h3>owner <span class="count">1</span></h3>
                                     <div class="list">
                                         <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
@@ -377,7 +383,7 @@ angular.module('XmppApp', [
                                         </div>
                                     </div>
 
-
+-->
 
 
 

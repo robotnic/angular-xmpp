@@ -1,4 +1,4 @@
-console.log(1);
+
 angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike','XmppUI','XmppLogin','Minichat','XmppForm','XmppRoster','XmppMuc'])
 
 
@@ -8,19 +8,19 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
         'restrict': 'E',
         'scope': {
             host:"@",
+            anonymous:"@",
             oninit:"&"
         },
         'transclude': false,
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
-            console.log("eh da");
             scope.host=attrs.host;
+            scope.anonymous=attrs.anonymous;
         }
     };
 
 })
 .controller('xmppController',function($scope,Xmpp){
-    console.log($scope.host);
     this.init=function(){
         console.log($scope.host);
     };
@@ -54,5 +54,9 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
     };
     console.log("xmpp",this.xmpp);
     $scope.oninit({scope:this.xmpp});
+
+    if($scope.anonymous){
+        console.log("let me in");
+        this.xmpp.anonymouslogin();
+    }
 });
-console.log(2);

@@ -448,6 +448,22 @@ Directive
                 return rights;
             }
 
+            function makeSubscribertree(data){
+                var tree={};
+                for(var i=0;i<data.length;i++){
+                    var item=data[i];
+                    if(!tree[item.affiliation]){
+                        tree[item.affiliation]=[];
+                    }
+                    tree[item.affiliation].push(item);
+                }
+                return tree;
+            }
+
+            /**
+            Public API;
+            */
+
 
             var api = {
                 data: {
@@ -635,6 +651,7 @@ Directive
                                 console.log("suscribers", data);
                                 api.getAffiliations(node).then(function(data){
                                     api.data.subscribers=data;
+                                    api.data.subscribertree=makeSubscribertree(data);
                                 });
                                 q.resolve(data);
 
