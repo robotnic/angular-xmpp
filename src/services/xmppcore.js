@@ -15,16 +15,6 @@ angular.module('XmppCoreFactory', [])
         console.log("New XMPP init");
 
 
-        if(callback){
-            watch().then(function(data){
-                console.log("q-data",data);
-            },function(data){
-                console.log("q-error",error);
-            },function(notify){
-                console.log("q-notify",notify);
-                callback(notify);
-            })
-        }
 
 
         /**
@@ -301,6 +291,20 @@ angular.module('XmppCoreFactory', [])
         API=api;
         console.log("---------",host);
         api.connect(host);
+
+        if(callback){
+            watch().then(function(data){
+                console.log("q-data",data);
+            },function(data){
+                console.log("q-error",error);
+            },function(notify){
+                console.log("q-notify",notify);
+                callback(notify);
+            })
+        }
+
+
+
         return api;
     };
 })
