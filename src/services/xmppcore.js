@@ -133,6 +133,7 @@ angular.module('XmppCoreFactory', [])
                 case 'xmpp.chat.receipt':
                     break;
                 case 'xmpp.presence':
+                    if(!request)request={};
                     api.socket.send( 'xmpp.presence', request);
                     break;
                 case 'xmpp.presence.subscribe':
