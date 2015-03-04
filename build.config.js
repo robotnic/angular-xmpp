@@ -61,9 +61,6 @@ module.exports = {
    * recommended that you use wildcards.
    */
   vendor_files: {
-    main:[
-        dist:
-    ],
     js: [
         'vendor/angular/angular.js',
         'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
