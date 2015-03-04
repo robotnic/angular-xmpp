@@ -11,8 +11,21 @@ angular.module('XmppCoreFactory', [])
 
 
 .factory("Xmpp",function($q){
-    return function(host){
+    return function(host,callback){
         console.log("New XMPP init");
+
+
+        if(callback){
+            watch().then(function(data){
+                console.log("q-data",data);
+            },function(data){
+                console.log("q-error",error);
+            },function(notify){
+                console.log("q-notify",notify);
+                callback(notify);
+            })
+        }
+
 
         /**
         Listen to incoming json stanzas

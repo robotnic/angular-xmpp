@@ -20,12 +20,23 @@ angular.module('BuddycloudModule', [])
     function($q) {
 
 
-        return function(xmpp) {
+        return function(xmpp,callback) {
 
             /**
             waiting for incomming json stranzas
             @method watch
             */
+
+            if(callback){
+                watch().then(function(data){
+                    console.log("q-data",data);
+                },function(data){
+                    console.log("q-error",error);
+                },function(notify){
+                    console.log("q-notify",notify);
+                    callback(notify);
+                })
+            }
 
             function watch() {
                 var q = $q.defer();
@@ -143,7 +154,11 @@ angular.module('BuddycloudModule', [])
                     });
                 });
                 return q.promise;
+
+
             }
+
+            
 
 
             function addMethods(item){
@@ -1259,7 +1274,7 @@ angular.module('BuddycloudModule', [])
 
 
                 watch: function() {
-                    return watch();
+                    watch();
                 }
             };
             BCAPI = api;
