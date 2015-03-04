@@ -32,7 +32,8 @@ angular.module('XmppCoreFactory', [])
         @method watch
         */    
 
-        function watch(q){
+        function watch(){
+            var q=$q.defer();
             api.q=q;
             //roster change
             api.socket.on('xmpp.connection', function(data) {
@@ -99,6 +100,7 @@ angular.module('XmppCoreFactory', [])
             api.socket.on('xmpp.presence.subscribed', function(data) {
                 console.log('-----------------------------------------xmpp.presence.subscribed',data);
             });
+            return q.promise;
         }
 
         function send(command,request){
@@ -229,9 +231,7 @@ angular.module('XmppCoreFactory', [])
             socket:null,
             q:null,
             watch:function(){
-                var q=$q.defer();
                 watch(q);
-                return q.promise; 
             },
             connect:function(host){
                 var q=$q.defer();
