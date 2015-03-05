@@ -221,7 +221,7 @@ angular.module('XmppCoreFactory', [])
             socket:null,
             q:null,
             watch:function(){
-                watch(q);
+                return watch();
             },
             connect:function(host){
                 var q=$q.defer();
