@@ -3,12 +3,19 @@
 <head>
 <meta charset="utf-8">
 <title>Angluar-xmpp Tutorial Example</title>
+
 <script src="primus.js"></script>
-<!--
 <script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
--->
+<!--
 <script src="angular-xmpp-0.0.2.js"></script>
+-->
+<script src="bower_components/json-formatter/dist/json-formatter.js"></script>
+<link rel="stylesheet" href="bower_components/json-formatter/dist/json-formatter.css"/>
+
 <style type="text/css">
+body{
+padding:20px;
+}
 td{
 vertical-align:top;
 }
@@ -23,7 +30,8 @@ vertical-align:top;
 -->
 <button ng-click="login()">login</button>
 <button ng-click="loadcoretest()">test core</button>
-<button ng-click="loadbuddycloudtest()">test buddycloud</button>
+<button ng-click="loadbuddycloudtest('buddycloud')">test buddycloud</button>
+<button ng-click="loadbuddycloudtest('buddyclouderrors')">buddycloud bugs</button>
 </div>
 <table style="width:100%;margin-top:100px;">
 <tr>
@@ -32,13 +40,15 @@ vertical-align:top;
 <td ng-repeat="xmpp in xmpps" ng-init="rowIndex = $index">
 <h3>{{xmpp.data.me.jid.user}}@{{xmpp.data.me.jid.domain}}</h3>
 <div ng-repeat="item in check">
-<h4>{{$index}}. {{item}} 
+<h4 ng-click="toggle=!toggle">{{$index}}. {{item}} 
 <span ng-if="allcommands[counter -1].checkresults[$index][item]" style="color:green">✓ </span>
 <span ng-if="!allcommands[counter -1].checkresults[$index][item]" style="color:red">✖ </span>
 </h4>
-<div ng-click="toggle=!toggle">
+<div>
 <pre ng-if="toggle" style="color:blue">{{expected[counter][rowIndex][item]|json}}</pre>
-<pre ng-if="!toggle">{{results[counter -1][rowIndex][item]|json}} </pre>
+<div ng-if="!toggle">
+      <json-formatter open="1" json="results[counter -1][rowIndex][item]"></json-formatter>
+</div>
 </div>
 </div>
 
@@ -65,8 +75,9 @@ This Test system works with real accounts. The accounts should be in the same st
 If you are very smart, you can change to passwords of the testaccounts. 
 This online test-tool is broken then until somebody repairs it.
 <h2>Creating new tests</h2>
-
+<p>
 The testfiles are very big and it's not really possible to generate by hand. The purpose is to keep the API consistent. The testfiles (expected.json) can be generated automaticaliy (textarea)
-
+</p>
+<p>This tool shows you if the API has changed. If it is a change by purpous, copy the automatic generated protocol file and use as the new testdefinition</p>
 </body>
 </html>

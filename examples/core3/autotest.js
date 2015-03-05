@@ -15,7 +15,7 @@ var testaccount3 = "test3@laos.buddycloud.com";
 
 
 
-angular.module('Test', ['AngularXmpp'])
+angular.module('Test', ['AngularXmpp','jsonFormatter'])
     .controller("test", function($scope, Xmpp, $timeout, $http, $q, BuddycloudFactory) {
 
 
@@ -35,11 +35,28 @@ The xmpp websocket connections
 
         function before(numberOfConnections) {
             for (var i = 0; i < numberOfConnections; i++) {
-                xmpps[i] = init();
+                xmpps[i] = initsocket();
                 $scope.commands[i] = [];
                 console.log($scope.commands);
             }
         }
+
+        function initsocket() {
+            //var xmpp=new Xmpp("https://buddycloud.org/");
+            var xmpp = new Xmpp("https://laos.buddycloud.com/");
+            //var xmpp=new Xmpp("https://xmpp-ftw.jit.su/");
+
+            xmpp.watch().then(function(data) {
+                console.log("destroy xmpp");
+            }, function(error) {
+                console.log("xmpp error", error);
+            }, function(notification) {
+                console.log("xmpp update", notification); //$apply
+            });
+            console.log("startwatch");
+            return xmpp;
+        }
+
 
 
         /**
@@ -87,36 +104,16 @@ xmppcore
 
 
 
-
-        function init() {
-            //var xmpp=new Xmpp("https://buddycloud.org/");
-            //var xmpp = new Xmpp("https://laos.buddycloud.com/");
-            var xmpp=new Xmpp("https://xmpp-ftw.jit.su/");
-
-            xmpp.watch().then(function(data) {
-                console.log("destroy xmpp");
-            }, function(error) {
-                console.log("xmpp error", error);
-            }, function(notification) {
-                console.log("xmpp update", notification); //$apply
-            });
-            console.log("startwatch");
-            return xmpp;
-        }
-
-
-
-
-        $scope.loadbuddycloudtest = function() {
+        $scope.loadbuddycloudtest = function(dir) {
             console.log("dada");
             $scope.good = 0;
             $scope.bad = 0;
             $scope.counter = 0;
-            $scope.check = ["nodes", "unread", "affiliations","tree"];
+            $scope.check = ["nodes", "unread", "affiliations","tree","result"];
 
             $q.all({
-                commands: $http.get('tests/buddycloud/commands.json'),
-                expected: $http.get('tests/buddycloud/expected.json')
+                commands: $http.get('tests/'+dir+'/commands.json'),
+                expected: $http.get('tests/'+dir+'/expected.json')
             }).then(function(response) {
                 console.log("++", response);
                 starttest("buddyclouds", response.commands.data, response.expected.data);
@@ -124,11 +121,11 @@ xmppcore
             for (var i = 0; i < 3; i++) {
                 buddyclouds[i] = new BuddycloudFactory(xmpps[i]);
                 buddyclouds[i].watch().then(function(data) {
-                    console.log("destroy xmpp");
+                    console.log("destroy buddycloud");
                 }, function(error) {
-                    console.log("xmpp error", error);
+                    console.log("buddycloud error", error);
                 }, function(notification) {
-                    console.log("xmpp update", notification); //$apply
+                    console.log("buddycloud update", notification); //$apply
                 });
 
             }
@@ -216,13 +213,16 @@ common
                         $scope.allcommands[i].checkresults[j] = {};
                         for (var k = 0; k < $scope.check.length; k++) {
                             var prop = $scope.check[k];
-                            console.log("compare", prop, $scope.results[i][j][prop], $scope.expected[i][j][prop]);
-                            if (angular.equals($scope.results[i][j][prop], $scope.expected[i][j][prop])) {
-                                good++;
-                                $scope.allcommands[i].checkresults[j][prop] = true;
-                            } else {
-                                bad++;
-                                $scope.allcommands[i].checkresults[j][prop] = false;
+                            if($scope.expected[i]){
+                                console.log("compare", prop, $scope.results[i][j], $scope.expected[i][j]);
+                                console.log("compare", prop, $scope.results[i][j][prop], $scope.expected[i][j][prop]);
+                                if (angular.equals($scope.results[i][j][prop], $scope.expected[i][j][prop])) {
+                                    good++;
+                                    $scope.allcommands[i].checkresults[j][prop] = true;
+                                } else {
+                                    bad++;
+                                    $scope.allcommands[i].checkresults[j][prop] = false;
+                                }
                             }
                         }
                     }
