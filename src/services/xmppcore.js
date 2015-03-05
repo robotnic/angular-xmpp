@@ -15,8 +15,6 @@ angular.module('XmppCoreFactory', [])
         console.log("New XMPP init");
 
 
-
-
         /**
         Listen to incoming json stanzas
         @method watch
@@ -277,8 +275,9 @@ angular.module('XmppCoreFactory', [])
                 return({user:user,domain:domain,resource:resource});
 
             },
-
-
+            watch:function(){
+                return watch();
+            },
 
             send:function(command,request){
                 console.log(command,request);
@@ -292,21 +291,10 @@ angular.module('XmppCoreFactory', [])
         console.log("---------",host);
         api.connect(host);
 
-        if(callback){
-            watch().then(function(data){
-                console.log("q-data",data);
-            },function(data){
-                console.log("q-error",error);
-            },function(notify){
-                console.log("q-notify",notify);
-                callback(notify);
-            })
-        }
-
-
 
         return api;
     };
+    return q;
 })
 
 
