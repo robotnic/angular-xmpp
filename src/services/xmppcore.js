@@ -132,6 +132,7 @@ angular.module('XmppCoreFactory', [])
                     return q.promise;
                     break;
                 case 'xmpp.chat.message':
+                    api.socket.send('xmpp.chat.message',request);
                     break;
                 case 'xmpp.chat.receipt':
                     break;
