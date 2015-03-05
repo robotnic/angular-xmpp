@@ -1,0 +1,94 @@
+body{
+font-family:sans-serif;
+}
+
+.roster{
+width:200px;
+border-collapse: collapse;
+border-spacing: 0;
+box-shadow:0px 0 10px rgba(0,0,0,0.2);
+position:absolute;
+top:60px;
+}
+.roster tr:hover{
+background-color:yellow;
+}
+.roster td{
+vertical-align:top;
+padding:4px;
+}
+.roster td:first-child{
+width:20px;
+}
+.roster .item{
+background-color:white;
+}
+.roster .item p{
+margin:0px;
+}
+
+.roster .item span{
+font-size:10px;
+}
+.roster .item span.unreadcount{
+color:green;
+font-size:14px;
+}
+
+.roster .item .status{
+width:16px;
+height:16px;
+background-size:cover;
+background-image:url('icons/offline.png');
+}
+.roster .item .status.online{
+background-image:url('icons/online.png');
+}
+.roster .item .status.chat{
+background-image:url('icons/chatty.png');
+}
+.roster .item .status.dnd{
+background-image:url('icons/dnd.png');
+}
+.roster .item .status.away{
+background-image:url('icons/away.png');
+}
+
+
+.chatwindow{
+position:absolute;
+top:60px;
+left:250px;
+right:20px;
+height:300px;
+box-shadow:0px 0 10px rgba(0,0,0,0.2);
+}
+.chatwindow .messages{
+position:absolute;
+top:60px;
+bottom:50px;
+left:0px;
+right:20px;
+border:1px solid lightgrey;
+overflow:auto;
+}
+.chatwindow .messages .username{
+color:red;
+}
+.chatwindow .messages .self .username{
+color:green;
+}
+
+
+.chatwindow input{
+position:absolute;
+bottom:5px;
+left:0px;
+right:5px;
+}
+
+.debug{
+position:absolute;
+top:500px;
+}
+

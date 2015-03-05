@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="xmpptest">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="primus.js"></script>
+    <script type="text/javascript" src="bower_components/angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script>
+        var SCOPE = null;
+        angular.module("xmpptest", ['AngularXmpp', 'XmppMessageFactory'])
+            .controller("page", function($scope, Xmpp, XmppMessage) {
+                SCOPE = $scope;
+                $scope.jid = "maria@laos.buddycloud.com";
+                $scope.password = "bbb";
+                $scope.ticks = 0;
+                $scope.xmpp = new Xmpp("https://laos.buddycloud.com/");
+                //    $scope.xmpp=new Xmpp("https://xmpp-ftw.jit.su/");
+
+                $scope.xmpp.watch().then(
+                    function() {},
+                    function() {},
+                    function() {
+                        $scope.ticks++;
+                    }
+                );
+                $scope.messages = new XmppMessage($scope.xmpp);
+
+                $scope.login = function() {
+                    $scope.xmpp.send('xmpp.login', {
+                        jid: $scope.jid,
+                        password: $scope.password,
+                        resource: 'test'
+                    }).then(function() {
+                        $scope.xmpp.send('xmpp.roster.get');
+                        $scope.xmpp.send('xmpp.presence');
+                    }, function(error) {
+                        console.log(error);
+                    });
+                }
+
+                $scope.open = function(item) {
+                    $scope.chatpartner = item;
+                }
+
+                $scope.send = function(text) {
+                    var to = $scope.chatpartner.jid.user + "@" + $scope.chatpartner.jid.domain;
+                    $scope.messages.send('xmpp.chat.message', {
+                        to: to,
+                        content: text
+                    });
+                }
+            })
+    </script>
+</head>
+
+<body ng-controller="page">
+    renderticks: {{ticks}}
+
+    <!-- login -->
+    <form ng-submit="login()">
+        <input ng-model="jid" />
+        <input type="password" ng-model="password" />
+        <input type="submit" />
+    </form>
+
+    <!-- roster -->
+    <table class="roster">
+        <tr ng-repeat="item in xmpp.data.roster" class="item" ng-click="open(item)">
+            <td>
+                <div class="status {{item.presence.show}}" ng-class="{'online':item.presence}"></div>
+            </td>
+            <td>
+                <p>{{item.name}} <span class="unreadcount">{{messages.notifications.unread[item.jid.user+"@"+item.jid.domain]}}</span>
+                </p>
+                <span>{{item.presence.status}}</span>
+                <span ng-if="item.presence.show">{{item.presence.show}}</span>
+                <span ng-if="!item.presence.show">{{item.presence.status}}</span>
+            </td>
+        </tr>
+    </table>
+
+    <!-- chat window -->
+
+    <div class="chatwindow" ng-if="chatpartner">
+        <h1>{{chatpartner.name}}</h1>
+        <div class="messages">
+            <div ng-repeat="item in messages.items" class="message">
+
+                <span ng-if="item.from.user==chatpartner.jid.user">
+<span class="username">{{item.from.user}}</span>
+                {{item.content}}
+                </span>
+
+                <span ng-if="item.to==chatpartner.jid.user+'@'+chatpartner.jid.domain" class="self">
+<span class="username">{{xmpp.data.me.jid.user}}</span>
+                {{item.content}}
+                </span>
+
+            </div>
+        </div>
+        <form ng-submit="send(newmessage)">
+            <input ng-model="newmessage" />
+        </form>
+    </div>
+
+
+    <!-- debug -->
+    <div class="debug">
+        <br/>
+        <br/>
+        <br/>
+        <h3>Messages</h3>
+        <pre>
+{{messages.items|json}}
+</pre>
+        <h3>xmpp</h3>
+        <pre>
+{{xmpp.data|json}}
+</pre>
+    </div>
+</body>
+
+</html>
