@@ -1,7 +1,7 @@
-angular.module('XmppMessages', [])
+angular.module('XmppMessageFactory', [])
 
 
-.factory('XmppMessageFactory',['$q',function($q){
+.factory('XmppMessage',['$q',function($q){
     return function(xmpp){
         function watch(q){
             //notify is used to apply changes (render html);
@@ -50,12 +50,7 @@ angular.module('XmppMessages', [])
             watch:function(){
                 return watch();
             },
-            send:function(user, text, event) {
-                var message = {
-                    to: user.jid,
-                    type: "chat",
-                    content: user.newtext
-                };
+            send:function(user, message) {
                 api.items.push(message);
                 xmpp.socket.send('xmpp.chat.message', message);
             },
