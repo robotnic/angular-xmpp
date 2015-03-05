@@ -1,0 +1,49 @@
+body{
+font-family:sans-serif;
+}
+
+.roster{
+width:200px;
+border-collapse: collapse;
+border-spacing: 0;
+box-shadow:0px 0 10px rgba(0,0,0,0.2);
+}
+.roster tr:hover{
+background-color:yellow;
+}
+.roster td{
+vertical-align:top;
+padding:4px;
+}
+.roster td:first-child{
+width:20px;
+}
+.roster .item{
+background-color:white;
+}
+.roster .item p{
+margin:0px;
+}
+
+.roster .item span{
+font-size:10px;
+}
+
+.roster .item .status{
+width:16px;
+height:16px;
+background-size:cover;
+background-image:url('icons/offline.png');
+}
+.roster .item .status.online{
+background-image:url('icons/online.png');
+}
+.roster .item .status.chat{
+background-image:url('icons/chatty.png');
+}
+.roster .item .status.dnd{
+background-image:url('icons/dnd.png');
+}
+.roster .item .status.away{
+background-image:url('icons/away.png');
+}

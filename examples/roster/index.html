@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="xmpptest">
+<head>
+<meta charset="utf-8"/>
+<script type="text/javascript" src="primus.js"></script>
+<script type="text/javascript" src="bower_components/angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+
+<script>
+var SCOPE=null;
+angular.module("xmpptest",['AngularXmpp'])
+.controller("page",function($scope,Xmpp,BuddycloudFactory){
+    SCOPE=$scope;
+    $scope.jid="maria@laos.buddycloud.com";
+    $scope.password="bbb";
+    $scope.ticks=0;
+    $scope.xmpp = new Xmpp("https://laos.buddycloud.com/");
+//    $scope.xmpp=new Xmpp("https://xmpp-ftw.jit.su/");
+
+    $scope.xmpp.watch().then(
+        function(){},
+        function(){},
+        function(){
+            $scope.ticks++;
+        }
+    );
+
+    $scope.login=function(){
+        $scope.xmpp.send('xmpp.login',{jid:$scope.jid,password:$scope.password,resource:'test'}).then(function(){
+            $scope.xmpp.send('xmpp.roster.get');
+            $scope.xmpp.send('xmpp.presence');
+        },function(error){
+
+        });
+    }
+    
+})
+</script>
+</head>
+<body ng-controller="page">
+renderticks: {{ticks}}
+<form ng-submit="login()">
+<input ng-model="jid"/>
+<input type="password" ng-model="password"/>
+<input type="submit"/>
+</form>
+<br/>
+<br/>
+<br/>
+<table class="roster">
+<tr ng-repeat="item in xmpp.data.roster" class="item">
+<td><div class="status {{item.presence.show}}" ng-class="{'online':item.presence}"></div></td>
+<td>
+<p>{{item.name}}</p>
+<span>{{item.presence.status}}</span>
+<span ng-if="item.presence.show">{{item.presence.show}}</span>
+<span ng-if="!item.presence.show">{{item.presence.status}}</span>
+</td>
+</tr>
+</table>
+
+<pre>
+{{xmpp.data|json}}
+</pre>
+</body>
+</html>
