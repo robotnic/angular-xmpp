@@ -538,6 +538,7 @@ angular.module('BuddycloudModule', [])
 
 
             function send(command, data) {
+                if(!data)data={};
                 switch (command) {
                     case 'xmpp.buddycloud.subscribe':
                         var q = $q.defer();
