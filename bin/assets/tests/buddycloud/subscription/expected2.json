@@ -1,0 +1,497 @@
+[
+  [
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        },
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        },
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        },
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        },
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ],
+  [
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        },
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        },
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [
+        {
+          "name": "test1",
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "jid": "test1@laos.buddycloud.com"
+        },
+        {
+          "name": "test2",
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "jid": "test2@laos.buddycloud.com"
+        }
+      ],
+      "affiliations": {
+        "/user/test1@laos.buddycloud.com/posts": {
+          "node": "/user/test1@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          }
+        },
+        "/user/test2@laos.buddycloud.com/posts": {
+          "node": "/user/test2@laos.buddycloud.com/posts",
+          "affiliation": "owner",
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          }
+        }
+      }
+    },
+    {
+      "unread": {},
+      "nodes": [],
+      "affiliations": {}
+    }
+  ]
+]

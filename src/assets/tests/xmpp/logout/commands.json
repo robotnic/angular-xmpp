@@ -1,0 +1,5 @@
+[
+  [0,"xmpp","send('xmpp.logout')"],
+  [1,"xmpp","send('xmpp.logout')"],
+  [2,"xmpp","send('xmpp.logout')"]
+]

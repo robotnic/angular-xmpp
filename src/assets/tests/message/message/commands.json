@@ -1,0 +1,15 @@
+[
+
+  [1,"message","send('xmpp.chat.message',{to:'test1@laos.buddycloud.com',content:'hello from test1 to test0'})"],
+  [2,"message","send('xmpp.chat.message',{to:'test2@laos.buddycloud.com',content:'hello from test2 to test0'})"],
+  [0,"message","send('xmpp.chat.message',{to:'test3@laos.buddycloud.com',content:'hello from test3 to test0'})"],
+
+  [1,"message","send('xmpp.chat.message',{to:'test1@laos.buddycloud.com',content:'yes test1'})"],
+  [2,"message","send('xmpp.chat.message',{to:'test2@laos.buddycloud.com',content:'yes test2'})"],
+  [0,"message","send('xmpp.chat.message',{to:'test3@laos.buddycloud.com',content:'yes test3'})"],
+
+
+  [0,"xmpp","send('xmpp.logout')"],
+  [1,"xmpp","send('xmpp.logout')"],
+  [2,"xmpp","send('xmpp.logout')"]
+]

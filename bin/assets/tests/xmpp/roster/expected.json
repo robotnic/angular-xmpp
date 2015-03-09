@@ -1,0 +1,1320 @@
+[
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "none",
+          "name": "test1",
+          "ask": "subscribe"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "from",
+          "name": "test2"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "to",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "from",
+          "name": "test2",
+          "ask": "subscribe"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "to",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2"
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "none",
+          "name": "test3",
+          "ask": "subscribe"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2"
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "to",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "from",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2"
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "to",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "from",
+          "name": "test1",
+          "ask": "subscribe"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2"
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2",
+          "presence": {
+            "status": "Cool that"
+          }
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1",
+          "presence": {
+            "status": "bored to death"
+          }
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2",
+          "presence": {
+            "status": "Cool that2"
+          }
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "bored to death"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1",
+          "presence": {
+            "status": "bored to death"
+          }
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "both",
+          "name": "test2",
+          "presence": {
+            "status": "Cool that2"
+          }
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1",
+          "presence": {
+            "status": "I also haz new status"
+          }
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2"
+          },
+          "subscription": "none",
+          "name": "test2"
+        },
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3"
+          },
+          "subscription": "both",
+          "name": "test3"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "both",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "none",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [
+        {
+          "jid": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1"
+          },
+          "subscription": "none",
+          "name": "test1"
+        }
+      ],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test1",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test1"
+        },
+        "presence": {
+          "status": "I also haz new status"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        },
+        "presence": {
+          "status": "Cool that2"
+        }
+      }
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null
+    }
+  ]
+]

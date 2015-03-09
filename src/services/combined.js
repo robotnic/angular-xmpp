@@ -1,2 +1,2 @@
-angular.module('AngularXmpp', ['XmppCoreFactory', 'BuddycloudModule','XmppMucFactory','XmppMessageFactory']);
+angular.module('AngularXmpp', ['Helpers','XmppCoreFactory', 'BuddycloudModule','XmppMucFactory','XmppMessage']);
 

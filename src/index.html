@@ -1,995 +1,350 @@
 <!DOCTYPE html>
-<!-- saved from url=(0051)https://demo.buddycloud.org/prototypes/private.html -->
-<html lang="en" class=" js history csstransforms csstransforms3d fontface localstorage" ng-app="XmppApp">
+<html ng-app="Test">
+<!--
+This is the testscript for angular-xmpp-core
+
+-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Streams</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Angluar-xmpp Tutorial Example</title>
+    <!--
+    <script src="primus.js"></script>
+    <script src="../../../../angular-xmpp/bin/assets/angular-xmpp-0.0.2.js"></script>
+-->
+
+    <link rel="stylesheet" href="assets/css/json-formatter.css" />
 
     <script type="text/javascript" src="assets/scripts/primus.js"></script>
     <!-- compiled CSS -->
     <% styles.forEach( function ( file ) { %>
         <link rel="stylesheet" type="text/css" href="<%= file %>" />
         <% }); %>
-    <!-- compiled JavaScript -->
-    <% scripts.forEach( function ( file ) { %>
-        <script type="text/javascript" src="<%= file %>"></script>
-        <% }); %>
-
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen"/>
-    <script  type="text/javascript">
-        var SCOPE = null;
-
-angular.module('XmppApp', [
-  'templates-app', 'templates-common','XmppUI','btford.markdown','tagged.directives.infiniteScroll','ngSanitize','ui.bootstrap'
-    ])
+            <!-- compiled JavaScript -->
+            <% scripts.forEach( function ( file ) { %>
+                <script type="text/javascript" src="<%= file %>"></script>
+                <% }); %>
+                    <script type="text/javascript" data-require="json-formatter@*" data-semver="0.2.7" src="src/scripts/json-formatter.js"></script>
+                    <script type="text/javascript" data-require="moment.js@2.5.1" data-semver="2.5.1" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.js"></script>
+                    <script type="text/javascript" data-require="angular-moment@*" data-semver="0.7.1" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.7.1/angular-moment.min.js"></script>
 
 
-.controller('page', ['$scope','$rootScope', '$location', function($scope,$rootScope, $location) {
 
-//        function page($scope, $rootScope, $location) {
-            SCOPE = $scope;
-            $scope.node = "recent";
-            $scope.openchat = function(node) {
-                $scope.xmpp.openchat($scope.xmpp.parseNodeString(node).jid);
-            }
-            $scope.changenode = function(node) {
-                $scope.node = node;
-                $scope.nodeuser = $scope.xmpp.parseNodeString(node);
-                $location.hash(node);
-            }
-            $scope.opennode = function(jid) {
-                $scope.changenode("/user/" + jid.user + "@" + jid.domain + "/posts");
-            };
-            $scope.initbuddycloud = function(bc) {
-                $scope.buddycloud = bc;
-            }
-            $scope.initxmpp = function(xmpp) {
-                $scope.xmpp = xmpp;
-            }
-            $scope.showxmpp = function() {
-                console.log("xmpp", $scope.xmpp, $scope.buddycloud); //debug
-            }
-            $scope.initchat = function(chat) {
-                $scope.chat = chat;
-            }
+                    <link rel="stylesheet" href="animate.css" />
 
-            $rootScope.$on('$locationChangeSuccess', function(data) {
-                if ($location.hash() == "") {
-                    node = "recent";
-                } else {
-                    node = $location.hash();
-                }
-                $scope.changenode(node);
-
-            });
-        }]);
-    </script>
+                    <style type="text/css">
+                        body {
+                            padding: 20px;
+                            font-family: sans-serif;
+                        }
+                        h5 {
+                            margin: 0px;
+                        }
+                        .topic{
+                            display:inline-block;
+                            width:150px;
+                            text-align:right;
+                        }
+                        #mode{
+                            position:absolute;
+                            top:5px;
+                            right:150px;
+                        }
+                        td {
+                            vertical-align: top;
+                            position: relative;
+                        }
+                        .bc {
+                            border: 1px solid lightgrey;
+                            margin: 14px;
+                            padding: 14px;
+                        }
+                        .nodepanel {
+                            margin-left: 160px;
+                        }
+                        .item {
+                            margin: 5px;
+                            padding: 5px;
+                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                        }
+                        .item .time {
+                            color: gray;
+                            font-size: 10px;
+                        }
+                        .nodes {
+                            position: absolute;
+                            top: 100px;
+                            left: 20px;
+                            width: 100px;
+                        }
+                        .stream {
+                            width: 140px;
+                            color: blue;
+                            cursor: pointer;
+                        }
+                        .stream.selected {
+                            font-weight: bold;
+                        }
+                        .stream:hover {
+                            color: red;
+                        }
+                        .avatar {
+                            display: inline-block;
+                            width: 30px;
+                            height: 30px;
+                            margin: 3px;
+                        }
+                        .link.selected {
+                            color: red;
+                        }
+                        .link {
+                            color: blue;
+                            cursor:pointer;
+                            text-decoration:underline;
+                            margin-right:10px;
+                        }
+                        json-formatter {
+                            background-color: yellow;
+                        }
+                    </style>
+                    <script type="text/javascript" src="src/autotest.js">
+                    </script>
 </head>
 
-<body ng-controller="page">
-        <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)" >
-        <div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
-            <xmpplogin></xmpplogin>
-            <div style="display:none">
-                <xmpproster></xmpproster>
-            </div>
+<body ng-controller="test" ng-keydown="down($event)">
+    <div style="position:fixed;top:0px;left:0px;width:100%;padding:5px;box-shadow:0px 0px 10px rgba(0,0,0,0.2);background-color:white;z-index:10">
+        <h3>Testcenter: XmppServices ({{counter +1}}/{{expected.length}}/<span style="color:green">{{good}}</span>/<span style="color:red">{{bad}}</span>)</h3>
+        <div ng-repeat="(key,value) in testplan"><span class="topic">{{key}}</span>
+        <a class="link" ng-repeat="item in value" ng-click="loadTest(item)">{{item.name}}</a>
         </div>
-        <xmppminichat oninit="initchat(scope)"></xmppminichat>
+        <div id="mode">
+        API:
+        <input type="checkbox" ng-model="debug" />uimode:
+        <input type="checkbox" ng-model="uimode">
+        </div>
+        <p style="font-size:20px;">
+        <div style="font-family:monospace;border:1px dashed black;padding:8px">{{allcommands[counter].command}}</div>
+        </p>
+        <img src="http://upload.wikimedia.org/wikipedia/commons/8/8c/Arrow_keys.jpg" style="position:absolute;top:10px;right:10px;width:100px"/>
+    </div>
 
-        <div class="sidebar">
-            <div class="personal channel" style="width:100%;height:80px">
-                <div class="avatar" style="background-image: url(assets/icons/avatars/{{xmpp.me.jid.user}}.png)" ng-click="changenode('recent')">
-                    <span class="channelpost counter">2</span>
-                    <span class="message counter" ng-if="chat.notifications.unreadmessages">{{chat.notifications.unreadmessages}}</span>
-                </div>
-                <div class="info">
-                    <span class="owner">{{xmpp.jid}}</span>
-                    <span class="status">Aww yeah, Mountain Lion rocks</span>
-                </div>
-                <div class="settings noSelect">
-                    <div class="popup">
-                        <div class="centered vertical">
-                            <div class="arrow"></div>
-                            <ul>
-                                <li class="newChannel"><a href="https://demo.buddycloud.org/prototypes/editChannel.html">Create Topic Channel</a>
-                                </li>
-                                <li class="preferences"><a href="https://demo.buddycloud.org/prototypes/preferences.html">Preferences</a>
-                                </li>
-                                <li class="logout" ng-click="xmpp.logout()">Logout
-                                </li>
-                            </ul>
+
+
+<!-- diffent -->
+
+    <div ng-if="uimode">
+
+        <table style="width:100%;margin-top:180px;table-layout: fixed;">
+            <tr>
+                <pre>
+</pre>
+                <td ng-repeat="buddycloud in buddyclouds" ng-init="rowIndex = $index" class="bc">
+
+                    <!-- own image and name -->
+                    <h3>
+<div style="background-image:url('avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;display:inline-block;"></div>
+<span>{{buddycloud.xmpp.data.me.jid.user}}@{{buddycloud.xmpp.data.me.jid.domain}}</span> {{ticks[$index]}}
+</h3>
+
+
+                    <!-- subscribed nodes -->
+                    <div class="nodes">
+                        <h4>subscriptions</h4>
+                        <json-formatter ng-if="debug" open="0" json="buddycloud.data.subscriptions"></json-formatter>
+                        <div ng-repeat="item in buddycloud.data.subscriptions" ng-click="item.open()" class="stream" ng-class="{selected:item.node==buddycloud.data.currentnode}">
+                            {{item.node|getUser}} <span ng-if="buddycloud.data.unread[item.node]">({{buddycloud.data.unread[item.node]}})</span>{{item.subscription}}
+                        </div>
+
+
+
+                        <!-- node affiliations -->
+                        <h4>affiliations</h4>
+                        <json-formatter ng-if="debug" open="0" json="buddycloud.data.affiliations[buddycloud.data.currentnode]"></json-formatter>
+                        <div ng-repeat="node in buddycloud.data.affiliations[buddycloud.data.currentnode]|orderBy:'affiliation' | groupBy:['affiliation']" ng-class="{avatar:!node.group_by_CHANGED}">
+                            <h5 ng-if="node.group_by_CHANGED">{{node.affiliation}} &#160; &#160; &#160; &#160; &#160; &#160; </h5>
+                            <div style="background-image:url('avatars/{{node.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px" ng-click="buddycloud.open({'node':'/user/'+node.jid.user+'@'+node.jid.domain+'/posts'})"></div>
+                            <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner'" ng-click="buddycloud.affiliation(node.jid,'moderator')">make mod</button>
+                            <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'publisher')">make publisher</button>
+                            <button ng-if="buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='owner' || buddycloud.data.myaffiliations[buddycloud.data.currentnode].affiliation=='moderator'" ng-click="buddycloud.affiliation(node.jid,'member')">make member</button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- timeline -->
+                    <div class="nodepanel">
+
+                        <!-- the node buttons -->
+                        <button ng-if="buddycloud.subscribe" ng-click="buddycloud.subscribe()">follow</button>
+                        <button ng-if="buddycloud.unsubscribe" ng-click="buddycloud.unsubscribe()">unfollow</button>
+                        <button ng-if="buddycloud.config" ng-click="buddycloud.config()">config</button>
+                        {{buddycloud.data.currentnode}}
+                        <json-formatter ng-if="debug" open="0" json="buddycloud"></json-formatter>
+
+
+
+                        <!-- main textarea -->
+                        <form ng-if="buddycloud.publish" ng-submit="buddycloud.publish(content)">
+                            <textarea ng-model="content.atom.content"></textarea>
+                            <br/>
+                            <input type="submit" value="send" />
+                        </form>
+
+
+
+                        <!-- item loop -->
+                        <div ng-repeat="item in buddycloud.data.items | orderBy:'entry.atom.published':true" class="item" ng-if="!item.entry['in-reply-to']">
+
+                            <button ng-click="item.remove()">remove</button>
+                            <button ng-click="edit=!edit">edit</button>
+                            <button ng-if="edit" ng-click="item.save();edit=false">save</button>
+                            <json-formatter ng-if="debug" open="0" json="item"></json-formatter>
+                            <table>
+                                <!-- img,author,time -->
+                                <tr>
+                                    <td>
+                                        <div style="background-image:url('avatars/{{item.entry.atom.author.name|getUser}}.png');background-size:cover;width:40px;height:40px;border:1px solid black"></div>
+                                    </td>
+                                    <td>
+                                        <h4 style="margin:0px" ng-click="buddycloud.open({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</h4>
+                                        <span class="time" am-time-ago="item.entry.atom.published"></span>
+                                    </td>
+                                </tr>
+                                <!--text -->
+                                <tr>
+                                    <td colspan="2">
+                                        <textarea ng-if="edit" ng-model="item.entry.atom.content.content"></textarea>
+                                        {{item.entry.atom.content.content}}
+
+                                    </td>
+                                </tr>
+
+                                <!-- subitem loop -->
+                                <tr ng-repeat="subitem in buddycloud.data.items | orderBy:'entry.atom.published'" ng-if="item.id == subitem.entry['in-reply-to'].ref">
+                                    <td>
+                                        <div style="background-image:url('avatars/{{subitem.entry.atom.author.name|getUser}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;float:right"></div>
+                                    </td>
+                                    <td>
+                                        <p style="margin:0px">{{subitem.entry.atom.content.content}}</p>
+                                        <span class="time" am-time-ago="subitem.entry.atom.published"></span>
+                                        <button ng-click="subitem.remove()">remove</button>
+                                    </td>
+                                </tr>
+
+                                <!-- reply form -->
+                                <tr>
+                                    <td>
+                                        <div style="background-image:url('avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');background-size:cover;width:20px;height:20px;border:1px solid black;float:right"></div>
+                                    </td>
+                                    <td>
+                                        <form ng-submit='item.reply(subtext)'>
+                                            <input ng-model="subtext" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            <nav class="actionBar clearfix">
-                <button class="discover"><span>Find Channels</span>
-                </button>
-            </nav>
-            <div class="channels">
-                <div class="antiscroll-inner scrollHolder">
-                    <div class="bubbleHolder" style="height: 66px;">
-                        <div class="channel bubbling" style="top: 0px; z-index: 4;">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <hr/>
+                    <h4>commands</h4>
+                    <p style="font-size:10px" ng-repeat="command in commands[$index] track by $index" ng-click="setCounter(command.i )" ng-class="{'selected':command.i==counter}" class="link">
+                        {{command.i +1}}: {{command.command}}<br/>
+                        <span style="color:green" title="success">{{command.good}}</span>/<span style="color:red" title="errors">{{command.bad}}</span>/<span style="color:purple" type="$scope.$apply()">{{command.ticks}}</span> <span>{{command.time}}ms</span>
+                    </p>
 
+                </td>
+            </tr>
+        </table>
 
-                            <div ng-repeat="node in buddycloud.data.nodes" ng-click="changenode(node.node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
-                                <!--
-<img ng-src="assets/icons/avatars/{{node.name}}.png" style="height:25px"/>
-{{node.name}} <span ng-show="buddycloud.data.unread[node.node]" class="badge">{{buddycloud.data.unread[node.node]}}</span>
-<button class="btn btn-xs btn-link  pull-right" ng-click="xmpp.openchat(node.jid)" style="position:relative">
-<span class="glyphicon glyphicon-envelope " aria-hidden="true" ></span>
-<span ng-show="chat.notifications.unread[node.jid]" class="label label-success label-as-badge" style="position:absolute;top:-2px;left:12px;font-size:9px;backgroung-color:yellow">{{chat.notifications.unread[node.jid]}}</span>
-</button>
-</div>
+        <!--
+      <json-formatter open="1" json="buddyclouds[0].data"></json-formatter>
 -->
 
-                                <div class="channel">
-                                    <div class="avatar" style="background-image: url(assets/icons/avatars/{{node.name}}.png)">
-                                        <span class="channelpost counter" ng-if="buddycloud.data.unread[node.node]">{{buddycloud.data.unread[node.node]}}</span>
-                                        <span class="channelpost counter admin" ng-if="chat.notifications.unread[node.jid]" ng-click="openchat(node.node);">{{chat.notifications.unread[node.jid]}}</span>
-                                    </div>
-                                    <div class="info">
-                                        <span class="owner">{{node.name}}</span>
-                                        <span class="status">I can haz your nose?</span>
-                                    </div>
-                                </div>
-                                <br/>
-                                <br/>
-                                <br/>
+    </div>
 
-                            </div>
-                            <!--
-          <div class="info">
-            <span class="owner">music<span class="domain">@buddycloud.com</span></span>
-            <span class="status">New Foo Fighter Album online - check it out!</span>
-          </div>
-        </div></div><div class="bubbleHolder" style="height: 66px;"><div class="channel bubbling" style="top: 0px; z-index: 3;">
-          <div class="avatar" style="background-image: url(avatars/channel3.jpg)">
-            <span class="channelpost counter admin">1</span>
-          </div>
-          <div class="info">
-            <span class="owner">On the Box</span>
-            <span class="status">You gonna love the new Dexter episodes</span>
-          </div>
-        </div></div><div class="bubbleHolder" style="height: 66px;"><div class="channel bubbling" style="top: 0px; z-index: 2;">
-          <div class="avatar" style="background-image: url(img/topic-50px.jpg)">
-            <span class="channelpost counter">2</span>
-          </div>
-          <div class="info">
-            <span class="owner">Lolcats</span>
-            <span class="status">I can haz your nose?</span>
-          </div>
-        </div></div>
-        <div class="channel selected">
-          <div class="avatar" style="background-image: url(avatars/user2.jpg)">
-            <span class="channelpost counter">2</span>
-          </div>
-          <div class="info">
-            <span class="owner">Vera Maier</span>
-            <span class="status">What a wonderful day</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel2.jpg)">
-            <span class="channelpost counter admin">1</span>
-          </div>
-          <div class="info">
-            <span class="owner">Moviefans</span>
-            <span class="status">Harry Potter, tonight!</span>
-          </div>
-        </div>
-        <div class="startingArea" style="height: 0px;"></div>
-        <div class="startingArea" style="height: 0px;"></div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(img/personal-50px.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">Martin Rackel</span>
-            <span class="status">working on the webgl project</span>
-          </div>
-        </div>
-        <div class="startingArea" style="height: 0px;"></div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/user7.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">verena<span class="domain">@buddycloud.com</span></span>
-            <span class="status">test's are over - party!!!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel7.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">fans<span class="domain">@steam.com</span></span>
-            <span class="status">the cake is a lie!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel8.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">cave<span class="domain">@minecraft.com</span></span>
-            <span class="status">Buy minecraft - now!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(img/personal-50px.jpg)">
-            <span class="channelpost counter">2</span>
-          </div>
-          <div class="info">
-            <span class="owner">steve<span class="domain">@buddycloud.com</span></span>
-            <span class="status">all your base belongs to us</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel2.jpg)">
-            <span class="channelpost counter admin">1</span>
-          </div>
-          <div class="info">
-            <span class="owner">moviefans<span class="domain">@buddycloud.com</span></span>
-            <span class="status">Harry Potter, tonight!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel3.jpg)">
-            <span class="channelpost counter admin">1</span>
-          </div>
-          <div class="info">
-            <span class="owner">on-the-box<span class="domain">@bbc.co.uk</span></span>
-            <span class="status">You gonna love the new Dexter episodes</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel4.jpg)">
-            <span class="channelpost counter">2</span>
-          </div>
-          <div class="info">
-            <span class="owner">lolcats<span class="domain">@buddycloud.com</span></span>
-            <span class="status">I can haz your nose?</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/user4.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">martin<span class="domain">@buddycloud.com</span></span>
-            <span class="status">working on the webgl project</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel6.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">music<span class="domain">@buddycloud.com</span></span>
-            <span class="status">New Foo Fighter Album online - check it out!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/user7.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">verena<span class="domain">@buddycloud.com</span></span>
-            <span class="status">test's are over - party!!!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel7.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">fans<span class="domain">@steam.com</span></span>
-            <span class="status">the cake is a lie!</span>
-          </div>
-        </div>
-        <div class="channel">
-          <div class="avatar" style="background-image: url(avatars/channel8.jpg)">
-          </div>
-          <div class="info">
-            <span class="owner">cave<span class="domain">@minecraft.com</span></span>
-            <span class="status">Buy minecraft - now!</span>
-          </div>
-        </div>
--->
-                        </div>
-                    </div>
-                    <!-- /antiscroll-inner -->
-                </div>
-                <!-- /channels -->
-            </div>
-            <div class="content">
-                <div class="channelView personal clearfix">
-                    <header class="channelHeader justify">
-                        <div class="avatar" style="background-image: url(assets/icons/avatars/{{nodeuser.user}}.png);background-size: cover;"></div>
-                        <div class="flex titleText">
-                            <h2 class="owner" data-editmode="singleLine">{{node}}</h2>
-                            <div class="about" data-editmode="multiLine">I'm Vera, I love to cook, I love clothes and most of all, I love my boyfriend.</div>
-                        </div>
-                        <nav class="inChannel">
-                            <!--<span class="messages button newMessage">
-            <span class="holder">Messages</span><span class="message counter">2</span>
-          </span>-->
-                            <span class="channel button">
-            <span class="holder">Channel</span>
-                            </span>
-                            <span class="hidden save button">Save</span>
-                            <!--<span class="edit button">Edit</span>-->
-                            <div ng-show="node!=='recent'">
-                                <span class="unfollow button" ng-if="buddycloud.data.rights.subscribed" ng-click="buddycloud.unsubscribe();">Unfollow</span>
-                                <span class="unfollow button" ng-if="!buddycloud.data.rights.subscribed" ng-click="buddycloud.subscribe();">Follow</span>
-                            </div>
-                        </nav>
-                        <a href="http://www.buddycloud.com/" id="poweredby">powered by buddycloud</a>
-                    </header>
-                    <div class="centered start">
-                        <section class="stream private clearfix">
-                            <buddycloud node="{{node}}" jid="jid" changenode="changenode(node,bc)" oninit="initbuddycloud(scope)"></buddycloud>
 
-                        </section>
-                        <!-- /stream -->
-                        <div class="channelDetails">
-                            <div class="infoToggle">
-                                <h4 class="title">Info</h4>
-                                <span class="icon"></span>
-                            </div>
-                            <div class="holder">
-                                <section class="meta">
-                                    <p class="address">
-                                        <span class="title">Address:</span>
-                                        <span class="data" ng-click="openchat(node)">{{nodeuser.user}}@{{nodeuser.domain}}</span>
-                                    </p>
-                                    <p class="open">
-                                        <span class="title">This Channel is:</span>
-                                        <span class="data accessModel" data-editmode="boolean">Public</span>
-                                    </p>
-                                    <p class="broadcast">
-                                        <span class="title">Broadcasting for:</span>
-                                        <time class="data" datetime="2011-06-06T05:06:00.000Z" title="5:06pm 06.06.2011" data-strftime="%f" data-strftitle="%A %d %B %Y %H:%M">188 days</time>
-                                    </p>
-                                </section>
-                                <section class="channelList">
-                                        <div ng-repeat="(key,value) in buddycloud.data.subscribertree">
-                                                    <h3>{{key}} <span class="count">{{value.length}}</span></h3>
-                                                    <img ng-repeat="item in value" ng-click="opennode(item.jid)"
-                                                     ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-<!--
-                                    <h3>owner <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='owner' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
 
-                                    <h3>moderators <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='moderator' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
-
-                                    <h3>publishers <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <img ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)" ng-if="item.affiliation=='publisher' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                    </div>
-
-                                    <h3>members <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='member' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
-
+    <!--
+debug view
 -->
 
 
 
-                                </section>
-                                <!-- /followers -->
-                                <!--
-            <section class="channelList">
-              <h3>followers <span class="count">20</span></h3>
-              <div class="list">
-                <img src="./Streams_files/user3.jpg" class="selected">
-                <img src="./Streams_files/user4.jpg">
-                <img src="./Streams_files/user5.jpg">
-                <img src="./Streams_files/user6.jpg">
-                <div class="adminAction first">
-                  <div class="arrow"></div>
-                  <div class="holder">
-                    <div class="box">
-                      <section class="channelInfo">
-                        <h4>tom@buddycloud.com</h4>
-                        <div class="currentRole">Follower</div>
-                      </section>
-                      <section class="action changeRole">
-                        <h5>Change Role</h5>
-                        <select>
-                          <option value="moderator">Moderator</option>
-                          <option value="followerPlus">Follower+Post</option>
-                          <option value="follower" selected="">Follower</option>
-                        </select>
-                        <section class="info">
-                          <div class="moderator">
-                            <ul>
-                              <li>read your channel</li>
-                              <li>write comments &amp; messages</li>
-                              <li>post new topics</li>
-                              <li>approve new followers</li>
-                              <li>set user's roles</li>
-                              <li>delete posts</li>
-                            </ul>
-                          </div>
-                          <div class="followerPlus">
-                            <ul>
-                              <li>read your channel</li>
-                              <li>write comments &amp; messages</li>
-                              <li>post new topics</li>
-                            </ul>
-                          </div>
-                          <div class="follower">
-                            <ul>
-                              <li>read your channel</li>
-                            </ul>
-                          </div>
-                        </section>
-                      </section>
-                      <section class="action banUser">
-                        <h5>Ban User</h5>
-                        <div class="info">
-                          <ul>
-                            <li class="negative">Remove access to channel.</li>
-                          </ul>
-                        </div>
-                      </section>
-                      <section class="actionRow choose">
-                        <div class="changeRoleButton">Change Role</div>
-                        <div class="banUserButton">Ban User</div>
-                      </section>
-                      <section class="actionRow confirm">
-                        <div class="cancelButton">Cancel</div>
-                        <div class="okButton">Ok</div>
-                      </section>
-                    </div>
-                  </div>
-                </div>
-                <img src="./Streams_files/user7.jpg">
-                <img src="./Streams_files/user8.jpg">
-                <img src="./Streams_files/user9.jpg">
-                <img src="./Streams_files/user10.jpg">
-                <img src="./Streams_files/user11.jpg">
-                <img src="./Streams_files/user12.jpg">
-                <img src="./Streams_files/user13.jpg">
-                <img src="./Streams_files/channel8.jpg">
-              </div>
--->
-                                <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
-                                <section class="channelList">
-                                    <h3>channels nearby <span class="count">10</span></h3>
-                                    <div class="list">
-                                        <img src="./Streams_files/channel1.jpg">
-                                        <img src="./Streams_files/channel2.jpg">
-                                        <img src="./Streams_files/channel3.jpg">
-                                        <img src="./Streams_files/channel4.jpg">
-                                    </div>
-                                    <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
-                                <section class="channelList">
-                                    <h3>similar channels <span class="count">8</span></h3>
-                                    <div class="list">
-                                        <img src="./Streams_files/channel5.jpg">
-                                        <img src="./Streams_files/channel6.jpg">
-                                        <img src="./Streams_files/channel7.jpg">
-                                        <img src="./Streams_files/channel8.jpg">
-                                    </div>
-                                    <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
+
+
+    <div ng-if="!uimode">
+        <table style="width:100%;margin-top:180px;table-layout: fixed;">
+            <tr>
+                <pre>
+</pre>
+                <td ng-repeat="xmpp in xmpps" ng-init="rowIndex = $index">
+                    <h3>{{xmpp.data.me.jid.user}}@{{xmpp.data.me.jid.domain}}</h3>
+                    <div ng-repeat="item in check">
+                        <h4 ng-click="toggle=!toggle" ng-class="{'selected':toggle}" class="link">{{$index}}. {{item}} 
+                        <span ng-if="toggle"> (expected)</span>
+        <span ng-if="allcommands[counter].checkresults[rowIndex][item]=='ok'" style="color:green;font-size:14px">✓ </span>
+        <span ng-if="allcommands[counter].checkresults[rowIndex][item]=='notok'" style="color:red">✖ </span>
+        </h4>
+                        <div>
+                            <div ng-if="toggle" style="color:blue">
+                                <json-formatter open="2" json="expected[counter][rowIndex][item]"></json-formatter>
                             </div>
-                            <!-- /holder -->
+                            <div ng-if="!toggle">
+                                <json-formatter open="2" json="appstate[counter][rowIndex][item]"></json-formatter>
+                            </div>
                         </div>
-                        <!-- /detail -->
                     </div>
-                </div>
-                <!-- /channelView -->
-            </div>
-            <!-- /content -->
-            <script type="text/javascript">
-                /* ###
 
-  redraw function to make sure that transitions are triggered
+                    <h4>commands</h4>
+                    <p style="font-size:10px" ng-repeat="command in commands[$index] track by $index" ng-click="setCounter(command.i )" ng-class="{'selected':command.i==counter}" class="link">
+                        {{command.i +1}}: {{command.command}}<br/>
+                        <span style="color:green" title="success">{{command.good}}</span>/<span style="color:red" title="errors">{{command.bad}}</span>/<span style="color:purple" title="$scope.$apply()">{{command.ticks}}</span> <span>{{command.time}}ms</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <h1>Automatic testing</h1>
+        <p>This is an automatic test client for angular-xmpp. It works with 3 xmpp accounts and sends commands to the websocket. After sending the command it waits for <input type="number" ng-model="steptime" style="width:45px"/> ms, tests the angular-xmpp state and then sends the next command.</p>
+        <p>When the test is finished, all created data should be removed from server. If you cancel a test, there will be remaining data on the server and the next test can not succeed. If you see an error, please wait until the testrun is finished and then start again.</p>
+        <h2>Possible Problems</h2>
+        This Test system works with real accounts. The accounts should be in the same state as after creating the account. If not, the tests WILL FAIL.
+        <h2>For funny persons</h2>
+        If you are very smart, you can change to passwords of the testaccounts. This online test-tool is broken then until somebody repairs it.
+        <h2>Creating new tests</h2>
+        <p>
+            The testfiles are very big and it's not really possible to generate by hand. The purpose is to keep the API consistent. The testfiles (expected.json) can be generated automaticaliy (textarea)
+        </p>
+        <p>This tool shows you if the API has changed. If it is a change by purpous, copy the automatic generated protocol file and use as the new testdefinition</p>
+        <h2>Finding Changes</h2>
+        When the automatic test is finished, you can click on the commands or use the cursor keys to go back in time and examine the states.
+        <h2>Static Only</h2>
+        This Test is only for testing data formats. It does not test timing. If a requests takes longer then 2 seconds the test will not work.
+    </div>
+
+<!-- the copy/paste thing -->
+        <div ng-if="resultstring">
+            <h4>This is the automatic generated testfile</h4>
+            <textarea ng-model="resultstring" style="margin-left:100px;width:500px;height:300px;"></textarea>
+        </div>
 
-  ### */
-                ! function(document) {
 
-                    // (C) WebReflection (As It Is) - Mit Style
 
-                    // we all love function declarations
-                    function redraw() {
-
-                        // clientHeight returns 0 if not present in the DOM
-                        // e.g. document.removeChild(document.documentElement);
-                        // also some crazy guy may swap runtime the whole HTML element
-                        // this is why the documentElement should be always discovered
-                        // and if present, it should be a node of the document
-                        // In all these cases the returned value is true
-                        // otherwise what is there cannot really be considered as painted
-
-                        return !!(document.documentElement || 0).clientHeight;
-                    }
-
-                    // ideally an Object.defineProperty
-                    // unfortunately some engine will complain
-                    // if used against DOM objects
-                    document.redraw = redraw;
-
-                }(document);
-
-                /* ###
-
-    Channel bubbling
-
-    ### */
-                var channelHolder = $('.channels');
-                var innerHolder = channelHolder.find('.scrollHolder');
-                var channels = channelHolder.find('.channel:not(".personal")');
-
-                 // prefixes for cutting edge css properties and javascript events:
-                 //
-                 //  transition => MozTransition
-                var transition = Modernizr.prefixed('transition');
-                 //  transform => MozTransform
-                var transform = Modernizr.prefixed('transform');
-                var transEndEventNames = {
-                        'WebkitTransition': 'webkitTransitionEnd',
-                        'MozTransition': 'transitionend',
-                        'OTransition': 'oTransitionEnd',
-                        'msTransition': 'msTransitionEnd', // maybe?
-                        'transition': 'transitionEnd'
-                    }
-                    //  transitionendEvent => transitionend
-                var transitionendEvent = transEndEventNames[transition];
-                 // cache channelHeight - it's the same for every channel-preview
-                var channelHeight = channels.first().outerHeight();
-                 // count of currently moving channels
-                var movingChannels = 0;
-
-                /*
-
-  Stress test:
-
-  $('.channel:not(".personal")').each(function(i, channel){
-      setTimeout( function(){ $(this).click() }.bind(this), i*250);
-  });
-
-  Reality test:
-
-  $('.channel:not(".personal")').each(function(i, channel){
-      setTimeout( function(){ $(this).click() }.bind(this), i*Math.round(Math.random()*2500));
-  });
-
-  An even more real test:
-
-  time = 5000;
-
-  function goCrazy(){
-  var allChannels = $('.channel:not(".personal")');
-  allChannels.eq( Math.round( Math.random()*allChannels.size() ) ).click();
-    timer = setTimeout(goCrazy, Math.random()*time);
-  }
-  goCrazy();
-
-  */
-
-                function bubble() {
-                    var bubblingChannel = $(this);
-
-                    // relative offset + absolute offset
-                    var offset = bubblingChannel.position().top + innerHolder.scrollTop();
-
-                    // don't bubble if the channel is..
-                    //  - on top
-                    //  - bubbling
-                    if (offset === 0 || bubblingChannel.parent().hasClass('bubbleHolder')) {
-                        return false;
-                    }
-
-                    // create a gap where the channel starts off
-                    var startingArea = $('<div>').height(channelHeight).addClass('startingArea');
-                    bubblingChannel.before(startingArea);
-
-                    document.redraw();
-
-                    startingArea.bind(transitionendEvent, destroy);
-
-                    // close startingArea
-                    startingArea.css('height', 0);
-
-                    // detach the bubbling channel from the DOM
-                    // and insert it at the top
-                    bubblingChannel.detach().css('top', offset);
-                    innerHolder.prepend(bubblingChannel);
-
-                    // wrap a growing holder around it
-                    var landingArea = $('<div>').addClass('bubbleHolder');
-                    bubblingChannel.wrap(landingArea);
-
-                    document.redraw();
-
-                    // bind the callback on transition end for all bubbling channels
-                    bubblingChannel.bind(transitionendEvent, reset);
-
-                    // bubble!
-                    bubblingChannel.addClass('bubbling').css({
-                        'top': 0,
-                        'z-index': ++movingChannels + 1
-                    });
-                    // open a gap for the channel to arrive
-                    bubblingChannel.parent().css('height', channelHeight);
-                }
-
-                function destroy(event) {
-                    var propertyToWaitFor = event.data.propertyName;
-                    if (propertyToWaitFor !== undefined && event.originalEvent.propertyName === propertyToWaitFor)
-                        $(this).remove();
-                }
-
-                function reset(event) {
-                    if (event.data && event.data.callback) event.data.callback();
-                    // reset the bubbling channel and unwrap it
-                    $(this).removeClass('bubbling').css({
-                        'height': '',
-                        'z-index': ''
-                    }).unwrap();
-                    movingChannels--;
-                }
-                channels.click(bubble);
-                 //channels.toggle(function(){ $(this).css('background', 'red'); }, function(){ $(this).css('background', 'green'); });
-
-                /* ###
-
-    show/hide channel info
-
-    ### */
-                var channelInfo = $('.channelDetails');
-                var channelInfoToggle = channelInfo.find('> .infoToggle');
-
-                channelInfoToggle.click(function() {
-                    channelInfo.toggleClass('hidden');
-                });
-
-                $('.showAll').click(function() {
-                    var list = $(this).prev();
-                    list.children().clone().appendTo(list);
-                    $(this).remove();
-                });
-
-                /* ###
-
-    new topic animation
-
-    ### */
-
-                $('.opener, .comment').each(function() {
-                    var post = $(this);
-                    post.find('button.delete').click(function() {
-                        post.toggleClass('dangerZone');
-                    });
-                });
-
-                 // works for both new topic field and all the small answer fields
-                var newTopic = $('.newTopic, .answer');
-                var topicTextarea = newTopic.find('textarea');
-
-                function openArea(event) {
-                    // prevent bubbling!
-                    event.stopPropagation();
-                    if (!$(this).hasClass('write')) {
-                        $(this).addClass('write');
-                        $(document).one('click', {
-                            self: this
-                        }, closeArea);
-                    }
-                }
-
-                function closeArea(event) {
-                    var self = event.data.self;
-                    var textarea = $(self).find('textarea');
-                    // minimize the textarea only if the textarea is empty
-                    if (textarea.val() === "") {
-                        $(self).removeClass('write');
-                    }
-                }
-
-                newTopic.click(openArea);
-
-                /* ###
-
-    notification animation
-
-    ### */
-
-                var notification = $('.notification');
-                var notificationButtons = notification.find('.controls > div');
-
-                function notify() {
-                    notification.addClass('visible');
-                }
-
-                function logNotifaction() {
-                    var reaction = $(this).hasClass('positive') ? 'granted' : 'denied';
-                    notification.addClass('log ' + reaction);
-                }
-
-                notificationButtons.click(logNotifaction);
-                 //setTimeout('notify()', 2000);
-
-                $(function() {
-                    //$('#channels').antiscroll();
-                }); //*/
-
-                /* ###
-
-      edit mode
-
-  */
-
-                var editableElements = [
-                    'header .title',
-                    'header .status',
-                    '.meta .description',
-                    '.meta .accessModel',
-                    '.location .previous',
-                    '.location .current',
-                    '.location .next'
-                ];
-
-                function fauxLoadEditedStuff() {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
-                            if (localStorage[el]) $(el).text(localStorage[el]);
-                        }
-                    }
-                }
-
-                fauxLoadEditedStuff();
-
-                $('.edit.button').click(function() {
-                    if (!$('html').hasClass('editmode')) {
-                        $('html').addClass('editmode');
-                        startEditMode();
-                    } else {
-                        $('html').removeClass('editmode');
-                        stopEditMode(true);
-                    }
-                });
-
-                function startEditMode() {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
-                            // store the current state
-                            localStorage[el] = $(el).text();
-
-                            // add designMode & contenteditable
-                            $(el)
-                                .prop('contenteditable', true)
-                                .input(function() {
-                                    var text = $(this).text();
-                                    if (text === "") $(this).html("&nbsp;");
-                                }).keydown(function(ev) {
-                                    var code = ev.keyCode || ev.which;
-                                    if ($(this).data('editmode') === 'singleLine' && code == 13) {
-                                        ev.preventDefault();
-                                        return false;
-                                    } else return true;
-                                });
-                            // only allow enter when the target is not singleLine
-                        }
-                    }
-                    $(editableElements[0]).focus();
-                }
-
-                function stopEditMode(save) {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
-
-                            // remove designMode & contenteditable
-                            $(el).prop('contenteditable', false);
-
-                            // compare the current state with the pre-edit state and store the changed elements
-                            if ($(el).text() != localStorage[el]) {
-                                if (save) {
-                                    localStorage[el] = $(el).text();
-                                } else {
-                                    $(el).text(localStorage[el]);
-                                }
-                            }
-                        }
-                    }
-                }
-
-
-                /* ###
-
-      search
-
-  ### */
-
-                $('input[type=search]').bind('input', search);
-                 // channels = $('#channels .channel');
-
-                function search() {
-                    var text = this.value;
-                    channels.each(function(i, el) {
-                        // check if the text is in there
-                        // add class hidden if text is not the same
-                        if ($(el).text().indexOf(text) !== -1) {
-                            $(el).removeClass('hidden');
-                        } else {
-                            $(el).addClass('hidden');
-                        };
-                    });
-                }
-
-                /* ###
-
-    unfollow
-
-    ### */
-
-                $('.inChannel').on('click', '.unfollow', function() {
-                    // rename button
-                    $(this).text('Follow').removeClass('unfollow').addClass('follow');
-
-                    var channelToRemove = $('.channel.selected');
-                    channelToRemove.bind(transitionendEvent, {
-                        propertyName: 'height'
-                    }, destroy);
-
-                    document.redraw();
-
-                    channelToRemove.addClass('remove');
-                });
-
-                /* ###
-
-    follow
-
-    ### */
-
-                function channelTemplate(avatarUrl, owner, status, animationClassName) {
-                    return $('<div class="channel">')
-                        .addClass(animationClassName ? animationClassName : "")
-                        .append(
-                            $('<div class="avatar">').css('background-image', avatarUrl)
-                        )
-                        .append(
-                            $('<div class="info">')
-                            .append(
-                                $('<div class="owner">').text(owner)
-                            )
-                            .append(
-                                $('<div class="status">').text(status)
-                            )
-                        );
-                }
-
-                $('.inChannel').on('click', '.follow', follow);
-
-                function follow() {
-                    // TODO: scroll channel list up (animation) and the go on
-                    $(this).text('Unfollow').removeClass('follow').addClass('unfollow');
-
-                    var avatarUrl = $(this).parent().siblings('.avatar').css('background-image');
-                    var owner = $(this).parent().siblings().children('.owner').text();
-                    // the status will not be visible in the discovery
-                    // using the about for now
-                    var status = $(this).parent().siblings().children('.about').text();
-                    var animationClassName = 'channelHeader';
-                    console.log(avatarUrl);
-                    console.log(owner);
-                    console.log(status);
-                    // create new channel from template for the sidebar
-                    var newChannel = new channelTemplate(avatarUrl, owner, status, animationClassName);
-
-                    // get the start offset
-                    var offset = $(this).parents('.channelHeader').offset();
-                    var callback = function() {
-                        $('.channels').removeClass('rainbowAnimationRunning');
-                        $(this).addClass('selected').css({
-                            left: '',
-                            top: ''
-                        });
-                    }.bind(newChannel);
-
-                    $('.channels').addClass('rainbowAnimationRunning');
-
-                    // start the animation
-                    rainbowAnimation(newChannel, offset, animationClassName, callback);
-                }
-
-                function rainbowAnimation(channel, offset, animationClassName, callback) {
-                    channel.css({
-                        left: offset.left - innerHolder.offset().left,
-                        top: offset.top - innerHolder.offset().top
-                    });
-                    innerHolder.prepend(channel);
-
-                    // wrap a growing holder around it
-                    var landingArea = $('<div>').addClass('bubbleHolder rainbowBubble');
-                    channel.wrap(landingArea);
-
-                    document.redraw();
-
-                    console.log(channel);
-                    // bind the callback on transition end for all bubbling channels
-                    channel.one(transitionendEvent, {
-                        callback: callback
-                    }, reset);
-                    // bubble!
-                    channel.removeClass(animationClassName).css({
-                        'top': 0,
-                        'left': 0,
-                        'z-index': ++movingChannels + 1
-                    });
-                    // open a gap for the channel to arrive
-                    channel.parent().css('height', channelHeight);
-                }
-
-                /* ###
-
-    Show Settings
-
-    ### */
-                $('.settings').click(function() {
-                    $(this).toggleClass('showSettings');
-                });
-                $('.settings li').click(function(event) {
-                    event.stopPropagation();
-                });
-
-
-                $.fn.autoResize = function() {
-
-                    this.filter('.expandingArea').each(function() {
-
-                        var $this = $(this);
-                        var $textarea = $this.find('textarea');
-                        var $span = $this.find('span');
-                        var textarea = $textarea[0];
-                        var span = $span[0];
-
-                        if (textarea.addEventListener) {
-                            textarea.addEventListener('input', function() {
-                                span.textContent = textarea.value;
-                            }, false);
-                            span.textContent = textarea.value;
-                        } else if (textarea.attachEvent) {
-                            // IE8 compatibility
-                            textarea.attachEvent('onpropertychange', function() {
-                                span.innerText = textarea.value;
-                            });
-                            span.innerText = textarea.value;
-                        }
-                        // Enable extra CSS
-                        $this.addClass('active');
-
-                    });
-                }
-
-                $('.expandingArea').autoResize();
-            </script>
-
-    </xmpp>
 </body>
 
 </html>

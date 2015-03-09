@@ -4,6 +4,10 @@ is a library,that provides stylable UI Elements for XMPP oder Websockets using x
 
 Test here:  http://datenkueche.com/buddycloud/
 
+## sorry, big mess
+
+I try to sepearate content from design. The directives will come again later. 
+
 
 
 ## getting started

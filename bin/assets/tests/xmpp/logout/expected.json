@@ -1,0 +1,86 @@
+[
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      },
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      },
+      "items": []
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      },
+      "items": []
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    }
+  ]
+]

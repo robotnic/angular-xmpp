@@ -1,0 +1,14 @@
+[
+  [0,"buddycloud","send('xmpp.buddycloud.discover')"],
+  [1,"buddycloud","send('xmpp.buddycloud.discover')"],
+  [0,"buddycloud","send('xmpp.buddycloud.disover.media-server')"],
+  [0,"buddycloud","send('xmpp.buddycloud.disover.media-server', { 'of': 'laos.buddycloud.com' })"],
+  [0,"buddycloud","send('xmpp.buddycloud.register',{})"],
+  [0,"buddycloud","open({'node':'/user/test1@laos.buddycloud.com/posts',rsm:{'max':2000}})"],
+  [1,"buddycloud","open({'node':'/user/test2@laos.buddycloud.com/posts',rsm:{'max':2000}})"],
+  [0,"buddycloud","data.items[0].remove()"],
+
+  [0,"buddycloud","send('xmpp.buddycloud.create', {'node':'/user/weather77@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.unsubscribe',{'node':{node:'/user/test1@laos.buddycloud.com/posts'}})"],
+  [0,"buddycloud","send( 'xmpp.buddycloud.item.delete', { 'node': '/user/test1@laos.buddycloud.com/posts', 'id': 'tag:null@cs.buddycloud.com,/user/test1@laos.buddyc…ud.com/posts,323730c2-66ba-4355-971c-452788da185b' })"]
+]

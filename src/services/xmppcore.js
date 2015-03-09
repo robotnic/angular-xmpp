@@ -102,6 +102,7 @@ angular.module('XmppCoreFactory', [])
                     api.socket.send('xmpp.login', request);
                     api.socket.on('xmpp.connection', function(data) {
                         q.resolve(data);
+                        api.q.notify(data);
                     });
                     return q.promise;
                     break;
@@ -215,7 +216,8 @@ angular.module('XmppCoreFactory', [])
             data:{
                 connected:false,
                 roster:[],
-                me:null
+                me:null,
+                items:[]
             },
             socket:null,
             q:null,

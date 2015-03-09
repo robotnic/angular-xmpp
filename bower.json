@@ -19,12 +19,14 @@
     "type": "git",
     "url": "git@github.com:robotnic/angular_xmpp.git"
   },
-  "devDependencies": {
+  "dependencies": {
     "angular-strap": "~2.1.6",
     "angular-markdown-directive": "~0.3.1",
     "angular-bootstrap": "~0.12.0",
     "showdown": "~0.3.4",
     "jquery": "~2.1.3",
-    "modernizr": "~2.8.3"
+    "modernizr": "~2.8.3",
+    "angular-moment":"*",
+    "json-formatter":"*"
   }
 }

@@ -1,7 +1,7 @@
-angular.module('XmppMessageFactory', [])
+angular.module('XmppMessage', [])
 
 
-.factory('XmppMessage',['$q',function($q){
+.factory('MessageFactory',['$q',function($q){
     return function(xmpp){
         function watch(q){
             //notify is used to apply changes (render html);

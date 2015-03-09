@@ -1,0 +1,868 @@
+[
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test2@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "hello from test1 to test0",
+            "format": "plain",
+            "receivetime": 1425842149307,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 0,
+        "unread": {},
+        "messages": {},
+        "composing": {}
+      }
+    },
+    {
+      "items": [],
+      "notifications": {
+        "unreadmessages": 0,
+        "unread": {},
+        "messages": {},
+        "composing": {}
+      }
+    }
+  ],
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test2@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "hello from test1 to test0",
+            "format": "plain",
+            "receivetime": 1425842149307,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "hello from test2 to test0",
+          "format": "plain",
+          "receivetime": 1425842151287,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test3@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test3@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test3",
+              "resource": "test",
+              "jid": "test3@laos.buddycloud.com"
+            },
+            "content": "hello from test2 to test0",
+            "format": "plain",
+            "receivetime": 1425842151287,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test3@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "hello from test2 to test0"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 0,
+        "unread": {},
+        "messages": {},
+        "composing": {}
+      }
+    }
+  ],
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        },
+        {
+          "to": "test3@laos.buddycloud.com",
+          "content": "hello from test3 to test0"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test2@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "hello from test1 to test0",
+            "format": "plain",
+            "receivetime": 1425842149307,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "hello from test2 to test0",
+          "format": "plain",
+          "receivetime": 1425842151287,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test3@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test3@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test3",
+              "resource": "test",
+              "jid": "test3@laos.buddycloud.com"
+            },
+            "content": "hello from test2 to test0",
+            "format": "plain",
+            "receivetime": 1425842151287,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test3@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "hello from test2 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1",
+            "resource": "test",
+            "jid": "test1@laos.buddycloud.com"
+          },
+          "content": "hello from test3 to test0",
+          "format": "plain",
+          "receivetime": 1425842153274,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test1@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test1@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test1",
+              "resource": "test",
+              "jid": "test1@laos.buddycloud.com"
+            },
+            "content": "hello from test3 to test0",
+            "format": "plain",
+            "receivetime": 1425842153274,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test1@laos.buddycloud.com": false
+        }
+      }
+    }
+  ],
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        },
+        {
+          "to": "test3@laos.buddycloud.com",
+          "content": "hello from test3 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "yes test1",
+          "format": "plain",
+          "receivetime": 1425842155289,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test2@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "yes test1",
+            "format": "plain",
+            "receivetime": 1425842155289,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "hello from test2 to test0",
+          "format": "plain",
+          "receivetime": 1425842151287,
+          "unread": true
+        },
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "yes test1"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test3@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test3@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test3",
+              "resource": "test",
+              "jid": "test3@laos.buddycloud.com"
+            },
+            "content": "hello from test2 to test0",
+            "format": "plain",
+            "receivetime": 1425842151287,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test3@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "hello from test2 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1",
+            "resource": "test",
+            "jid": "test1@laos.buddycloud.com"
+          },
+          "content": "hello from test3 to test0",
+          "format": "plain",
+          "receivetime": 1425842153274,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test1@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test1@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test1",
+              "resource": "test",
+              "jid": "test1@laos.buddycloud.com"
+            },
+            "content": "hello from test3 to test0",
+            "format": "plain",
+            "receivetime": 1425842153274,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test1@laos.buddycloud.com": false
+        }
+      }
+    }
+  ],
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        },
+        {
+          "to": "test3@laos.buddycloud.com",
+          "content": "hello from test3 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "yes test1",
+          "format": "plain",
+          "receivetime": 1425842155289,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test2@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "yes test1",
+            "format": "plain",
+            "receivetime": 1425842155289,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "hello from test2 to test0",
+          "format": "plain",
+          "receivetime": 1425842151287,
+          "unread": true
+        },
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "yes test1"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "yes test2",
+          "format": "plain",
+          "receivetime": 1425842157272,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test3@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test3@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test3",
+              "resource": "test",
+              "jid": "test3@laos.buddycloud.com"
+            },
+            "content": "yes test2",
+            "format": "plain",
+            "receivetime": 1425842157272,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test3@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "hello from test2 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1",
+            "resource": "test",
+            "jid": "test1@laos.buddycloud.com"
+          },
+          "content": "hello from test3 to test0",
+          "format": "plain",
+          "receivetime": 1425842153274,
+          "unread": true
+        },
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "yes test2"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 1,
+        "unread": {
+          "test1@laos.buddycloud.com": 1
+        },
+        "messages": {
+          "test1@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test1",
+              "resource": "test",
+              "jid": "test1@laos.buddycloud.com"
+            },
+            "content": "hello from test3 to test0",
+            "format": "plain",
+            "receivetime": 1425842153274,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test1@laos.buddycloud.com": false
+        }
+      }
+    }
+  ],
+  [
+    {
+      "items": [
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "hello from test1 to test0",
+          "format": "plain",
+          "receivetime": 1425842149307,
+          "unread": true
+        },
+        {
+          "to": "test3@laos.buddycloud.com",
+          "content": "hello from test3 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test2",
+            "resource": "test",
+            "jid": "test2@laos.buddycloud.com"
+          },
+          "content": "yes test1",
+          "format": "plain",
+          "receivetime": 1425842155289,
+          "unread": true
+        },
+        {
+          "to": "test3@laos.buddycloud.com",
+          "content": "yes test3"
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test2@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test2@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test2",
+              "resource": "test",
+              "jid": "test2@laos.buddycloud.com"
+            },
+            "content": "yes test1",
+            "format": "plain",
+            "receivetime": 1425842155289,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test2@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "hello from test1 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "hello from test2 to test0",
+          "format": "plain",
+          "receivetime": 1425842151287,
+          "unread": true
+        },
+        {
+          "to": "test1@laos.buddycloud.com",
+          "content": "yes test1"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test3",
+            "resource": "test",
+            "jid": "test3@laos.buddycloud.com"
+          },
+          "content": "yes test2",
+          "format": "plain",
+          "receivetime": 1425842157272,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test3@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test3@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test3",
+              "resource": "test",
+              "jid": "test3@laos.buddycloud.com"
+            },
+            "content": "yes test2",
+            "format": "plain",
+            "receivetime": 1425842157272,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test3@laos.buddycloud.com": false
+        }
+      }
+    },
+    {
+      "items": [
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "hello from test2 to test0"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1",
+            "resource": "test",
+            "jid": "test1@laos.buddycloud.com"
+          },
+          "content": "hello from test3 to test0",
+          "format": "plain",
+          "receivetime": 1425842153274,
+          "unread": true
+        },
+        {
+          "to": "test2@laos.buddycloud.com",
+          "content": "yes test2"
+        },
+        {
+          "from": {
+            "domain": "laos.buddycloud.com",
+            "user": "test1",
+            "resource": "test",
+            "jid": "test1@laos.buddycloud.com"
+          },
+          "content": "yes test3",
+          "format": "plain",
+          "receivetime": 1425842159272,
+          "unread": true
+        }
+      ],
+      "notifications": {
+        "unreadmessages": 2,
+        "unread": {
+          "test1@laos.buddycloud.com": 2
+        },
+        "messages": {
+          "test1@laos.buddycloud.com": {
+            "from": {
+              "domain": "laos.buddycloud.com",
+              "user": "test1",
+              "resource": "test",
+              "jid": "test1@laos.buddycloud.com"
+            },
+            "content": "yes test3",
+            "format": "plain",
+            "receivetime": 1425842159272,
+            "unread": true
+          }
+        },
+        "composing": {
+          "test1@laos.buddycloud.com": false
+        }
+      }
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test2",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test2"
+        }
+      },
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      },
+      "items": []
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": true,
+      "roster": [],
+      "me": {
+        "status": "online",
+        "jid": {
+          "local": "test3",
+          "domain": "laos.buddycloud.com",
+          "resource": "test",
+          "user": "test3"
+        }
+      },
+      "items": []
+    }
+  ],
+  [
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    },
+    {
+      "connected": false,
+      "roster": [],
+      "me": null,
+      "items": []
+    }
+  ]
+]
