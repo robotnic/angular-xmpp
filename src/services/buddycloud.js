@@ -824,7 +824,7 @@ angular.module('BuddycloudModule', [])
                     return send(command, data);
                 },
                 init: function() {
-                    var q=$q.promise();
+                    var q=$q.defer();
                     api.send('xmpp.buddycloud.discover', {}).then(function() {
                         api.send('xmpp.buddycloud.register', {});
                         api.send('xmpp.buddycloud.subscriptions', {});
@@ -836,7 +836,7 @@ angular.module('BuddycloudModule', [])
                         api.data.errors.unshift(error);
                         q.reject("error");
                     });
-                    var q=$q.defer;
+                    var q=$q.promise;
                 }
 
             };
