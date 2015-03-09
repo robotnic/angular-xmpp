@@ -39,7 +39,7 @@ angular.module('Test', ['AngularXmpp','jsonFormatter','angularMoment'])
                 name:"logout",
                 type:"xmpp",
                 check:["me"],
-            }
+            },
             ],
             message:[
             {
@@ -56,12 +56,20 @@ angular.module('Test', ['AngularXmpp','jsonFormatter','angularMoment'])
             {
                 name:"buddycloud",
                 type:"buddycloud",
-                check:[ "unread", "affiliations","myaffiliations","items","config","subscriptions","errors"]
+                check:["subscriptions",  "affiliations","myaffiliations","errors"]
             },
             { 
                 name:"buddyclouderror",
                 type:"buddycloud",
-                check:["errors", "unread", "affiliations","myaffiliations","items","config","subscriptions"]
+                check:["subscriptions",  "affiliations","myaffiliations","errors"]
+            },{
+                name:"create",
+                type:"buddycloud",
+                check:["me", "roster", "connected","error"],
+            },{
+                name:"descroy",
+                type:"buddycloud",
+                check:["me", "roster", "connected","error"],
             }]
         }
 

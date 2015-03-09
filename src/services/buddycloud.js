@@ -824,16 +824,19 @@ angular.module('BuddycloudModule', [])
                     return send(command, data);
                 },
                 init: function() {
+                    var q=$q.promise();
                     api.send('xmpp.buddycloud.discover', {}).then(function() {
                         api.send('xmpp.buddycloud.register', {});
                         api.send('xmpp.buddycloud.subscriptions', {});
                         api.send('xmpp.buddycloud.affiliations', {});
                         api.send('xmpp.buddycloud.presence', {});
+                        q.resolve();
 
                     }, function(error) {
-                        api.data.error = error;
-
+                        api.data.errors.unshift(error);
+                        q.reject("error");
                     });
+                    var q=$q.defer;
                 }
 
             };

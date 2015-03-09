@@ -1,0 +1,9 @@
+[
+  [0,"buddycloud","init()"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'node':'/user/test2@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'node':'/user/test1@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'elke':'/user/test1@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'eva':'/user/test1@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'seppl':'/user/test1@laos.buddycloud.com/posts'})"],
+  [0,"buddycloud","send('xmpp.buddycloud.subscribe',{'robotnic':'/user/test1@laos.buddycloud.com/posts'})"]
+]
