@@ -835,7 +835,7 @@ angular.module('BuddycloudModule', [])
                         api.data.errors.unshift(error);
                         q.reject("error");
                     });
-                    return $q.promise;
+                    return q.promise;
                 }
 
             };
