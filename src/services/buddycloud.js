@@ -503,7 +503,7 @@ angular.module('BuddycloudModule', [])
                 $q.all([
                     api.send('xmpp.buddycloud.retrieve', request),
                     api.send('xmpp.buddycloud.affiliations', request),
-                    api.send('xmpp.buddycloud.config', request)
+                    api.send('xmpp.buddycloud.config.get', request)
                 ]).then(function() {
                     console.log("SUPICOMPARE", request.node, api.data.currentnode);
                     if (request.node == api.data.currentnode) {
@@ -770,6 +770,7 @@ angular.module('BuddycloudModule', [])
                                     q.reject(error);
                                 } else {
                                     api.data.config = response;
+                                    api.q.notify("config");
                                     q.resolve(response);
                                 }
                             }
