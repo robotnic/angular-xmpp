@@ -1,5 +1,6 @@
-console.log(1);
-angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike','XmppUI','XmppLogin','Minichat','XmppForm','XmppRoster','XmppMuc'])
+
+//angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike','XmppUI','XmppLogin','Minichat','XmppForm','XmppRoster','XmppMuc'])
+angular.module("XmppUI", [ 'Buddycloud','AngularXmpp','XmppRoster','Minichat','XmppMessage','XmppForm'])
 
 
 
@@ -8,23 +9,25 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
         'restrict': 'E',
         'scope': {
             host:"@",
+            anonymous:"@",
             oninit:"&"
         },
         'transclude': false,
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
-            console.log("eh da");
             scope.host=attrs.host;
+            scope.anonymous=attrs.anonymous;
         }
     };
 
 })
 .controller('xmppController',function($scope,Xmpp){
-    console.log($scope.host);
     this.init=function(){
         console.log($scope.host);
     };
     this.xmpp=new Xmpp($scope.host);
+    var self=this;
+    
 /*
     this.xmpp.connect().then(function(data){
         console.log("online");
@@ -36,10 +39,12 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
     },function(error){
         console.log(error);
     },function(notification){
-        console.log("-------------",notification);
-        if(notification.status){
-            $scope.$emit("connected",notification);
+        console.log("notification",notification);
+        if(!self.xmpp.ticks){
+            self.xmpp.ticks=0;
+            $scope.$emit("connected","xx");
         }
+        self.xmpp.ticks++;
     });
     this.xmpp.openchat=function(jid){
             console.log("openchat",jid);
@@ -54,5 +59,9 @@ angular.module("XmppUI", [ 'Buddycloud','BuddycloudRoster','XmppCore','XmppLike'
     };
     console.log("xmpp",this.xmpp);
     $scope.oninit({scope:this.xmpp});
+
+    if($scope.anonymous){
+        console.log("let me in");
+        this.xmpp.anonymouslogin();
+    }
 });
-console.log(2);

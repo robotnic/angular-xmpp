@@ -1,6 +1,6 @@
 var FORM=null;
 console.log("form");
-angular.module('XmppForm', ['XmppCore','luegg.directives'])
+angular.module('XmppForm', ['AngularXmpp','luegg.directives'])
 
 /*
 Roster
@@ -36,7 +36,7 @@ Roster
         };
         $scope.save=function(){
             console.log("save",$scope.formdata);
-            $scope.onsave()($scope.formdata.fields);  //syntax http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
+            $scope.onsave()($scope.formdata);  //syntax http://weblogs.asp.net/dwahlin/creating-custom-angularjs-directives-part-3-isolate-scope-and-function-parameters
             $scope.onclose();
         };
     }

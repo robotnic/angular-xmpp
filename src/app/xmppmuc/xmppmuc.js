@@ -208,6 +208,51 @@ MUC
                         }
                     );
                 },
+                setUserRole:function(nick,role){
+                    var q = $q.defer();
+                    xmpp.socket.send(
+                        'xmpp.muc.role.set', {
+                            "room": api.data.room,
+                            "nick": nick,
+                            "role": role
+                        },
+                        function(error, data) {
+                            console.log("-----------setUserRole", error, data);
+                            if (error){
+                                 q.reject(error);
+                            }
+                            if (data){
+                                 q.resolve(data);
+                            }
+                        }
+                    );
+                    return q.promise;
+                },
+                setUserAffiliation:function(jid,affiliation){
+                    var q = $q.defer();
+                    xmpp.socket.send(
+                        'xmpp.muc.role.set', {
+                            "room": api.data.room,
+                            "jid": jid,
+                            "affiliation":affiliation 
+                        },
+                        function(error, data) {
+                            console.log("-----------setUserAffiliation", error, data);
+                            if (error){
+                                 q.reject(error);
+                            }
+                            if (data){
+                                 q.resolve(data);
+                            }
+                        }
+                    );
+                    return q.promise;
+                },
+
+
+
+
+
                 watch: function() {
                     return watch();
                 }

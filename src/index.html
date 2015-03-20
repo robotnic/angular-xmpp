@@ -8,86 +8,159 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
     <script type="text/javascript" src="assets/scripts/primus.js"></script>
     <!-- compiled CSS -->
     <% styles.forEach( function ( file ) { %>
         <link rel="stylesheet" type="text/css" href="<%= file %>" />
         <% }); %>
-    <!-- compiled JavaScript -->
-    <% scripts.forEach( function ( file ) { %>
-        <script type="text/javascript" src="<%= file %>"></script>
-        <% }); %>
+            <!-- compiled JavaScript -->
+            <% scripts.forEach( function ( file ) { %>
+                <script type="text/javascript" src="<%= file %>"></script>
+                <% }); %>
 
-    <link rel="stylesheet" href="assets/css/style.less" type="text/css" media="screen"/>
-    <script  type="text/javascript">
-        var SCOPE = null;
+                    <link rel="stylesheet" href="assets/css/style.less" type="text/css" media="screen" />
+                    <script type="text/javascript">
+                        var SCOPE = null;
 
-angular.module('XmppApp', [
-  'templates-app', 'templates-common','XmppUI','btford.markdown','tagged.directives.infiniteScroll','ngSanitize','ui.bootstrap'
-    ])
+                        angular.module('XmppApp', [
+                            'templates-app', 'templates-common', 'AngularXmpp', 'XmppUI', 'btford.markdown', 'tagged.directives.infiniteScroll', 'ngSanitize', 'ui.bootstrap', 'angularMoment'
+                        ])
 
 
-.controller('page', ['$scope','$rootScope', '$location', function($scope,$rootScope, $location) {
+                        .controller('page', ['$scope', '$rootScope', '$location',
+                            function($scope, $rootScope, $location) {
 
-//        function page($scope, $rootScope, $location) {
-            SCOPE = $scope;
-            $scope.node = "recent";
-            $scope.openchat = function(node) {
-                $scope.xmpp.openchat($scope.xmpp.parseNodeString(node).jid);
-            }
-            $scope.changenode = function(node) {
-                $scope.node = node;
-                $scope.nodeuser = $scope.xmpp.parseNodeString(node);
-                $location.hash(node);
-            }
-            $scope.opennode = function(jid) {
-                $scope.changenode("/user/" + jid.user + "@" + jid.domain + "/posts");
-            };
-            $scope.initbuddycloud = function(bc) {
-                $scope.buddycloud = bc;
-            }
-            $scope.initxmpp = function(xmpp) {
-                $scope.xmpp = xmpp;
-            }
-            $scope.showxmpp = function() {
-                console.log("xmpp", $scope.xmpp, $scope.buddycloud); //debug
-            }
-            $scope.initchat = function(chat) {
-                $scope.chat = chat;
-            }
+                                //        function page($scope, $rootScope, $location) {
+                                SCOPE = $scope;
+                                $scope.node = "recent";
+                                $scope.openchat = function(node) {
+                                    $scope.xmpp.openchat($scope.xmpp.parseNodeString(node).jid);
+                                }
+                                $scope.changenode = function(node) {
+                                    $scope.node = node;
+                                    $scope.nodeuser = $scope.xmpp.parseNodeString(node);
+                                    $location.hash(node);
+                                }
+                                $scope.open = function(jid) {
+                                    console.log(jid);
+                                    $scope.changenode(jid);
+                                };
+                                $scope.initbuddycloud = function(bc) {
+                                    $scope.buddycloud = bc;
+                                    console.log("bc", bc);
+                                }
+                                $scope.initxmpp = function(xmpp) {
+                                    $scope.xmpp = xmpp;
+                                    var username=localStorage.getItem("username");
+                                    var password=localStorage.getItem("password");
+                                    if(username && password){
+                                        xmpp.send('xmpp.login', {
+                                            jid: username,
+                                            password: password,
+                                            resource: 'angular-xmpp',
+                                            register: false
+                                        }).then(function() {
+                                            $scope.jid = $scope.xmpp.data.me.jid.user + "@" + $scope.xmpp.data.me.jid.domain;
+                                            xmpp.send("xmpp.presence");
+                                            xmpp.send("xmpp.roster.get");
+                                        });
+                                    }
 
-            $rootScope.$on('$locationChangeSuccess', function(data) {
-                if ($location.hash() == "") {
-                    node = "recent";
-                } else {
-                    node = $location.hash();
-                }
-                $scope.changenode(node);
+                                }
+                                $scope.login=function(username,password,register,stayloggedin){
+                                    if(username.indexOf("@")===-1){
+                                        username=username+'@laos.buddycloud.com';
+                                    }
+                                    if(stayloggedin){
+                                        localStorage.setItem("username",username);
+                                        localStorage.setItem("password",password);
+                                    }
+                                    console.log(username,password,register);
+                                    $scope.xmpp.send('xmpp.login', {
+                                        jid: username,
+                                        password: password,
+                                        resource: 'angular-xmpp',
+                                        register: register
+                                    }).then(function() {
+                                        $scope.jid = $scope.xmpp.data.me.jid.user + "@" + $scope.xmpp.data.me.jid.domain;
+                                        $scope.xmpp.send("xmpp.presence");
+                                        $scope.xmpp.send("xmpp.roster.get");
+                                    });
 
-            });
-        }]);
-    </script>
+                                }
+                                $scope.logout=function(){
+                                        console.log("logout");
+                                        localStorage.removeItem("username");
+                                        localStorage.removeItem("password");
+                                        $scope.xmpp.socket.send('xmpp.logout');
+                                }
+                                $scope.showxmpp = function() {
+                                    console.log("xmpp", $scope.xmpp, $scope.buddycloud); //debug
+                                }
+                                $scope.initchat = function(chat) {
+                                    $scope.chat = chat;
+                                }
+
+                                $rootScope.$on('$locationChangeSuccess', function(data) {
+                                    if ($location.hash() == "") {
+                                        node = "recent";
+                                    } else {
+                                        node = $location.hash();
+                                    }
+                                    $scope.changenode(node);
+
+                                });
+                            }
+                        ])
+
+                        .filter('getJidString', function() {
+                            return function(item) {
+                                var user = "";
+                                var domain = "";
+                                if (item.indexOf("@") !== -1) {
+                                    user = item.split("@")[0];
+                                } else {
+                                    user = item;
+                                }
+                                if (user.indexOf("/") !== -1) {
+                                    user = user.substring(user.lastIndexOf("/") + 1);
+                                }
+
+                                if (item.indexOf("@") !== -1) {
+                                    domain = item.split("@")[1];
+                                } else {
+                                    domain = item;
+                                }
+                                if (domain.indexOf("/") !== -1) {
+                                    domain = domain.substring(0, domain.indexOf("/"));
+                                }
+                                return user + "@" + domain;
+                            }
+                        })
+                    </script>
 </head>
 
 <body ng-controller="page">
-        <xmpp host="https://laos.buddycloud.com" oninit="initxmpp(scope)">
-        <div style="position:absolute;top:200px;left:300px;z-index:1000;background-color:white;">
+    <div ng-if="!xmpp.data.me" ng-include="'assets/partials/landing.html'"></div>
+    <div ng-show="xmpp.data.me">
+    <xmpp althost="https://laos.buddycloud.com" host="http://localhost:3000" oninit="initxmpp(scope)">
+        <div style="position:absolute;top:200px;left:20px;z-index:1000;background-color:white;">
             <xmpplogin></xmpplogin>
-            <div style="display:none">
-                <xmpproster></xmpproster>
+            <div style="display:block">
+
+
             </div>
         </div>
         <xmppminichat oninit="initchat(scope)"></xmppminichat>
 
         <div class="sidebar">
             <div class="personal channel" style="width:100%;height:80px">
-                <div class="avatar" style="background-image: url(assets/icons/avatars/{{xmpp.me.jid.user}}.png)" ng-click="changenode('recent')">
+                <div class="avatar" style="background-image: url(assets/icons/avatars/{{xmpp.data.me.jid.user}}.png)" ng-click="changenode('recent')">
                     <span class="channelpost counter">2</span>
                     <span class="message counter" ng-if="chat.notifications.unreadmessages">{{chat.notifications.unreadmessages}}</span>
                 </div>
                 <div class="info">
-                    <span class="owner">{{xmpp.jid}}</span>
+                    <span class="owner">{{xmpp.data.me.jid.user}}</span>
                     <span class="status">Aww yeah, Mountain Lion rocks</span>
                 </div>
                 <div class="settings noSelect">
@@ -99,7 +172,7 @@ angular.module('XmppApp', [
                                 </li>
                                 <li class="preferences"><a href="https://demo.buddycloud.org/prototypes/preferences.html">Preferences</a>
                                 </li>
-                                <li class="logout" ng-click="xmpp.logout()">Logout
+                                <li class="logout" ng-click="logout()">Logout
                                 </li>
                             </ul>
                         </div>
@@ -116,7 +189,7 @@ angular.module('XmppApp', [
                         <div class="channel bubbling" style="top: 0px; z-index: 4;">
 
 
-                            <div ng-repeat="node in buddycloud.data.nodes" ng-click="changenode(node.node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
+                            <div ng-repeat="node in buddycloud.buddycloud.data.subscriptions" ng-click="changenode(node.node)" class="menu" ng-class="{'selected':selectednode.node==node.node}">
                                 <!--
 <img ng-src="assets/icons/avatars/{{node.name}}.png" style="height:25px"/>
 {{node.name}} <span ng-show="buddycloud.data.unread[node.node]" class="badge">{{buddycloud.data.unread[node.node]}}</span>
@@ -127,13 +200,14 @@ angular.module('XmppApp', [
 </div>
 -->
 
-                                <div class="channel">
-                                    <div class="avatar" style="background-image: url(assets/icons/avatars/{{node.name}}.png)">
-                                        <span class="channelpost counter" ng-if="buddycloud.data.unread[node.node]">{{buddycloud.data.unread[node.node]}}</span>
-                                        <span class="channelpost counter admin" ng-if="chat.notifications.unread[node.jid]" ng-click="openchat(node.node);">{{chat.notifications.unread[node.jid]}}</span>
+                                <div class="channel thechannel" ng-class="{'selected':node.node==buddycloud.buddycloud.data.currentnode}">
+                                    <div class="avatar" style="background-image: url(assets/icons/avatars/{{node.node|getUser}}.png)">
+                                        <span class="channelpost counter" ng-if="buddycloud.buddycloud.data.unread[node.node]">{{buddycloud.buddycloud.data.unread[node.node]}}</span>
+                                        <!-- sorry -->
+                                        <span class="channelpost counter admin" ng-if="chat.notifications.unread[buddycloud.buddycloud.data.affiliations[node.node].owner[0].jid.user+'@'+buddycloud.buddycloud.data.affiliations[node.node].owner[0].jid.domain]" ng-click="openchat(node.node);">{{chat.notifications.unread[buddycloud.buddycloud.data.affiliations[node.node].owner[0].jid.user+'@'+buddycloud.buddycloud.data.affiliations[node.node].owner[0].jid.domain]}}</span>
                                     </div>
                                     <div class="info">
-                                        <span class="owner">{{node.name}}</span>
+                                        <span class="owner">{{node.node|getUser}}</span>
                                         <span class="status">I can haz your nose?</span>
                                     </div>
                                 </div>
@@ -300,90 +374,72 @@ angular.module('XmppApp', [
                 </div>
                 <!-- /channels -->
             </div>
-            <div class="content">
-                <div class="channelView personal clearfix">
-                    <header class="channelHeader justify">
-                        <div class="avatar" style="background-image: url(assets/icons/avatars/{{nodeuser.user}}@{{nodeuser.domain}}.png);background-size: cover;"></div>
-                        <div class="flex titleText">
-                            <h2 class="owner" data-editmode="singleLine">{{node}}</h2>
-                            <div class="about" data-editmode="multiLine">I'm Vera, I love to cook, I love clothes and most of all, I love my boyfriend.</div>
-                        </div>
-                        <nav class="inChannel">
-                            <!--<span class="messages button newMessage">
+        </div>
+        <div class="content">
+            <div class="channelView personal clearfix">
+                <header class="channelHeader justify">
+                    <div ng-repeat="item in buddycloud.buddycloud.data.config" ng-if="item.var=='pubsub#owner'" class="avatar big" style="background-image:url('assets/icons/avatars/{{item.value|getUser}}.png');"></div>
+                    <div class="flex titleText">
+                        <h2 class="owner" ng-repeat="item in buddycloud.buddycloud.data.config" ng-if="item.var=='pubsub#title'">{{item.value}}</h2>
+                        <div class="about" ng-repeat="item in buddycloud.buddycloud.data.config" ng-if="item.var=='pubsub#description'">{{item.value}}</div>
+
+                    </div>
+                    <nav class="inChannel">
+                        <!--<span class="messages button newMessage">
             <span class="holder">Messages</span><span class="message counter">2</span>
           </span>-->
-                            <span class="channel button">
+                        <span class="channel button">
             <span class="holder">Channel</span>
-                            </span>
-                            <span class="hidden save button">Save</span>
-                            <!--<span class="edit button">Edit</span>-->
-                            <div ng-show="node!=='recent'">
-                                <span class="unfollow button" ng-if="buddycloud.data.rights.subscribed" ng-click="buddycloud.unsubscribe();">Unfollow</span>
-                                <span class="unfollow button" ng-if="!buddycloud.data.rights.subscribed" ng-click="buddycloud.subscribe();">Follow</span>
-                            </div>
-                        </nav>
-                        <a href="http://www.buddycloud.com/" id="poweredby">powered by buddycloud</a>
-                    </header>
-                    <div class="centered start">
-                        <section class="stream private clearfix">
-                            <buddycloud node="{{node}}" jid="jid" changenode="changenode(node,bc)" oninit="initbuddycloud(scope)"></buddycloud>
+                        </span>
+                        <span class="hidden save button">Save</span>
+                        <!--<span class="edit button">Edit</span>-->
+                        <div ng-show="node!=='recent'">
+                            <span class="button" ng-show="buddycloud.buddycloud.unsubscribe" ng-click="buddycloud.buddycloud.unsubscribe({node:node});">Unfollow</span>
+                            <span class="button" ng-show="buddycloud.buddycloud.subscribe" ng-click="buddycloud.buddycloud.subscribe({node:node});">Follow</span>
+                            <span class="button" ng-show="buddycloud.buddycloud.config" ng-click="showconfigform=!showconfigform">Config</span>
+                        </div>
+                    </nav>
+                    <a href="http://www.buddycloud.com/" id="poweredby">powered by buddycloud</a>
+                </header>
+                <div class="centered start">
+                    <section class="stream private clearfix buddycloud">
+                        <buddycloud node="{{node}}" jid="jid" changenode="changenode(node,bc)" oninit="initbuddycloud(scope)"></buddycloud>
 
-                        </section>
-                        <!-- /stream -->
-                        <div class="channelDetails">
-                            <div class="infoToggle">
-                                <h4 class="title">Info</h4>
-                                <span class="icon"></span>
-                            </div>
-                            <div class="holder">
-                                <section class="meta">
-                                    <p class="address">
-                                        <span class="title">Address:</span>
-                                        <span class="data" ng-click="openchat(node)">{{nodeuser.user}}@{{nodeuser.domain}}</span>
-                                    </p>
-                                    <p class="open">
-                                        <span class="title">This Channel is:</span>
-                                        <span class="data accessModel" data-editmode="boolean">Public</span>
-                                    </p>
-                                    <p class="broadcast">
-                                        <span class="title">Broadcasting for:</span>
-                                        <time class="data" datetime="2011-06-06T05:06:00.000Z" title="5:06pm 06.06.2011" data-strftime="%f" data-strftitle="%A %d %B %Y %H:%M">188 days</time>
-                                    </p>
-                                </section>
-                                <section class="channelList">
-                                    <h3>owner <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='owner' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
-
-                                    <h3>moderators <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='moderator' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
-
-                                    <h3>publishers <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <img ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)" ng-if="item.affiliation=='publisher' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                    </div>
-
-                                    <h3>members <span class="count">1</span></h3>
-                                    <div class="list">
-                                        <div ng-repeat="item in buddycloud.data.subscribers" ng-click="opennode(item.jid)">
-                                            <img ng-if="item.affiliation=='member' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" style="height:30px" />
-                                        </div>
-                                    </div>
+                    </section>
+                    <!-- /stream -->
+                    <div class="channelDetails">
+                        <div class="infoToggle">
+                            <h4 class="title">Info</h4>
+                            <span class="icon"></span>
+                        </div>
+                        <div class="holder">
+                            <section class="meta">
+                                <p class="address">
+                                    <span class="title">Address:</span>
+                                    <span class="data" ng-click="openchat(node)">{{nodeuser.user}}@{{nodeuser.domain}}</span>
+                                </p>
+                                <p class="open">
+                                    <span class="title">This Channel is:</span>
+                                    <span class="data accessModel" ng-repeat="item in buddycloud.buddycloud.data.config" ng-if="item.var=='pubsub#access_model'">{{item.value}}</span>
+                                </p>
+                                <p class="broadcast">
+                                    <span class="title">Broadcasting since:</span>
+                                    <span ng-repeat="item in buddycloud.buddycloud.data.config" ng-if="item.var=='pubsub#creation_date'" am-time-ago="item.value"></span>
+                                </p>
+                            </section>
+                            <section class="channelList">
+                                <div ng-repeat="(key,node) in buddycloud.buddycloud.data.affiliations[buddycloud.buddycloud.data.currentnode]">
+                                    <h3>{{key}}  <span class="count">{{node.length}}</span></h3>
+                                    <div class="list" ng-repeat="item in node" style="background-image:url('assets/icons/avatars/{{item.jid.user}}.png');background-size:cover;width:30px;height:30px;border:1px solid black;display:inline-block;margin:4px" ng-click="buddycloud.open({'node':'/user/'+item.jid.user+'@'+item.jid.domain+'/posts'})" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
+                                </div>
 
 
 
 
 
-                                </section>
-                                <!-- /followers -->
-                                <!--
+                            </section>
+                            <!-- /followers -->
+                            <!--
             <section class="channelList">
               <h3>followers <span class="count">20</span></h3>
               <div class="list">
@@ -460,101 +516,101 @@ angular.module('XmppApp', [
                 <img src="./Streams_files/channel8.jpg">
               </div>
 -->
+                            <div class="showAll">show all</div>
+                            </section>
+                            <!-- /followers -->
+                            <section class="channelList">
+                                <h3>channels nearby <span class="count">10</span></h3>
+                                <div class="list">
+                                    <img src="./Streams_files/channel1.jpg">
+                                    <img src="./Streams_files/channel2.jpg">
+                                    <img src="./Streams_files/channel3.jpg">
+                                    <img src="./Streams_files/channel4.jpg">
+                                </div>
                                 <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
-                                <section class="channelList">
-                                    <h3>channels nearby <span class="count">10</span></h3>
-                                    <div class="list">
-                                        <img src="./Streams_files/channel1.jpg">
-                                        <img src="./Streams_files/channel2.jpg">
-                                        <img src="./Streams_files/channel3.jpg">
-                                        <img src="./Streams_files/channel4.jpg">
-                                    </div>
-                                    <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
-                                <section class="channelList">
-                                    <h3>similar channels <span class="count">8</span></h3>
-                                    <div class="list">
-                                        <img src="./Streams_files/channel5.jpg">
-                                        <img src="./Streams_files/channel6.jpg">
-                                        <img src="./Streams_files/channel7.jpg">
-                                        <img src="./Streams_files/channel8.jpg">
-                                    </div>
-                                    <div class="showAll">show all</div>
-                                </section>
-                                <!-- /followers -->
-                            </div>
-                            <!-- /holder -->
+                            </section>
+                            <!-- /followers -->
+                            <section class="channelList">
+                                <h3>similar channels <span class="count">8</span></h3>
+                                <div class="list">
+                                    <img src="./Streams_files/channel5.jpg">
+                                    <img src="./Streams_files/channel6.jpg">
+                                    <img src="./Streams_files/channel7.jpg">
+                                    <img src="./Streams_files/channel8.jpg">
+                                </div>
+                                <div class="showAll">show all</div>
+                            </section>
+                            <!-- /followers -->
                         </div>
-                        <!-- /detail -->
+                        <!-- /holder -->
                     </div>
+                    <!-- /detail -->
                 </div>
-                <!-- /channelView -->
             </div>
-            <!-- /content -->
-            <script type="text/javascript">
-                /* ###
+            <!-- /channelView -->
+        </div>
+        <!-- /content -->
+        <script type="text/javascript">
+            /* ###
 
   redraw function to make sure that transitions are triggered
 
   ### */
-                ! function(document) {
+            ! function(document) {
 
-                    // (C) WebReflection (As It Is) - Mit Style
+                // (C) WebReflection (As It Is) - Mit Style
 
-                    // we all love function declarations
-                    function redraw() {
+                // we all love function declarations
+                function redraw() {
 
-                        // clientHeight returns 0 if not present in the DOM
-                        // e.g. document.removeChild(document.documentElement);
-                        // also some crazy guy may swap runtime the whole HTML element
-                        // this is why the documentElement should be always discovered
-                        // and if present, it should be a node of the document
-                        // In all these cases the returned value is true
-                        // otherwise what is there cannot really be considered as painted
+                    // clientHeight returns 0 if not present in the DOM
+                    // e.g. document.removeChild(document.documentElement);
+                    // also some crazy guy may swap runtime the whole HTML element
+                    // this is why the documentElement should be always discovered
+                    // and if present, it should be a node of the document
+                    // In all these cases the returned value is true
+                    // otherwise what is there cannot really be considered as painted
 
-                        return !!(document.documentElement || 0).clientHeight;
-                    }
+                    return !!(document.documentElement || 0).clientHeight;
+                }
 
-                    // ideally an Object.defineProperty
-                    // unfortunately some engine will complain
-                    // if used against DOM objects
-                    document.redraw = redraw;
+                // ideally an Object.defineProperty
+                // unfortunately some engine will complain
+                // if used against DOM objects
+                document.redraw = redraw;
 
-                }(document);
+            }(document);
 
-                /* ###
+            /* ###
 
     Channel bubbling
 
     ### */
-                var channelHolder = $('.channels');
-                var innerHolder = channelHolder.find('.scrollHolder');
-                var channels = channelHolder.find('.channel:not(".personal")');
+            var channelHolder = $('.channels');
+            var innerHolder = channelHolder.find('.scrollHolder');
+            var channels = channelHolder.find('.channel:not(".personal")');
 
-                 // prefixes for cutting edge css properties and javascript events:
-                 //
-                 //  transition => MozTransition
-                var transition = Modernizr.prefixed('transition');
-                 //  transform => MozTransform
-                var transform = Modernizr.prefixed('transform');
-                var transEndEventNames = {
-                        'WebkitTransition': 'webkitTransitionEnd',
-                        'MozTransition': 'transitionend',
-                        'OTransition': 'oTransitionEnd',
-                        'msTransition': 'msTransitionEnd', // maybe?
-                        'transition': 'transitionEnd'
-                    }
-                    //  transitionendEvent => transitionend
-                var transitionendEvent = transEndEventNames[transition];
-                 // cache channelHeight - it's the same for every channel-preview
-                var channelHeight = channels.first().outerHeight();
-                 // count of currently moving channels
-                var movingChannels = 0;
+             // prefixes for cutting edge css properties and javascript events:
+             //
+             //  transition => MozTransition
+            var transition = Modernizr.prefixed('transition');
+             //  transform => MozTransform
+            var transform = Modernizr.prefixed('transform');
+            var transEndEventNames = {
+                    'WebkitTransition': 'webkitTransitionEnd',
+                    'MozTransition': 'transitionend',
+                    'OTransition': 'oTransitionEnd',
+                    'msTransition': 'msTransitionEnd', // maybe?
+                    'transition': 'transitionEnd'
+                }
+                //  transitionendEvent => transitionend
+            var transitionendEvent = transEndEventNames[transition];
+             // cache channelHeight - it's the same for every channel-preview
+            var channelHeight = channels.first().outerHeight();
+             // count of currently moving channels
+            var movingChannels = 0;
 
-                /*
+            /*
 
   Stress test:
 
@@ -581,409 +637,410 @@ angular.module('XmppApp', [
 
   */
 
-                function bubble() {
-                    var bubblingChannel = $(this);
+            function bubble() {
+                var bubblingChannel = $(this);
 
-                    // relative offset + absolute offset
-                    var offset = bubblingChannel.position().top + innerHolder.scrollTop();
+                // relative offset + absolute offset
+                var offset = bubblingChannel.position().top + innerHolder.scrollTop();
 
-                    // don't bubble if the channel is..
-                    //  - on top
-                    //  - bubbling
-                    if (offset === 0 || bubblingChannel.parent().hasClass('bubbleHolder')) {
-                        return false;
-                    }
-
-                    // create a gap where the channel starts off
-                    var startingArea = $('<div>').height(channelHeight).addClass('startingArea');
-                    bubblingChannel.before(startingArea);
-
-                    document.redraw();
-
-                    startingArea.bind(transitionendEvent, destroy);
-
-                    // close startingArea
-                    startingArea.css('height', 0);
-
-                    // detach the bubbling channel from the DOM
-                    // and insert it at the top
-                    bubblingChannel.detach().css('top', offset);
-                    innerHolder.prepend(bubblingChannel);
-
-                    // wrap a growing holder around it
-                    var landingArea = $('<div>').addClass('bubbleHolder');
-                    bubblingChannel.wrap(landingArea);
-
-                    document.redraw();
-
-                    // bind the callback on transition end for all bubbling channels
-                    bubblingChannel.bind(transitionendEvent, reset);
-
-                    // bubble!
-                    bubblingChannel.addClass('bubbling').css({
-                        'top': 0,
-                        'z-index': ++movingChannels + 1
-                    });
-                    // open a gap for the channel to arrive
-                    bubblingChannel.parent().css('height', channelHeight);
+                // don't bubble if the channel is..
+                //  - on top
+                //  - bubbling
+                if (offset === 0 || bubblingChannel.parent().hasClass('bubbleHolder')) {
+                    return false;
                 }
 
-                function destroy(event) {
-                    var propertyToWaitFor = event.data.propertyName;
-                    if (propertyToWaitFor !== undefined && event.originalEvent.propertyName === propertyToWaitFor)
-                        $(this).remove();
-                }
+                // create a gap where the channel starts off
+                var startingArea = $('<div>').height(channelHeight).addClass('startingArea');
+                bubblingChannel.before(startingArea);
 
-                function reset(event) {
-                    if (event.data && event.data.callback) event.data.callback();
-                    // reset the bubbling channel and unwrap it
-                    $(this).removeClass('bubbling').css({
-                        'height': '',
-                        'z-index': ''
-                    }).unwrap();
-                    movingChannels--;
-                }
-                channels.click(bubble);
-                 //channels.toggle(function(){ $(this).css('background', 'red'); }, function(){ $(this).css('background', 'green'); });
+                document.redraw();
 
-                /* ###
+                startingArea.bind(transitionendEvent, destroy);
+
+                // close startingArea
+                startingArea.css('height', 0);
+
+                // detach the bubbling channel from the DOM
+                // and insert it at the top
+                bubblingChannel.detach().css('top', offset);
+                innerHolder.prepend(bubblingChannel);
+
+                // wrap a growing holder around it
+                var landingArea = $('<div>').addClass('bubbleHolder');
+                bubblingChannel.wrap(landingArea);
+
+                document.redraw();
+
+                // bind the callback on transition end for all bubbling channels
+                bubblingChannel.bind(transitionendEvent, reset);
+
+                // bubble!
+                bubblingChannel.addClass('bubbling').css({
+                    'top': 0,
+                    'z-index': ++movingChannels + 1
+                });
+                // open a gap for the channel to arrive
+                bubblingChannel.parent().css('height', channelHeight);
+            }
+
+            function destroy(event) {
+                var propertyToWaitFor = event.data.propertyName;
+                if (propertyToWaitFor !== undefined && event.originalEvent.propertyName === propertyToWaitFor)
+                    $(this).remove();
+            }
+
+            function reset(event) {
+                if (event.data && event.data.callback) event.data.callback();
+                // reset the bubbling channel and unwrap it
+                $(this).removeClass('bubbling').css({
+                    'height': '',
+                    'z-index': ''
+                }).unwrap();
+                movingChannels--;
+            }
+            channels.click(bubble);
+             //channels.toggle(function(){ $(this).css('background', 'red'); }, function(){ $(this).css('background', 'green'); });
+
+            /* ###
 
     show/hide channel info
 
     ### */
-                var channelInfo = $('.channelDetails');
-                var channelInfoToggle = channelInfo.find('> .infoToggle');
+            var channelInfo = $('.channelDetails');
+            var channelInfoToggle = channelInfo.find('> .infoToggle');
 
-                channelInfoToggle.click(function() {
-                    channelInfo.toggleClass('hidden');
-                });
+            channelInfoToggle.click(function() {
+                channelInfo.toggleClass('hidden');
+            });
 
-                $('.showAll').click(function() {
-                    var list = $(this).prev();
-                    list.children().clone().appendTo(list);
-                    $(this).remove();
-                });
+            $('.showAll').click(function() {
+                var list = $(this).prev();
+                list.children().clone().appendTo(list);
+                $(this).remove();
+            });
 
-                /* ###
+            /* ###
 
     new topic animation
 
     ### */
 
-                $('.opener, .comment').each(function() {
-                    var post = $(this);
-                    post.find('button.delete').click(function() {
-                        post.toggleClass('dangerZone');
-                    });
+            $('.opener, .comment').each(function() {
+                var post = $(this);
+                post.find('button.delete').click(function() {
+                    post.toggleClass('dangerZone');
                 });
+            });
 
-                 // works for both new topic field and all the small answer fields
-                var newTopic = $('.newTopic, .answer');
-                var topicTextarea = newTopic.find('textarea');
+             // works for both new topic field and all the small answer fields
+            var newTopic = $('.newTopic, .answer');
+            var topicTextarea = newTopic.find('textarea');
 
-                function openArea(event) {
-                    // prevent bubbling!
-                    event.stopPropagation();
-                    if (!$(this).hasClass('write')) {
-                        $(this).addClass('write');
-                        $(document).one('click', {
-                            self: this
-                        }, closeArea);
-                    }
+            function openArea(event) {
+                // prevent bubbling!
+                event.stopPropagation();
+                if (!$(this).hasClass('write')) {
+                    $(this).addClass('write');
+                    $(document).one('click', {
+                        self: this
+                    }, closeArea);
                 }
+            }
 
-                function closeArea(event) {
-                    var self = event.data.self;
-                    var textarea = $(self).find('textarea');
-                    // minimize the textarea only if the textarea is empty
-                    if (textarea.val() === "") {
-                        $(self).removeClass('write');
-                    }
+            function closeArea(event) {
+                var self = event.data.self;
+                var textarea = $(self).find('textarea');
+                // minimize the textarea only if the textarea is empty
+                if (textarea.val() === "") {
+                    $(self).removeClass('write');
                 }
+            }
 
-                newTopic.click(openArea);
+            newTopic.click(openArea);
 
-                /* ###
+            /* ###
 
     notification animation
 
     ### */
 
-                var notification = $('.notification');
-                var notificationButtons = notification.find('.controls > div');
+            var notification = $('.notification');
+            var notificationButtons = notification.find('.controls > div');
 
-                function notify() {
-                    notification.addClass('visible');
-                }
+            function notify() {
+                notification.addClass('visible');
+            }
 
-                function logNotifaction() {
-                    var reaction = $(this).hasClass('positive') ? 'granted' : 'denied';
-                    notification.addClass('log ' + reaction);
-                }
+            function logNotifaction() {
+                var reaction = $(this).hasClass('positive') ? 'granted' : 'denied';
+                notification.addClass('log ' + reaction);
+            }
 
-                notificationButtons.click(logNotifaction);
-                 //setTimeout('notify()', 2000);
+            notificationButtons.click(logNotifaction);
+             //setTimeout('notify()', 2000);
 
-                $(function() {
-                    //$('#channels').antiscroll();
-                }); //*/
+            $(function() {
+                //$('#channels').antiscroll();
+            }); //*/
 
-                /* ###
+            /* ###
 
       edit mode
 
   */
 
-                var editableElements = [
-                    'header .title',
-                    'header .status',
-                    '.meta .description',
-                    '.meta .accessModel',
-                    '.location .previous',
-                    '.location .current',
-                    '.location .next'
-                ];
+            var editableElements = [
+                'header .title',
+                'header .status',
+                '.meta .description',
+                '.meta .accessModel',
+                '.location .previous',
+                '.location .current',
+                '.location .next'
+            ];
 
-                function fauxLoadEditedStuff() {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
-                            if (localStorage[el]) $(el).text(localStorage[el]);
-                        }
+            function fauxLoadEditedStuff() {
+                for (var i = 0, l = editableElements.length; i < l; i++) {
+                    var el = editableElements[i];
+                    if ($(el).data('editmode') !== 'boolean') {
+                        if (localStorage[el]) $(el).text(localStorage[el]);
                     }
                 }
+            }
 
-                fauxLoadEditedStuff();
+            fauxLoadEditedStuff();
 
-                $('.edit.button').click(function() {
-                    if (!$('html').hasClass('editmode')) {
-                        $('html').addClass('editmode');
-                        startEditMode();
-                    } else {
-                        $('html').removeClass('editmode');
-                        stopEditMode(true);
-                    }
-                });
-
-                function startEditMode() {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
-                            // store the current state
-                            localStorage[el] = $(el).text();
-
-                            // add designMode & contenteditable
-                            $(el)
-                                .prop('contenteditable', true)
-                                .input(function() {
-                                    var text = $(this).text();
-                                    if (text === "") $(this).html("&nbsp;");
-                                }).keydown(function(ev) {
-                                    var code = ev.keyCode || ev.which;
-                                    if ($(this).data('editmode') === 'singleLine' && code == 13) {
-                                        ev.preventDefault();
-                                        return false;
-                                    } else return true;
-                                });
-                            // only allow enter when the target is not singleLine
-                        }
-                    }
-                    $(editableElements[0]).focus();
+            $('.edit.button').click(function() {
+                if (!$('html').hasClass('editmode')) {
+                    $('html').addClass('editmode');
+                    startEditMode();
+                } else {
+                    $('html').removeClass('editmode');
+                    stopEditMode(true);
                 }
+            });
 
-                function stopEditMode(save) {
-                    for (var i = 0, l = editableElements.length; i < l; i++) {
-                        var el = editableElements[i];
-                        if ($(el).data('editmode') !== 'boolean') {
+            function startEditMode() {
+                for (var i = 0, l = editableElements.length; i < l; i++) {
+                    var el = editableElements[i];
+                    if ($(el).data('editmode') !== 'boolean') {
+                        // store the current state
+                        localStorage[el] = $(el).text();
 
-                            // remove designMode & contenteditable
-                            $(el).prop('contenteditable', false);
+                        // add designMode & contenteditable
+                        $(el)
+                            .prop('contenteditable', true)
+                            .input(function() {
+                                var text = $(this).text();
+                                if (text === "") $(this).html("&nbsp;");
+                            }).keydown(function(ev) {
+                                var code = ev.keyCode || ev.which;
+                                if ($(this).data('editmode') === 'singleLine' && code == 13) {
+                                    ev.preventDefault();
+                                    return false;
+                                } else return true;
+                            });
+                        // only allow enter when the target is not singleLine
+                    }
+                }
+                $(editableElements[0]).focus();
+            }
 
-                            // compare the current state with the pre-edit state and store the changed elements
-                            if ($(el).text() != localStorage[el]) {
-                                if (save) {
-                                    localStorage[el] = $(el).text();
-                                } else {
-                                    $(el).text(localStorage[el]);
-                                }
+            function stopEditMode(save) {
+                for (var i = 0, l = editableElements.length; i < l; i++) {
+                    var el = editableElements[i];
+                    if ($(el).data('editmode') !== 'boolean') {
+
+                        // remove designMode & contenteditable
+                        $(el).prop('contenteditable', false);
+
+                        // compare the current state with the pre-edit state and store the changed elements
+                        if ($(el).text() != localStorage[el]) {
+                            if (save) {
+                                localStorage[el] = $(el).text();
+                            } else {
+                                $(el).text(localStorage[el]);
                             }
                         }
                     }
                 }
+            }
 
 
-                /* ###
+            /* ###
 
       search
 
   ### */
 
-                $('input[type=search]').bind('input', search);
-                 // channels = $('#channels .channel');
+            $('input[type=search]').bind('input', search);
+             // channels = $('#channels .channel');
 
-                function search() {
-                    var text = this.value;
-                    channels.each(function(i, el) {
-                        // check if the text is in there
-                        // add class hidden if text is not the same
-                        if ($(el).text().indexOf(text) !== -1) {
-                            $(el).removeClass('hidden');
-                        } else {
-                            $(el).addClass('hidden');
-                        };
-                    });
-                }
+            function search() {
+                var text = this.value;
+                channels.each(function(i, el) {
+                    // check if the text is in there
+                    // add class hidden if text is not the same
+                    if ($(el).text().indexOf(text) !== -1) {
+                        $(el).removeClass('hidden');
+                    } else {
+                        $(el).addClass('hidden');
+                    };
+                });
+            }
 
-                /* ###
+            /* ###
 
     unfollow
 
     ### */
 
-                $('.inChannel').on('click', '.unfollow', function() {
-                    // rename button
-                    $(this).text('Follow').removeClass('unfollow').addClass('follow');
+            $('.inChannel').on('click', '.unfollow', function() {
+                // rename button
+                $(this).text('Follow').removeClass('unfollow').addClass('follow');
 
-                    var channelToRemove = $('.channel.selected');
-                    channelToRemove.bind(transitionendEvent, {
-                        propertyName: 'height'
-                    }, destroy);
+                var channelToRemove = $('.channel.selected');
+                channelToRemove.bind(transitionendEvent, {
+                    propertyName: 'height'
+                }, destroy);
 
-                    document.redraw();
+                document.redraw();
 
-                    channelToRemove.addClass('remove');
-                });
+                channelToRemove.addClass('remove');
+            });
 
-                /* ###
+            /* ###
 
     follow
 
     ### */
 
-                function channelTemplate(avatarUrl, owner, status, animationClassName) {
-                    return $('<div class="channel">')
-                        .addClass(animationClassName ? animationClassName : "")
+            function channelTemplate(avatarUrl, owner, status, animationClassName) {
+                return $('<div class="channel">')
+                    .addClass(animationClassName ? animationClassName : "")
+                    .append(
+                        $('<div class="avatar">').css('background-image', avatarUrl)
+                    )
+                    .append(
+                        $('<div class="info">')
                         .append(
-                            $('<div class="avatar">').css('background-image', avatarUrl)
+                            $('<div class="owner">').text(owner)
                         )
                         .append(
-                            $('<div class="info">')
-                            .append(
-                                $('<div class="owner">').text(owner)
-                            )
-                            .append(
-                                $('<div class="status">').text(status)
-                            )
-                        );
-                }
+                            $('<div class="status">').text(status)
+                        )
+                    );
+            }
 
-                $('.inChannel').on('click', '.follow', follow);
+            $('.inChannel').on('click', '.follow', follow);
 
-                function follow() {
-                    // TODO: scroll channel list up (animation) and the go on
-                    $(this).text('Unfollow').removeClass('follow').addClass('unfollow');
+            function follow() {
+                // TODO: scroll channel list up (animation) and the go on
+                $(this).text('Unfollow').removeClass('follow').addClass('unfollow');
 
-                    var avatarUrl = $(this).parent().siblings('.avatar').css('background-image');
-                    var owner = $(this).parent().siblings().children('.owner').text();
-                    // the status will not be visible in the discovery
-                    // using the about for now
-                    var status = $(this).parent().siblings().children('.about').text();
-                    var animationClassName = 'channelHeader';
-                    console.log(avatarUrl);
-                    console.log(owner);
-                    console.log(status);
-                    // create new channel from template for the sidebar
-                    var newChannel = new channelTemplate(avatarUrl, owner, status, animationClassName);
+                var avatarUrl = $(this).parent().siblings('.avatar').css('background-image');
+                var owner = $(this).parent().siblings().children('.owner').text();
+                // the status will not be visible in the discovery
+                // using the about for now
+                var status = $(this).parent().siblings().children('.about').text();
+                var animationClassName = 'channelHeader';
+                console.log(avatarUrl);
+                console.log(owner);
+                console.log(status);
+                // create new channel from template for the sidebar
+                var newChannel = new channelTemplate(avatarUrl, owner, status, animationClassName);
 
-                    // get the start offset
-                    var offset = $(this).parents('.channelHeader').offset();
-                    var callback = function() {
-                        $('.channels').removeClass('rainbowAnimationRunning');
-                        $(this).addClass('selected').css({
-                            left: '',
-                            top: ''
-                        });
-                    }.bind(newChannel);
-
-                    $('.channels').addClass('rainbowAnimationRunning');
-
-                    // start the animation
-                    rainbowAnimation(newChannel, offset, animationClassName, callback);
-                }
-
-                function rainbowAnimation(channel, offset, animationClassName, callback) {
-                    channel.css({
-                        left: offset.left - innerHolder.offset().left,
-                        top: offset.top - innerHolder.offset().top
+                // get the start offset
+                var offset = $(this).parents('.channelHeader').offset();
+                var callback = function() {
+                    $('.channels').removeClass('rainbowAnimationRunning');
+                    $(this).addClass('selected').css({
+                        left: '',
+                        top: ''
                     });
-                    innerHolder.prepend(channel);
+                }.bind(newChannel);
 
-                    // wrap a growing holder around it
-                    var landingArea = $('<div>').addClass('bubbleHolder rainbowBubble');
-                    channel.wrap(landingArea);
+                $('.channels').addClass('rainbowAnimationRunning');
 
-                    document.redraw();
+                // start the animation
+                rainbowAnimation(newChannel, offset, animationClassName, callback);
+            }
 
-                    console.log(channel);
-                    // bind the callback on transition end for all bubbling channels
-                    channel.one(transitionendEvent, {
-                        callback: callback
-                    }, reset);
-                    // bubble!
-                    channel.removeClass(animationClassName).css({
-                        'top': 0,
-                        'left': 0,
-                        'z-index': ++movingChannels + 1
-                    });
-                    // open a gap for the channel to arrive
-                    channel.parent().css('height', channelHeight);
-                }
+            function rainbowAnimation(channel, offset, animationClassName, callback) {
+                channel.css({
+                    left: offset.left - innerHolder.offset().left,
+                    top: offset.top - innerHolder.offset().top
+                });
+                innerHolder.prepend(channel);
 
-                /* ###
+                // wrap a growing holder around it
+                var landingArea = $('<div>').addClass('bubbleHolder rainbowBubble');
+                channel.wrap(landingArea);
+
+                document.redraw();
+
+                console.log(channel);
+                // bind the callback on transition end for all bubbling channels
+                channel.one(transitionendEvent, {
+                    callback: callback
+                }, reset);
+                // bubble!
+                channel.removeClass(animationClassName).css({
+                    'top': 0,
+                    'left': 0,
+                    'z-index': ++movingChannels + 1
+                });
+                // open a gap for the channel to arrive
+                channel.parent().css('height', channelHeight);
+            }
+
+            /* ###
 
     Show Settings
 
     ### */
-                $('.settings').click(function() {
-                    $(this).toggleClass('showSettings');
-                });
-                $('.settings li').click(function(event) {
-                    event.stopPropagation();
-                });
+            $('.settings').click(function() {
+                $(this).toggleClass('showSettings');
+            });
+            $('.settings li').click(function(event) {
+                event.stopPropagation();
+            });
 
 
-                $.fn.autoResize = function() {
+            $.fn.autoResize = function() {
 
-                    this.filter('.expandingArea').each(function() {
+                this.filter('.expandingArea').each(function() {
 
-                        var $this = $(this);
-                        var $textarea = $this.find('textarea');
-                        var $span = $this.find('span');
-                        var textarea = $textarea[0];
-                        var span = $span[0];
+                    var $this = $(this);
+                    var $textarea = $this.find('textarea');
+                    var $span = $this.find('span');
+                    var textarea = $textarea[0];
+                    var span = $span[0];
 
-                        if (textarea.addEventListener) {
-                            textarea.addEventListener('input', function() {
-                                span.textContent = textarea.value;
-                            }, false);
+                    if (textarea.addEventListener) {
+                        textarea.addEventListener('input', function() {
                             span.textContent = textarea.value;
-                        } else if (textarea.attachEvent) {
-                            // IE8 compatibility
-                            textarea.attachEvent('onpropertychange', function() {
-                                span.innerText = textarea.value;
-                            });
+                        }, false);
+                        span.textContent = textarea.value;
+                    } else if (textarea.attachEvent) {
+                        // IE8 compatibility
+                        textarea.attachEvent('onpropertychange', function() {
                             span.innerText = textarea.value;
-                        }
-                        // Enable extra CSS
-                        $this.addClass('active');
+                        });
+                        span.innerText = textarea.value;
+                    }
+                    // Enable extra CSS
+                    $this.addClass('active');
 
-                    });
-                }
+                });
+            }
 
-                $('.expandingArea').autoResize();
-            </script>
+            $('.expandingArea').autoResize();
+        </script>
 
     </xmpp>
+    </div>
 </body>
 
 </html>

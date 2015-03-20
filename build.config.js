@@ -74,12 +74,15 @@ module.exports = {
         'vendor/showdown/src/showdown.js',
         'vendor/angular-bootstrap/ui-bootstrap.min.js',
         'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        'vendor/modernizr/modernizr.js'
+        'vendor/modernizr/modernizr.js',
+        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services-0.1.0.js',
+        'vendor/moment/min/moment.min.js',
+        'vendor/angular-moment/angular-moment.min.js'
     ],
     css: [
     ],
     assets: [
-  'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
+      'vendor/bootstrap/fonts/glyphicons-halflings-regular.eot',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.svg',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf',
       'vendor/bootstrap/fonts/glyphicons-halflings-regular.woff',

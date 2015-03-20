@@ -2,11 +2,10 @@
 <div class="roster" g-show="connected">
 <h4>Online Contacts</h4>
 
-
 <table >
-<tr ng-if="user.presence" ng-repeat="user in xmpp.roster" ng-click="xmpp.openchat(user)">
+<tr g-if="user.presence" ng-repeat="user in xmpp.data.roster" ng-click="$parent.$parent.open('/user/'+user.jid.user+'@'+user.jid.domain+'/posts')">
 <td>
-<img ng-src="assets/icons/avatars/{{user.jid.user}}.png" style="height:40px"/>
+<img ng-src="avatars/{{user.jid.user}}.png" style="height:20px" />
 </td>
 <td>
 <p ng-if="!user.name">{{user.jid.user}}</p>
@@ -27,7 +26,7 @@
 <br/>
 offline contacts</button>
 <table ng-if="offlineusers">
-<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in xmpp.roster" ng-click="xmpp.openchat(user)"><td>
+<tr g-if="user.subscription=='none' || user.subscription=='from'" ng-repeat="user in xmpp.roster" ng-click="open(user)"><td>
 <img ng-src="assets/icons/avatars/{{user.name}}.png" style="height:40px"/>
 </td>
 <td>

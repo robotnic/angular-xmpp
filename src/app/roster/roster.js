@@ -1,4 +1,4 @@
-angular.module('XmppRoster', ['XmppCore'])
+angular.module('XmppRoster', ['AngularXmpp'])
 
 /*
 Roster
@@ -16,8 +16,10 @@ Roster
             console.log("roster",xmppController);
             scope.xmpp=xmppController.xmpp;
             xmppController.on("connected",function(s,status){
-                scope.xmpp.getRoster();
-                scope.xmpp.setPresence();
+                console.log("roster meldet sich",scope,arguments);
+                scope.xmpp.send("xmpp.roster.get");
+                //set presence
+                //scope.xmpp.setPresence();
             });
         }
     };

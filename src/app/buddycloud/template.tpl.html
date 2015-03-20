@@ -1,132 +1,211 @@
-
-
-<div ng-show="data " class="buddycloud" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled" tagged-infinite-scroll-distance="500">
+<div ng-show="buddycloud.data " class="buddycloud centered start" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled" tagged-infinite-scroll-distance="500">
 
     <!-- header -->
-    <div g-show="!formdata">
-    <div class="streamheader">
-    <div g-if="node!='recent'">
-        <button ng-if="!data.rights.subscribed" ng-click="subscribe()" class="btn btn-link">subscribe</button>
-        <button ng-if="data.rights.subscribed" ng-click="unsubscribe()" class="btn btn-link">unsubscribe</button>
-        <button ng-if="data.rights.config" ng-click="getConfig()" class="btn btn-link">
-            <span class="glyphicon glyphicon-cog"></span>
-        </button>
-        <button ng-if="isContact(node)" ng-click="addFriend(node)" class="pull-right btn btn-link">add Contact</button>
-        <button ng-if="!isContact(node)" ng-click="removeFriend(node)" class="pull-right btn btn-link">remove Contact</button>
-        <br/>
-    </div>
+    <div ng-show="!$parent.showconfigform" class="thediv">
+        <div class="streamheader" ng-if="buddycloud.publish && !showconfigform">
+<!--
+            <div ng-if="node!='recent'">
 
-    <!-- config form -->
-    <div class="form" ng-show="formdata" style="position:relative;height:1300px">
-            <xmppform formdata="formdata" onclose="formdata=null" onsave="setConfig"></xmppform>
-    </div>
-
-    <!-- main post form -->
-    <form ng-show="data.rights.publish || data.currentnode=='recent'" ng-submit="publish()">
-        <textarea ng-model="newtopic.value" placeholder="What's going on" ng-class="{'saving': newtopic.status == 'saving'}"></textarea>{{newtopic.status}}
-        <input ng-show="newtopic.value" type="submit" />
-    </form>
-    </div>
-
-    <div ng-if="!data.tree">loading...</div>
-
-
-    <!-- the item loop -->
-    <div ng-repeat="item in data.tree |toArray|orderBy:'entry.atom.published':true " class="item">
-        {{entry.atom.published}}
-        <span ng-if="item.rights.remove" class="tool pull-right" ng-click="removeitem(item.entry.atom.id,item.node)">×</span>
-        <span ng-if="item.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
-        <img ng-src="assets/icons/avatars/{{item.entry.atom.author.image}}.png" />
-
-        <!-- head -->
-        <div class="person">
-            <span class="name">
-<span ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
-            <span ng-click="opennode(item.nodeowner)" ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
-            </span>
-            <span class="date">{{item.entry.atom.published | date:'medium'}}</span>
+                <div class="buttons">
+                    <button ng-if="buddycloud.subscribe" ng-click="buddycloud.subscribe()" class="btn btn-link">follow</button>
+                    <button ng-if="buddycloud.unsubscribe" ng-click="buddycloud.unsubscribe()" class="btn btn-link">unfollow</button>
+                    <button ng-if="buddycloud.config" ng-click="$parent.showconfigform=!$parent.showconfigform" class="btn btn-link">
+                        <span class="glyphicon glyphicon-cog">c</span>
+                    </button>
+                    <button ng-if="isContact(node)" ng-click="addFriend(node)" class="pull-right btn btn-link">add Contact</button>
+                    <button ng-if="!isContact(node)" ng-click="removeFriend(node)" class="pull-right btn btn-link">remove Contact</button>
+                    <button ng-click="$parent.openchat(node)" class="pull-right btn btn-link">Message</button>
+                    <br/>
+                </div>
         </div>
+-->
 
-        <!-- content -->
-        <div class="buddycloudcontent">
-            <form ng-show="editmode && data.rights.subscribed" ng-submit="save()">
-                <textarea ng-model="item.entry.atom.content.content"></textarea>
-                <input type="submit" />
+            <!-- main post form -->
+        <section class="newTopic" ng-class="{'write':write}">
+<div class="avatar" style="background-image:url('assets/icons/avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');"></div>
+
+            <form  ng-submit="buddycloud.publish(content)">
+            <div class="holder">
+              <div class="expandingArea active">
+                <pre><span></span><br></pre>
+                <textarea placeholder="New Topic..." ng-model="content.atom.content" ng-focus="$parent.write=true" ng-blur="$parent.write=false"></textarea>
+              </div>
+              <div class="controls clearfix">
+                <div class="hint">ctrl + enter to post</div>
+                <input class="button callToAction createComment" type="submit"/>
+              </div>
+            </div>
             </form>
-            <div ng-show="!editmode" btf-markdown="item.entry.atom.content.content"></div>
-
-        </div>
-        <br/> 
-
-
-        <!-- subitem loop -->
-        <div ng-repeat="subitem in item.nodes  |toArray|orderBy:'entry.atom.published'" class="subitem">
-
-            <!--  subitem -->
-<!--
-            <span ng-if="subitem.rights.remove" class="tool pull-right" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">×</span>
-            <span ng-if="subitem.rights.update" class="tool pull-right" ng-click="edititem(editmode=!editmode)">✎</span>
--->
-
-<div class="tool btn-group pull-right" dropdown is-open="status.isopen">
-      <button type="button" class="btn btn-link dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-         <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#" ng-click="edititem(editmode=!editmode)">Edit action</a></li>
-        <li><a href="#" ng-click="blockuser(subitem.entry.atom.id,subitem.node)">Block user</a></li>
-        <li><a href="#" ng-click="makeusermanager(subitem.entry.atom.id,subitem.node)">Make user node manager</a></li>
-        <li><a href="#" ng-click="makeuserreadonly(subitem.entry.atom.id,subitem.node)">Make user readonly</a></li>
-        <li class="divider"></li>
-        <li><a href="#" ng-click="removeitem(subitem.entry.atom.id,subitem.node)">Delete</a></li>
-      </ul>
-    </div>
-
-
-            <img ng-src="assets/icons/avatars/{{subitem.entry.atom.author.image}}.png" />
-            <div class="person">
-                <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
-                <input ng-show="editmode" ng-model="subitem.entry.atom.content.content" />
-                <span ng-show="!editmode">{{subitem.entry.atom.content.content}}</span>
-
-                <span class="date">{{subitem.entry.atom.published | date:'medium'}}</span>
-            </div>
+          </section>
         </div>
 
-        <!-- post replay -->
-        <form ng-if="item.rights.publish" ng-submit="publish(item.entry.atom.id)" class="subitem">
-            <img ng-src="assets/icons/avatars/{{me.jid.user}}.png" />
-            <div class="person">
-                <input ng-model="newitems[item.entry.atom.id].value" ng-class="{'saving': newitems[item.entry.atom.id].status == 'saving'}" class="form-control"/>
-            </div>
-        </form>
-    </div>
-    </div>
+
+
+
+            <article class="post" ng-repeat="item in buddycloud.data.items | orderBy:'entry.atom.published':true" class="item" ng-if="!item.entry['in-reply-to']">
+              <section class="opener owner">
+<div class="avatar" style="background-image:url('assets/icons/avatars/{{item.entry.atom.author.name|getUser}}.png');"  title="{{subitem.entry.atom.author.name}}"></div>
+                <div class="usermeta">
+                  <div class="name">Vera Maier</div>
+                  <div class="jid">vera@buddycloud.com</div>
+                </div>
+                <div class="postmeta">
+                    <span lass="date" am-time-ago="item.entry.atom.published"></span>
+                  <button class="flat delete button" title="Delete Post">▼</button>
+                </div>
+                <span class="name">vera<span class="domain">@buddycloud.com</span></span><span class="location">from Campus Library</span>
+                <p>{{item.entry.atom.content.content}}</p>
+              </section>
+               <section class="comments"> 
+                <section class="comment moderator" ng-repeat="subitem in buddycloud.data.items | orderBy:'entry.atom.published'" ng-if="item.id == subitem.entry['in-reply-to'].ref">
+<div class="avatar small" style="background-image:url('assets/icons/avatars/{{subitem.entry.atom.author.name|getUser}}.png');"  title="{{subitem.entry.atom.author.name}}"></div>
+                  <div class="usermeta">
+                    <div class="name">Elisabeth Smith</div>
+                    <div class="jid">lisa@buddycloud.com</div>
+                  </div>
+                  <div class="postmeta">
+                    <span lass="date" am-time-ago="subitem.entry.atom.published"></span>
+                  <button class="flat delete button" title="Delete Post">▼</button>
+                  </div>
+                  <span class="name">mona<span class="domain">@buddycloud.com</span></span><span class="location">from Cafe Extra</span>
+                  <p>{{subitem.entry.atom.content.content}}</p>
+                </section>
+                <section class="answer" ng-class="{'write':write}" ng-show="item.reply">
+<div class="avatar small" style="background-image:url('assets/icons/avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');"  ></div>
+                <form ng-submit="item.reply(subtext);subtext=''">
+                  <div class="holder">
+                    <div class="expandingArea active">
+                      <pre><span></span><br></pre>
+                      <textarea placeholder="comment" ng-focus="write=true" ng-blur="write=false" ng-model="subtext"></textarea>
 <!--
+                        <form ng-show="editmode[subitem.id]" ng-model="subitem.entry.atom.content.content" ng-submit="save(subitem)" />
+                        <input ng-model="subitem.entry.atom.content.content" />
+                        </form>
+-->
+                    </div>
+                    <div class="controls clearfix">
+                      <div class="hint">ctrl + enter to post</div>
+                      <input class="button callToAction createComment" type="submit"/>
+                    </div>
+                    </form>
+                  </div>
+                </section>
+              </section>
+            </article>
 
-    <div class="rightside">
-    <h4>Owner</h4>
-    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
-    <img ng-if="item.affiliation=='owner' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
-    </div>
 
 
-    <h4>Moderator</h4>
-    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
-    <img ng-if="item.affiliation=='moderator' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
-    </div>
+        <!-- 
+        <div ng-if="!showconfigform">
+        <div ng-repeat="item in buddycloud.data.items | orderBy:'entry.atom.published':true" class="item" ng-if="!item.entry['in-reply-to']">
+            <div class="mainitem">
 
-    <h4>Publisher</h4>
-    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
-    <img ng-if="item.affiliation=='publisher' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
-    </div>
+                <div class="tool">
+                    <div type="button" ng-click="open=!open">∨</div>
+                    <div ng-if="open" class="dropdown" ng-mouseleave="$parent.open=false">
+                        <ul>
+                            <li ng-if="item.remove"><a ng-href ng-click="editmode[item.id]=!editmode[item.id]">Edit</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'outcast')">Block user</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'publisher')">Make user publisher</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'member')">Make user readonly</a>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'moderator')">Make Moderator</a>
+                            </li>
+                            <li ng-if="item.remove" class="divider"></li>
+                            <li ng-if="item.remove"><a href="#" ng-click="item.remove()">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-    <h4>Member</h4>
-    <div ng-repeat="item in data.subscribers" ng-click="opennode(item.jid)">
-    <img ng-if="item.affiliation=='member' " ng-src="assets/icons/avatars/{{item.jid.user}}.png" /> 
-    </div>
+
+
+                <div class="avatar" style="background-image:url('avatars/{{item.entry.atom.author.name|getUser}}.png');"  title="{{subitem.entry.atom.author.name}}"></div>
+
+                <div class="person">
+                    <span class="name">
+    <span ng-click="opennode(item.entry.atom.author.name)">{{item.entry.atom.author.name}}</span>
+                    <span ng-click="opennode(item.nodeowner)" ng-show="item.entry.atom.author.name!=item.nodeowner && node=='recent'"> → {{item.nodeowner}}</span>
+                    </span>
+                    <span class="date" am-time-ago="item.entry.atom.published"></span>
+                </div>
+
+                <div class="buddycloudcontent">
+                    <form ng-show="editmode[item.id]" ng-submit="buddycloud.publish(item.entry.atom)">
+                        <textarea ng-model="item.entry.atom.content.content"></textarea>
+                        <input type="submit" />
+                    </form>
+                    <div ng-show="!editmode[item.id]" btf-markdown="item.entry.atom.content.content"></div>
+                    <div ng-show="!editmode[item.id]">{{item.entry.atom.content.content}}</div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <div ng-repeat="subitem in buddycloud.data.items | orderBy:'entry.atom.published'" ng-if="item.id == subitem.entry['in-reply-to'].ref" class="subitem">
+
+
+
+
+                <div class="tool">
+                    <div type="button" ng-click="open=!open">∨</div>
+                    <div ng-if="open" class="dropdown" ng-mouseleave="$parent.open=false">
+                        <ul>
+                            <li><a ng-href ng-click="editmode[subitem.id]=!editmode[subitem.id];$parent.open=false">Edit</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'outcast')">Block user</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'publisher')">Make user publisher</a>
+                            </li>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'member')">Make user readonly</a>
+                            <li ng-if="buddycloud.affiliation"><a href="#" ng-click="buddycloud.affiliation(item.entry.atom.author.name,'moderator')">Make Moderator</a>
+                            </li>
+
+                            <li class="divider"></li>
+                            <li><a ng-href="" ng-click="subitem.remove()">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="avatar" style="background-image:url('assets/icons/avatars/{{subitem.entry.atom.author.name|getUser}}.png');" title="{{subitem.entry.atom.author.name}}"></div>
+
+                <div class="person">
+                    <span class="name" ng-click="opennode(subitem.entry.atom.author.name)">{{subitem.entry.atom.author.name}}</span>
+                    <form ng-show="editmode[subitem.id]" ng-model="subitem.entry.atom.content.content" ng-submit="save(subitem)" />
+                    <input ng-model="subitem.entry.atom.content.content" />
+                    </form>
+                    <span ng-show="!editmode[subitem.id]">{{subitem.entry.atom.content.content}}</span>
+                    <span class="date" am-time-ago="subitem.entry.atom.published"></span>
+                </div>
+            </div>
+
+            <form ng-if="item.reply" ng-submit="item.reply(subtext);subtext=''" class="subitem">
+                <div class="avatar" style="background-image:url('assets/icons/avatars/{{buddycloud.xmpp.data.me.jid.user}}.png');"></div>
+                <div class="person">
+                    <input ng-model="subtext" ng-class="{'saving': newitems[item.entry.atom.id].status == 'saving'}" class="form-control" />
+                </div>
+            </form>
+        </div>
     </div>
 -->
+
+    </div>
+
+    <div class="thediv" ng-if="$parent.showconfigform" style="position:relative;height:1300px">
+            <h2>Node Configuration</h2>
+            <xmppform formdata="buddycloud.data.config" onclose="formdata=null" onsave="setConfig"></xmppform>
+    </div>
+
+
+
 
 </div>
 

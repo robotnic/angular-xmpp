@@ -3,7 +3,7 @@
 <h3>{{formdata.title}}</h3>
 <h4>{{formdata.instructions}}</h4>
 <table>
-<tr ng-repeat="field in formdata.fields">
+<tr ng-repeat="field in formdata">
 <td ng-if="field.label">{{field.label}}</td>
 <td ng-if="!field.label">{{field.var}}</td>
 <td>
