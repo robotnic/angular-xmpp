@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class=" js history csstransforms csstransforms3d fontface localstorage" ng-app="XmppApp">
+<html lang="en" class=" js history csstransforms csstransforms3d fontface localstorage" ng-app="XmppApp" ng-controller="page">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Streams</title>
+    <title ng-if="chat.notifications.unreadmessages">({{chat.notifications.unreadmessages}}) Buddycloud</title>
+    <title ng-if="!chat.notifications.unreadmessages">Buddycloud</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen"/>
 </head>
 
-<body ng-controller="page">
+<body>
 <div class="container">
     <xmpp althost="https://laos.buddycloud.com/" xhost="http://localhost:3000" host="http://datenkueche.com:3002"" defaultdomain="laos.buddycloud.com" xanonymous="'true'">
         <buddycloud node="node" class="row">
