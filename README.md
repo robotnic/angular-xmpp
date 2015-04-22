@@ -20,7 +20,7 @@ Test here:  http://datenkueche.com/buddycloud/
 ```
 
 <xmpp host="https://laos.buddycloud.com">
-    <xmpplogin></xmpplogin>
+    <xmpplogin defaultdomain="laos.buddycloud.com"></xmpplogin>
     <xmpproster></xmpproster>
     <xmppminichat></xmppminichat>
 </xmpp>
