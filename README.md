@@ -4,7 +4,7 @@ is a library,that provides stylable UI Elements for XMPP oder Websockets using x
 
 Test here:  http://datenkueche.com/buddycloud/
 
-[bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap.png)
+![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap.png)
 
 ## getting started
 
