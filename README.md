@@ -7,6 +7,9 @@ Test here:  http://datenkueche.com/buddycloud/
 Here an example how to use the lib
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap.png)
 
+Let's see the directives
+![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap-annotated.png)
+
 ## getting started
 
 ```
