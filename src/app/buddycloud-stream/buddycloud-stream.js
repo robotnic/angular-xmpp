@@ -3,7 +3,7 @@
 
 var STREAM=null;
 
-angular.module("BuddycloudStream",[])
+angular.module("BuddycloudStream",['btford.markdown'])
 .directive("buddycloudStream",function(){
     console.log("dir");
     return {

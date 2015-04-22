@@ -18,6 +18,7 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','XmppUI','btford
         console.log("openchat",jid,$scope.chat);
         $scope.chat.openchat(jid);
     }
+/*
     $scope.search=function(text){
         console.log(text);
         return [{title:"eins"},{title:"zwei"}]
@@ -36,5 +37,6 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','XmppUI','btford
           });
         });
   };
+*/
 }]);
 

@@ -6,6 +6,7 @@
     <title ng-if="chat.notifications.unreadmessages">({{chat.notifications.unreadmessages}}) Buddycloud</title>
     <title ng-if="!chat.notifications.unreadmessages">Buddycloud</title>
     <meta charset="utf-8">
+    <link href="http://kevinburke.bitbucket.org/markdowncss/markdown.css" rel="stylesheet"></link>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <!--
@@ -25,6 +26,7 @@
         
 
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen"/>
+
 </head>
 
 <body>
@@ -33,8 +35,6 @@
         <buddycloud node="node" class="row">
             <div ng-include="'navbar/template.tpl.html'"></div>
             <xmppminichat oninit="initchat(scope)"></xmppminichat>
-<br/>
-<br/>
 <br/>
 <br/>
             <div  class="col-md-2">
