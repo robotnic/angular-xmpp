@@ -45,11 +45,18 @@
 
     </div>
     <div class="panel-body">
-        <form ng-submit="bc.publish(content);content.atom.content=''">
-            <textarea ng-model="content.atom.content" class="form-control" placeholder="what?"></textarea>
-            <input class="btn btn-default" type="submit"></input>
+     <tabset>
+        <tab heading="Edit">
+            <form ng-submit="bc.publish(content);content.atom.content=''">
+                <textarea ng-model="content.atom.content" class="form-control" placeholder="what?"></textarea>
+                <input class="btn btn-default" type="submit"></input>
+            </form>
+        </tab>
+        <tab heading="Preview">
+            <div class="panel-body"  btf-markdown="content.atom.content"></div>
+        </tab>
+      </tabset>
     </div>
-    </form>
 </div>
 
 
@@ -61,7 +68,7 @@
         <div class="panel-heading">
             <div class="avatar" style="float:left;background-image:url('{{item.entry.atom.author.name|gravatar}}')" title="{{item.entry.atom.author.name}}"></div>
             <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
-            <div class="jid"><span class="author">{{item.entry.atom.author.name}}</span> <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span><span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
+            <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span> <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span><span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
             </div>
 
         </div>
@@ -74,7 +81,7 @@
             <div class="col-md-11">
                 <div class="avatar" style="float:left;background-image:url('{{subitem.entry.atom.author.name|gravatar}}')" title="{{subitem.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
-                <div class="jid"><span class="author">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
+                <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
                 </div>
 
                 <p>{{subitem.entry.atom.content.content}}</p>
