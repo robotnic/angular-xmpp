@@ -14,7 +14,7 @@ bower install angular-xmpp
 
 To see the buddycloud example (screenshot) open 
 ```
-bower_components/angular-xmpp
+bower_components/angular-xmpp/index.html
 ```
 in your brower.
 
@@ -40,19 +40,19 @@ in your brower.
 ```
 
 ## example xmpp buddycloud
-```
 
+```
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
-    <buddycloud room="/user/robotnic@laos.buddycloud.com/posts"></buddycloud>
+    <buddycloud node="/user/robotnic@laos.buddycloud.com/posts">
+    <buddycloud-stream></buddycloud-stream>
+    </buddycloud>
 </xmpp>
 
 ```
 
 
-
-The templates include alle the javascript that has to be done and tries to keep the html simple.
-Your part ist to give them a style.
+# Combine with your project
 
 ## Angular binding exampe
 ```
@@ -72,6 +72,9 @@ $scope.nodechangedinsidedirective=function(node){
 
 ```
 
+# Styling
 
+The templates include all the javascript that has to be done and tries to keep the html simple.
+Your part ist to give them a style.
 
 
