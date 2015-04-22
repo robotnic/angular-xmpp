@@ -1,9 +1,10 @@
 # angular-xmpp
 
-is a library,that provides stylable UI Elements for XMPP over Websockets using xmpp-ftw.
+This is a library, that provides stylable UI Elements for XMPP over Websockets using xmpp-ftw.
 
 Test here:  http://datenkueche.com/buddycloud/
 
+Here an example how to use the lib
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap.png)
 
 ## getting started
@@ -75,6 +76,48 @@ $scope.nodechangedinsidedirective=function(node){
 # Styling
 
 The templates include all the javascript that has to be done and tries to keep the html simple.
-Your part ist to give them a style.
+Your part is to give them a style.
+
+## how to start
+
+```
+git clone https://github.com/robotnic/angular-xmpp
+```
+
+## directory structure
+
+The structure comes from ng-boilerplate. All the angular factorys are in a seperate project called [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
+
+## grunt
+
+If you want to make changes. You have to run the grunt task builder.
+
+```
+grunt watch --force
+```
+The result have be views in the "build" folder
+
+
+If you are happy with your work run 
+```
+grunt compile
+```
+This will make more optimation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
