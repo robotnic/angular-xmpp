@@ -1,6 +1,6 @@
 # angular-xmpp
 
-This is a library, that provides stylable UI Elements for XMPP over Websockets using xmpp-ftw.
+This is a library, that provides stylable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
 Test here:  http://datenkueche.com/buddycloud/
 
@@ -49,7 +49,7 @@ in your brower.
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
     <buddycloud node="/user/robotnic@laos.buddycloud.com/posts">
-    <buddycloud-stream></buddycloud-stream>
+        <buddycloud-stream></buddycloud-stream>
     </buddycloud>
 </xmpp>
 
@@ -62,7 +62,7 @@ in your brower.
 ```
 <input ng-mode="node"/>
 <buddycloud node="node" onchangenode="nodechangedinsidedirective(node)">
-<buddycloud-stream></buddycloud-stream>
+    <buddycloud-stream></buddycloud-stream>
 </buddycloud>
 ```
 
