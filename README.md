@@ -91,6 +91,50 @@ git clone https://github.com/robotnic/angular-xmpp
 
 The structure comes from ng-boilerplate. All the angular factorys are in a seperate project called [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
+
+```
+├── app.js
+├── buddycloud
+│   ├── buddycloud.js
+│   └── buddycloud.less
+├── buddycloud-affiliations
+│   ├── buddycloud-affiliations.js
+│   └── template.tpl.html
+├── buddycloud-nodelist
+│   ├── buddycloud-nodelist.js
+│   ├── nodelist.less
+│   └── template.tpl.html
+├── buddycloud-search
+│   ├── search.js
+│   └── template.tpl.html
+├── buddycloud-stream
+│   ├── buddycloud-stream.js
+│   └── template.tpl.html
+├── login
+│   ├── login.js
+│   └── template.tpl.html
+├── minichat
+│   ├── chatstyle.css
+│   ├── minichat.js
+│   ├── minichat.less
+│   └── template.tpl.html
+├── navbar
+│   └── template.tpl.html
+├── xmppcore
+│   └── xmppcore.js
+├── xmppform
+│   ├── template.tpl.html
+│   ├── xmppform.js
+│   └── xmppform.less
+└── xmpproster
+    ├── nodelist.less
+    ├── roster.js
+    └── template.tpl.html
+
+```
+
+
+
 ## grunt
 
 If you want to make changes. You have to run the grunt task builder.
