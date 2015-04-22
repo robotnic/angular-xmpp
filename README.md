@@ -4,7 +4,7 @@ is a library,that provides stylable UI Elements for XMPP oder Websockets using x
 
 Test here:  http://datenkueche.com/buddycloud/
 
-
+[bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap.png)
 
 ## getting started
 
@@ -55,7 +55,9 @@ Your part ist to give them a style.
 ## Angular binding exampe
 ```
 <input ng-mode="node"/>
-<buddycloud room="{{node}}" changenode="nodechangedinsidedirective(node)"></buddycloud>
+<buddycloud node="node" onchangenode="nodechangedinsidedirective(node)">
+<buddycloud-stream></buddycloud-stream>
+</buddycloud>
 ```
 
 In your controller
