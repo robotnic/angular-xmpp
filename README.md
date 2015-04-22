@@ -1,6 +1,6 @@
 # angular-xmpp
 
-This is a library, that provides stylable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
+This is a library, that provides styleable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
 Test here:  http://datenkueche.com/buddycloud/
 
@@ -9,6 +9,9 @@ Here an example how to use the lib
 
 Let's see the directives
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap-annotated.png)
+
+Other design (conversjs clone - prove of concept)
+![convers clone](https://raw.githubusercontent.com/robotnic/angular-converse/master/screenshots/beta.png)
 
 ## getting started
 
