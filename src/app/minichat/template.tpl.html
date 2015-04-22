@@ -1,9 +1,9 @@
 <div class="bottomchat" >
   <div class="minichat"  ng-repeat="user in chatwindows" title="{{ user.jid }}"  >
     <div ng-if="user.style=='max'">
-        <div class="title" ng-click="minify(user)"><p>{{user.name}} </p><span class="close" ng-click="close(user)">×</span></div>
+        <div class="title" ng-click="minify(user)"><p>{{user.name}} </p><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ng-click="close(user)"></span><span class="glyphicon glyphicon-facetime-video pull-right" aria-hidden="true"></span></div>
             <div class="messages" scroll-glue>
-                <ul ng-repeat="message in messages">
+                <ul ng-repeat="message in chat.items track by $index">
                     <li ng-if="message.from.jid==user.jid">
                         <img class="left"  ng-src="assets/icons/avatars/{{message.from.user}}.png" />
                         <span class="left">{{message.content}}</span>

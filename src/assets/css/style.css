@@ -1,0 +1,56 @@
+html {
+overflow: -moz-scrollbars-vertical; 
+overflow-y: scroll;
+}
+.navbar-header{
+margin-left:40px !important;
+color:white !important;
+}
+.navbar-inverse .navbar-brand {
+  color: white;
+}
+.navbar-inverse {
+  background-color: rgb(45, 174, 191);
+}
+.navbar-inverse .navbar-nav > li > a{
+  color: white;
+}
+
+.navbar-inverse .navbar-brand::before {
+  margin: -0.24em 0px 0px -1.75em;
+  content: ' ';
+  width: 1.333em;
+  height: 1.333em;
+  display: block;
+  position: absolute;
+  background-image: url(http://buddycloud.com/theme/vendor/buddycloud-styles/dist/img/logos/buddycloud_logo_mark_white.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+uddycloud-stream{
+position:absolute;
+top:80px;
+left:180px;
+right:250px;
+min-height:300px;
+}
+uddycloud-nodelist{
+top:80px;
+position:absolute;
+left:5px;
+width:140px;
+min-height:300px;
+display:block;
+}
+uddycloud-affiliations{
+top:80px;
+position:absolute;
+right:5px;
+width:190px;
+min-height:300px;
+border:1px solid blue;
+display:block;
+}

@@ -302,7 +302,8 @@ module.exports = function ( grunt ) {
         noarg: true,
         sub: true,
         boss: true,
-        eqnull: true
+        eqnull: true,
+        strict:false
       },
       globals: {}
     },
@@ -444,7 +445,7 @@ module.exports = function ( grunt ) {
        * plugin should auto-detect.
        */
       options: {
-        livereload: true
+        livereload: false
       },
 
       /**

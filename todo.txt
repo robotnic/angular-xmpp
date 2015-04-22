@@ -1,0 +1,5 @@
+https://laos.buddycloud.com/api//account
+{username: "hexe@laos.buddycloud.com", password: "hexe", email: "adsf@asdf.com"}
+->OK
+
+

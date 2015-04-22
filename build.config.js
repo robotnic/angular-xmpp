@@ -74,7 +74,13 @@ module.exports = {
         'vendor/showdown/src/showdown.js',
         'vendor/angular-bootstrap/ui-bootstrap.min.js',
         'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        'vendor/modernizr/modernizr.js'
+        'vendor/modernizr/modernizr.js',
+        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services.js',
+        'vendor/moment/moment.js',
+        'vendor/angular-moment/angular-moment.js',
+        'vendor/ngInfiniteScroll/build/ng-infinite-scroll.js',
+        'vendor/angular-ui-router/release/angular-ui-router.js'
+
     ],
     css: [
     ],

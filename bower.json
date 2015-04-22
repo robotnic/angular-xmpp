@@ -3,10 +3,10 @@
   "authors": [
     "bernhard zwischenbrgger"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": [
-    "bin/assets/angular-xmpp-0.0.1.js",
-    "bin/assets/angular-xmpp-0.0.1.css"
+    "bin/assets/angular-xmpp-0.0.3.js",
+    "bin/assets/angular-xmpp-0.0.3.css"
   ],
   "repository": {
     "type": "git",
@@ -19,5 +19,13 @@
     "showdown": "~0.3.4",
     "jquery": "~2.1.3",
     "modernizr": "~2.8.3"
+  },
+  "dependencies": {
+    "angular": "~1.3.15",
+    "angular-xmpp-services": "~0.7.4",
+    "angular-moment": "~0.10.0",
+    "jquery": "~2.1.3",
+    "ngInfiniteScroll": "~1.2.0",
+    "angular-ui-router": "~0.2.13"
   }
 }

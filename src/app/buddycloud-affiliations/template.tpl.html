@@ -1,0 +1,27 @@
+   <div ng-repeat="(key,node) in bc.data.affiliations[bc.data.currentnode]">
+                            <p>{{key}}  <span class="badge">{{node.length}}</span></p>
+
+
+                            <div class="btn-group dropdown"  dropdown  ng-repeat="item in node" is-open="status.isOpen">
+                                <div class="list dropdown-toggle" ng-click="item.isOpen=true" role="button"  dropdown-toggle style="background-image:url('{{item.jid|gravatar}}');background-size:cover;width:30px;height:30px;border:1px solid lightgrey;display:inline-block;margin:4px" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
+
+
+                                <ul class="dropdown-menu" dropdown-menu role="menu">
+                                    <li><a ng-href ng-click="opennode({'node':'/user/'+item.jid.user+'@'+item.jid.domain+'/posts'})">Open Node</a>
+                                    </li>
+                                    <li><a ng-href ng-click="openchat(item.jid.user+'@'+item.jid.domain)">Open Chat</a>
+                                    </li>
+                                    </li>
+                                    <li ng-if="bc.affiliation"><a ng-href ng-click="bc.affiliation(item.jid.user+'@'+item.jid.domain,'publisher')">Make publisher</a>
+                                    </li>
+                                    <li ng-if="bc.affiliation"><a ng-href ng-click="bc.affiliation(item.jid.user+'@'+item.jid.domain,'member')">Make readonly</a>
+                                    </li>
+
+                                    <li ng-if="bc.affiliation" class="divider"></li>
+                                    <li ng-if="bc.affiliation"><a ng-href ng-click="bc.affiliation(item.jid.user+'@'+item.jid.domain,'outcast')">Block user</a>
+                                </ul>
+                            </div>
+
+
+                        </div>
+

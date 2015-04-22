@@ -1,0 +1,10 @@
+<h5>Channels</h5>
+<div class="list-group">
+<div ng-repeat="item in bc.data.subscriptions" class="nodelist" ng-class="{'active':item.node==bc.data.currentnode}">
+<div class="avatar" style="background-image: url('{{item.node|gravatar}}')" title="{{item.node}}">
+<a ng-href  class="item"  ng-click="opennode(item.node)">
+{{item.node|getUser}}
+</a>
+<span ng-if="bc.data.unread[item.node]" class="counter pull-right ">{{bc.data.unread[item.node]}}</span>
+
+</div>

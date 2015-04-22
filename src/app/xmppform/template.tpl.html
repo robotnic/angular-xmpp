@@ -1,12 +1,13 @@
 <div class="xmppform">
-<div>
 <h3>{{formdata.title}}</h3>
+<a href="https://github.com/buddycloud/buddycloud-server-java/issues/301">issues/301</a>
 <h4>{{formdata.instructions}}</h4>
-<table>
-<tr ng-repeat="field in formdata.fields">
-<td ng-if="field.label">{{field.label}}</td>
-<td ng-if="!field.label">{{field.var}}</td>
-<td>
+
+<form class="form-horizontal">
+  <div class="form-group" ng-repeat="field in formdata">
+    <label ng-if="!field.label" for="{{field.var}}" class="col-sm-6 control-label">{{field.var}}</label>
+    <label ng-if="field.label" for="{{field.var}}" class="col-sm-6 control-label">{{field.label}}</label>
+    <div class="col-sm-6">
 <input type="password" ng-model="field.value" ng-if="field.type=='text-private'"/>
 <input ng-model="field.value" ng-if="field.type=='text-single'"/>
 <input ng-model="field.value" ng-if="!field.type"/>
@@ -14,10 +15,13 @@
 <select ng-model="field.value" ng-if="field.type=='list-single'" ng-selected="field.value">
 <option  ng-repeat="item in field.options" value="item.value" selected>{{item.label}}</option>
 </select>
-</td>
-</tr>
-</table>
-<button ng-click="save()">save</button><button ng-click="close()">cancel</button>
+
+    </div>
+  </div>
+</form>
+
+<div>
+<button ng-click="save()">save</button><a ui-sref="index"><button ng-click="close()">cancel</button></a>
 </div>
 </div>
 

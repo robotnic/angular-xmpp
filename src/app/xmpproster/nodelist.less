@@ -1,0 +1,32 @@
+.nodelist{
+  width: 100%;
+  position:relative;
+  font-size:12px;
+  margin:4px;
+  cursor:pointer;
+
+  &:hover{
+    background-color:#efefef;
+  }
+  .avatar{
+    width:16px;
+    height:16px;
+  }
+  .item{
+        position:absolute;
+        color: rgb(51, 51, 51);
+        text-decoration:none;
+        left:20px; 
+        right:20px; 
+        top:0px; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; // This is where the magic happens
+   }
+   .counter{
+    color:gray;
+    position:absolute;
+    right:0px;
+    top:0px;
+   }
+}
