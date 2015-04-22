@@ -1,3 +1,5 @@
+var DD=null;
+
 angular.module('Minichat', ['AngularXmppServices','luegg.directives'])
 //luegg.directives for scroll cha down
 
@@ -42,9 +44,11 @@ Roster
 
 .controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp','MessageFactory',
     function($scope, $rootScope,  $anchorScroll, Xmpp, MessageFactory) {
+        DD=$scope;
         $scope.init=function(xmpp){
             var chat=new MessageFactory(xmpp);
             $scope.chat=chat;
+            $scope.xmpp.chat=chat;
             console.log("minichatcontroller",chat);
             $scope.username = Xmpp.user;
             $scope.chatwindows = [];

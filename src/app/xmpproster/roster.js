@@ -30,6 +30,10 @@ angular.module("XmppRoster",[])
             scope.addContact=function(jid){
                 scope.xmpp.send('xmpp.presence.subscribe',{to:jid});
             }
+            scope.messagecount=function(user){
+                var jid=user.user+"@"+user.domain;
+                return scope.xmpp.chat.notifications.unread[jid];
+            }
         }
     };
 

@@ -1,16 +1,20 @@
 <span class="dropdown" dropdown>
-<h5 >Contacts <span class="glyphicon glyphicon-collapse-down pull-right dropdown-toggle" dropdown-toggle aria-hidden="true" ng-click="status.isOpen=true"></span></h5>
- <div class="dropdown-menu" dropdown-menu>
+<h5 >Contacts <span class="glyphicon glyphicon-collapse-down pull-right dropdown-toggle" dropdown-toggle aria-hidden="true" ng-click="status.isOpen=true"></span>
+</h5>
+<div class="dropdown-menu" dropdown-menu>
     <div ng-click="showofflinecontacts=!showofflinecontacts">offline contacts</div>
-add contact<form ng-submit="addContact(newcontact)"><input ng-model="newcontact"/></form>
-  </div>
+    add contact
+    <form ng-submit="addContact(newcontact)">
+        <input ng-model="newcontact" />
+    </form>
+</div>
 </span>
 <div class="list-group">
-<div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.data.roster" class="nodelist" ng-click="openchat(item.jid)">
-<div class="avatar" style="background-image: url('{{item.jid|gravatar}}')" title="{{item.node}}">
-<a ng-href  class="item">
-{{item.jid.user}}@{{item.jid.domain}}
-</a>
-<span class="counter pull-right">{{bc.data.unread[item.node]}}</span>
+    <div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.data.roster" class="nodelist" ng-click="openchat(item.jid)">
+        <div class="avatar" style="background-image: url('{{item.jid|gravatar}}')" title="{{item.node}}">
+            <a ng-href class="item">{{item.jid.user}}@{{item.jid.domain}}</a>
+            <span class="counter pull-right">{{messagecount(item.jid)}}</span>
 
+        </div>
+    </div>
 </div>
