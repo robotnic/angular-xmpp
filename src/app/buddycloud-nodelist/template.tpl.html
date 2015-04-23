@@ -1,4 +1,12 @@
+<div class="dropdown"  dropdown>
+<span class="glyphicon glyphicon-plus-sign pull-right dropdown-toggle" aria-hidden="true" dropdown-toggle></span>
+<div dropdown-menu class="dropdown-menu" style="width:470px;padding:10px">
+<h3>Create Channel</h3>
+<xmppform formdata='form' onsave='save'></xmppform>
+</div>
+</div>
 <h5>Channels</h5>
+
 <div class="list-group">
 <div ng-repeat="item in bc.data.subscriptions" class="nodelist" ng-class="{'active':item.node==bc.data.currentnode}">
 <div class="avatar" style="background-image: url('{{item.node|gravatar}}')" title="{{item.node}}">

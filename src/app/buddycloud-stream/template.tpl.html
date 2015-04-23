@@ -48,8 +48,13 @@
      <tabset>
         <tab heading="Edit">
             <form ng-submit="bc.publish(content);content.atom.content=''">
-                <textarea ng-model="content.atom.content" class="form-control" placeholder="what?"></textarea>
+                <textarea ng-model="content.atom.content" class="form-control big" placeholder="what?"></textarea>
                 <input class="btn btn-default" type="submit"></input>
+            </form>
+            <form>
+                <span class="btn btn-file pull-right">upload image
+                  <input  type='file' ng-model='media.upload' base-sixty-four-input value="upoad image">
+                </span>
             </form>
         </tab>
         <tab heading="Preview">
@@ -99,7 +104,7 @@
                         </div>
 
                         <div class="col-md-11" style="text-align:left">
-                            <textarea class="form-control" ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
+                            <textarea class="form-control " ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
 
                         </div>
                     </div>

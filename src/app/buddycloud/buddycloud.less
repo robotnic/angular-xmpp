@@ -41,4 +41,37 @@ buddycloud{
       color: rgb(85, 85, 85);
       font-weight:bold;
     }
+    form{
+        display:inline;
+    }
+    textarea{
+        height:34px !important;
+        &.big{
+            height:100px !important;
+        }
+    }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+
+
+
 }

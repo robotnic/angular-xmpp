@@ -34,6 +34,7 @@ angular.module("xmppLogin",[])
     }
 })
 .controller("XmppLoginController",function($scope,$http){                
+        $scope.error="";
         $scope.login=function(user){
             if(user.jid.indexOf("@")==-1){
                 user.jid+="@"+$scope.defaultdomain;
@@ -46,12 +47,22 @@ angular.module("xmppLogin",[])
                         user.signup=false;
                     }
                     console.log(response);
+                },function(error){
+                    console.log(error);
+                    if(error.statusText){
+                        $scope.error=error.statusText;
+                    }else{
+                        $scope.error="register error";
+                    }
                 });
             }else{
-            if(user.remember){
-                localStorage.setItem("usernamepassword",JSON.stringify(user));
-            }
-            $scope.xmpp.send("xmpp.login",user);
+                if(user.remember){
+                    localStorage.setItem("usernamepassword",JSON.stringify(user));
+                }
+                if($scope.xmpp.data.me){
+                    $scope.xmpp.send("xmpp.logout");  
+                }
+                $scope.xmpp.send("xmpp.login",user);
             }
         };
         $scope.logout=function(){

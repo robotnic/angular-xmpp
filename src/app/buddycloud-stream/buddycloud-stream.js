@@ -1,9 +1,9 @@
 /*jslint node: true */
 'use strict';
 
-var STREAM=null;
+var UP=null;
 
-angular.module("BuddycloudStream",['btford.markdown'])
+angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
 .directive("buddycloudStream",function(){
     console.log("dir");
     return {
@@ -13,10 +13,11 @@ angular.module("BuddycloudStream",['btford.markdown'])
         'scope': {
             onnodechange:'&onnodechange'
         },
+        'controller': 'streamController',
         'transclude': false,
         'link': function(scope, element, attrs,events) {
             scope.events=events;
-            STREAM=scope;
+            UP=scope;
             events.connect().then(function(bc){
                 scope.bc=bc;
             });
@@ -35,6 +36,7 @@ angular.module("BuddycloudStream",['btford.markdown'])
                 console.log("node",node);
                 scope.onnodechange(node);
             };
+            scope.media={};
 /*
             scope.loadmore=function(){
                 alert("very good");
@@ -42,6 +44,31 @@ angular.module("BuddycloudStream",['btford.markdown'])
 */
         }
     };
+
+})
+
+.controller("streamController",function($scope,$http){
+            $scope.$watch("media.upload",function(){
+                console.log($scope.media);
+                if(!$scope.media.upload)return;
+                var json={
+                 "data": $scope.media.upload.base64,
+                 "content-type": $scope.media.upload.filetype,
+                 "filename": "image.png",
+                 "title": "Juliet's prom pic",
+                 "description": "Juliet's beautiful prom pic!"
+                 }
+                console.log(json);
+                var me=$scope.bc.xmpp.data.me.jid;
+                var jid=me.user+"@"+me.domain;
+                console.log(me,jid);
+                var url="https://buddycloud.com/api/"+jid+"/media";
+                $http({method:"POST",url:url,data:json}).then(function(response){
+                    console.log(response.data);
+                },function(error){
+                    console.log("upload error",error);
+                });
+            });
 
 });
 
