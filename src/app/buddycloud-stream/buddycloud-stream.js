@@ -61,7 +61,7 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
                 console.log(json);
                 var me=$scope.bc.xmpp.data.me.jid;
                 var jid=me.user+"@"+me.domain;
-                console.log(me,jid);
+                console.log(me,jid,json);
                 var url="https://buddycloud.com/api/"+jid+"/media";
                 $http({method:"POST",url:url,data:json}).then(function(response){
                     console.log(response.data);
