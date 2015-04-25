@@ -9,24 +9,22 @@ angular.module("xmppRequests",[])
         'transclude': false,
         'templateUrl': 'friendrequests/template.tpl.html',
         'link': function(scope, element, attrs,xmppController) {
-            console.log("login",arguments);
             scope.xmpp=xmppController.xmpp;
             scope.openchat=function(jid){
-                console.log("opnechat",jid);
                 scope.onopenchat(jid);
-            }
+            };
 
             //maybe produces heavy load
             scope.count=function(){
                 var count=0;
                 for(var i=0;i<scope.xmpp.data.roster.length;i++){
-                    if(scope.xmpp.data.roster[i].subscription=='to' || scope.xmpp.data.roster[i].subscription=='from'){
+                    if(scope.xmpp.data.roster[i].subscription=="from"){
                         count++;
                     }
                 }
                 scope.counter=count; //prevent double calc
                 return count;
-            }
+            };
 
             /**
             * @method confirmContact
@@ -49,14 +47,17 @@ angular.module("xmppRequests",[])
             * @method removeContact
             */
             scope.removeContact=function(jid){
+                if(!jid.user)jid.user="";
+                if(!jid.domain)jid.domain="";
                 var jidstring=jid.user+"@"+jid.domain;
                 scope.xmpp.send( 'xmpp.presence.unsubscribe', { "to": jidstring });
                 scope.xmpp.send( 'xmpp.presence.unsubscribed', { "to": jidstring });
+                scope.xmpp.send( 'xmpp.roster.remove', { "jid": jidstring });
             };
 
 
 
 
         }
-    }
-})
+    };
+});

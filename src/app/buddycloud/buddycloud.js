@@ -2,7 +2,6 @@
 'use strict';
 
 
-var BC=null;
 angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','angularMoment'])
 .directive("buddycloud",function(){
     return {
@@ -48,7 +47,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
     };
 
 })
-.controller('BuddycloudController',function($scope,$q,BuddycloudFactory){
+.controller('BuddycloudController',function($scope,$q,BuddycloudFactory,$window,$document){
     console.log("scope",$scope);
     var q=$q.defer();
     this.connect=function(){
@@ -59,7 +58,6 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
             console.log("new budddycloud");
             $scope.buddycloud=new BuddycloudFactory(xmpp);
         }
-        BC=$scope.buddycloud;
         $scope.buddycloud.init().then(function(){
             //$scope.buddycloud.open({node:$scope.node});
             //q.resolve($scope.buddycloud);
@@ -77,12 +75,12 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         $scope.onnodechange({node:node});
         console.log("opennode",node);
     };
-    window.onscroll=function(){
-        var bottomDistance = document.body.offsetHeight -window.innerHeight - window.scrollY;
+    $window.onscroll=function(){
+        var bottomDistance = $document[0].body.offsetHeight -$window.innerHeight - $window.scrollY;
         if(bottomDistance < 50){
             $scope.buddycloud.loadmore();
         }
-    }
+    };
 })
 
 .filter("gravatar", function() {

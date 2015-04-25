@@ -17,7 +17,7 @@ angular.module("buddycloudSearch",[])
             });
 
         }
-    }
+    };
 })
 .controller("searchController",function($scope,$http){                
      $scope.getLocation = function(text) {
@@ -38,9 +38,9 @@ angular.module("buddycloudSearch",[])
                     };
             });
         });
-    }
+    };
     $scope.onSelect=function(item){
         $scope.onnodechange({node:item.node});
         $scope.asyncSelected="";
-    }
+    };
 });

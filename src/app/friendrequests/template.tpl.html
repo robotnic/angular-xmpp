@@ -5,10 +5,10 @@ Bootstrap navigation dropdown
 
 <a ng-show="count()" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{counter}} <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></a>
 <div class="dropdown-menu notification">
-    <div ng-repeat="item in xmpp.data.roster"  ng-if="item.subscription=='to'">
+    <div ng-repeat="item in xmpp.data.roster"  ng-if="item.subscription=='from'"> 
         <div class="avatar" style="float:left;background-image: url('{{item.jid|gravatar}}')" title="{{item.from}}"></div>
         <h4 >{{item.jid.user}}@{{item.jid.domain}}</h4>
-        <button class="btn btn-xs btn-default" ng-click="confirmContact(item.jid)">add contact</button>
+        <button class="btn btn-xs btn-default" ng-click="confirmContact(item.jid)">confirm</button>
         <button class="btn btn-xs btn-default" ng-click="removeContact(item.jid)">reject</button>
     </div>
 </div>

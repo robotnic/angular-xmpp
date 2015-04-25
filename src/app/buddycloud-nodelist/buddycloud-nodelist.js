@@ -1,6 +1,5 @@
 /*jslint node: true */
 'use strict';
-var NODELIST=null;
 
 angular.module("BuddycloudNodelist",[])
 .directive("buddycloudNodelist",function(){
@@ -14,17 +13,13 @@ angular.module("BuddycloudNodelist",[])
         },
         'transclude': false,
         'link': function(scope, element, attrs,events) {
-            NODELIST=scope;
             scope.events=events;
             events.connect().then(function(bc){
                 scope.bc=bc;
             });
             scope.opennode=function(node){
                 scope.onnodechange({node:node});
-            };
-            scope.save = function(form)  {
-                console.log(form);
-            }
+            }; 
             scope.save = function() {
                 console.log(scope.form);
                 var domain=scope.bc.xmpp.data.me.jid.domain;
@@ -70,7 +65,7 @@ angular.module("BuddycloudNodelist",[])
                 "var": "pubsub#title",
                 "label": "Title",
                 "value": "Not set"
-            }]
+            }];
 
         }
     };

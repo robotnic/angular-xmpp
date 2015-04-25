@@ -1,7 +1,6 @@
 /*jslint node: true */
 'use strict';
 
-var UP=null;
 
 angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
 .directive("buddycloudStream",function(){
@@ -17,7 +16,6 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
         'transclude': false,
         'link': function(scope, element, attrs,events) {
             scope.events=events;
-            UP=scope;
             events.connect().then(function(bc){
                 scope.bc=bc;
             });
@@ -26,19 +24,59 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
                     item.reply(input.text);
                     input.text="";
                 }
-            }
+            };
             scope.setConfig=function(data){
                 console.log("new config data",data);
                 scope.bc.send("xmpp.buddycloud.config.set",{node:scope.bc.data.currentnode,form:data});
 
-            }
+            };
             scope.opennode=function(node){
                 console.log("node",node);
                 scope.onnodechange(node);
             };
+
+            /*
+            Todo, put in factory
+            */
+
             scope.addContact=function(jid){
                 console.log("addcontact",jid);
                 scope.bc.xmpp.send("xmpp.presence.subscribe",{to:jid});
+                scope.bc.xmpp.send("xmpp.presence.subscribed",{to:jid});
+            };
+            scope.confirmContact=function(jid){
+                console.log("addcontact",jid);
+                scope.bc.xmpp.send("xmpp.presence.subscribed",{to:jid});
+                scope.bc.xmpp.send("xmpp.presence.subscribe",{to:jid});
+                scope.bc.xmpp.send("xmpp.presence",{to:jid});
+            };
+            scope.removeContact=function(jid){
+                console.log("removecontact",jid);
+                scope.bc.xmpp.send("xmpp.presence.unsubscribe",{to:jid});
+                scope.bc.xmpp.send("xmpp.presence.unsubscribed",{to:jid});
+                scope.bc.xmpp.send("xmpp.roster.remove",{jid:jid});
+            };
+            scope.readContact=function(){
+                if(scope.bc && scope.bc.data && scope.bc.data.configobj){
+                    var jid=scope.bc.data.configobj['pubsub#owner'];
+                    if(jid ){
+                        var user=jid.split("@")[0];
+                        var domain=jid.split("@")[1];
+                        for(var i=0;i<scope.bc.xmpp.data.roster.length;i++){
+                            var item=scope.bc.xmpp.data.roster[i];
+                            if(item.jid.user==user && item.jid.domain==domain){
+                                console.log("scope.bc.xmpp.data.roster.subscription",jid,scope.bc.xmpp.data.roster[i]);
+                                if(item.subscription=='none'){
+                                    if(item.ask=="subscribe"){
+                                        return "ask";
+                                    }
+                                }else{
+                                    return item.subscription;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             scope.media={};
 /*
@@ -53,19 +91,18 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
 
 .controller("streamController",function($scope,$http){
             $scope.$watch("media.upload",function(){
-                console.log($scope.media);
-                if(!$scope.media.upload)return;
+                if(!$scope.media.upload){
+                    return;
+                }
                 var json={
                  "data": $scope.media.upload.base64,
                  "content-type": $scope.media.upload.filetype,
                  "filename": "image.png",
                  "title": "Juliet's prom pic",
                  "description": "Juliet's beautiful prom pic!"
-                 }
-                console.log(json);
+                 };
                 var me=$scope.bc.xmpp.data.me.jid;
                 var jid=me.user+"@"+me.domain;
-                console.log(me,jid,json);
                 var url="https://buddycloud.com/api/"+jid+"/media";
                 $http({method:"POST",url:url,data:json}).then(function(response){
                     console.log(response.data);

@@ -17,6 +17,7 @@ angular.module("BuddycloudAffiliations",[])
             scope.events=events;
             events.connect().then(function(bc){
                 scope.bc=bc;
+                scope.bc.send('xmpp.buddycloud.affiliations', {node:scope.bc.data.currentnode})
             });
             scope.opennode=function(node){
                 console.log("node",node);
@@ -25,7 +26,7 @@ angular.module("BuddycloudAffiliations",[])
             scope.openchat=function(jid){
                 console.log("openchat",jid);
                 scope.onopenchat({jid:jid});
-            }
+            }; 
         }
     };
 

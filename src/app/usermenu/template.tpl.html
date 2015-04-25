@@ -3,8 +3,8 @@ Bootstrap navigation dropdown
 -->
 
 
-<a ng-if="!xmpp.data.me"  ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login <span class="caret"></span></a>
-<a ng-if="xmpp.data.me" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+<a ng-if="!xmpp.data.me || xmpp.data.anonymous"  ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login <span class="caret"></span></a>
+<a ng-if="xmpp.data.me && !xmpp.data.anonymous" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <div class="avatar" style="margin:-5px;margin-right:4px;display:inline-block" avatar="xmpp.data.me.jid"></div>
     {{xmpp.data.me.jid.user}}<span class="caret"></span>
 </a>

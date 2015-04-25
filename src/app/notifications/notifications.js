@@ -14,7 +14,7 @@ angular.module("xmppNotifications",[])
             scope.openchat=function(jid){
                 console.log("opnechat",jid);
                 scope.onopenchat(jid);
-            }
+            };
         }
-    }
-})
+    };
+});

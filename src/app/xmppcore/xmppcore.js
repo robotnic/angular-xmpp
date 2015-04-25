@@ -21,7 +21,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
     };
 
 })
-.controller('xmppController',function($scope,Xmpp){
+.controller('xmppController',['$scope','Xmpp',function($scope,Xmpp){
     
     $scope.init=function(){
         console.log("-------host-----",$scope.host);
@@ -58,4 +58,4 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
             }
         );
     }
-});
+}]);

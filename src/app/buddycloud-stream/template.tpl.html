@@ -9,16 +9,22 @@
                 <div class="col-md-2">
                     <div class="avatar big" avatar="bc.data.currentnode"></div>
                 </div>
-                <div class="flex titleText col-md-8">
+                <div class="flex titleText col-md-7">
                     <h4 class="owner">{{bc.data.configobj['pubsub#title']}}</h4>
                     <div class="about">{{bc.data.configobj['pubsub#description']}}</div>
                 </div>
                 <!-- buttons -->
-                <div class="col-md-2" style="text-align:right">
+                <div class="col-md-3" style="text-align:right">
                     <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">unfollow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">follow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="showconfigform=!showconfigform">config</button>
-                    <button class="btn btn-xs btn-xs btn-default actionbutton" tyle="width:100%" ng-click="addContact(bc.data.configobj['pubsub#owner'])">add contact </button>
+                    <span ng-switch="readContact()" title="{{readContact()}}">
+                    <button ng-switch-default class="btn btn-xs btn-xs btn-default actionbutton" ng-click="addContact(bc.data.configobj['pubsub#owner'])">add contact </button>
+                    <button ng-switch-when="from" class="btn btn-xs btn-xs btn-default actionbutton" ng-click="confirmContact(bc.data.configobj['pubsub#owner'])">resend request</button>
+                    <button ng-switch-when="to" class="btn btn-xs btn-xs btn-warning actionbutton"  ng-click="addContact(bc.data.configobj['pubsub#owner'])">confirm</button>
+                    <button ng-switch-when="both" class="btn btn-xs btn-xs btn-success actionbutton"  ng-click="removeContact(bc.data.configobj['pubsub#owner'])">remove contact </button>
+                    <button ng-switch-when="ask" class="btn btn-xs btn-xs btn-default actionbutton"  ng-click="addContact(bc.data.configobj['pubsub#owner'])">add</button>
+                    </span>
 
                 </div>
             </div>

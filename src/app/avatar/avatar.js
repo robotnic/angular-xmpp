@@ -5,7 +5,7 @@ angular.module("Avatar",['ngImage'])
         'restrict': 'A',
         'scope': {
             onopenchat:'&onopenchat',
-            avatar:"=",
+            avatar:"="
         },
         'controller': "gravatarController",
         'transclude': false,
@@ -15,7 +15,7 @@ angular.module("Avatar",['ngImage'])
                 scope.makeurl(scope.avatar);
             });
         }
-    }
+    };
 })
 
 
@@ -25,7 +25,6 @@ angular.module("Avatar",['ngImage'])
 .controller("gravatarController", function($scope) {
 
         $scope.makeurl=function(jid){
-            var url="https://demo.buddycloud.org/api/deminem@buddycloud.org/media/avatar?maxheight=50&maxwidth=50";
             var jidstring="";
             if(typeof(jid)=="string"){
                 jidstring = jid;
@@ -40,18 +39,18 @@ angular.module("Avatar",['ngImage'])
             var url="https://demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight=80&maxwidth=80";
             $scope.avatarurl=url;
             return url;
-        }
+        };
 
 
         $scope.report=function(){
             return $scope.makeurl2($scope.avatar);
-        }
+        };
 
         $scope.makeurl2=function(jid){
             var url=gravatarurl(jid);
             $scope.avatarurl=url;
             return url;
-        }
+        };
 
         function gravatarurl(jid) {
             if (!jid) {
@@ -68,7 +67,7 @@ angular.module("Avatar",['ngImage'])
             var hash = hashCode(jidstring);
             var url = "http://www.gravatar.com/avatar/" + hash + "?d=monsterid&f=y";
             return url;
-        };
+        }
 
         function hashCode(s) {
             s = s.split("").reduce(function(a, b) {
