@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Buddycloud</a>
+      <a class="navbar-brand" ng-href>Buddycloud</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,25 +19,19 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" xmppfriendrequests></li>
         <li class="dropdown" xmppnotifications onopenchat="openchat(jid)"></li>
+        <li class="dropdown" usermenu>Login</li>
 <!--
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
--->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Login {{bc.xmpp.data.me.jid.user}} <span class="caret"></span></a>
+          <a ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <div class="avatar" avatar="xmpp.data.me.jid"></div>
+            Login {{xmpp.data.me.jid.user}} <span class="caret"></span></a>
             <div class="dropdown-menu" style="padding:17px;width:300px">
                 <xmpplogin defaultdomain="laos.buddycloud.com"></xmpplogin>
             </div>
         </li>
+-->
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

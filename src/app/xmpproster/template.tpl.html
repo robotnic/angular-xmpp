@@ -1,11 +1,15 @@
 <span class="dropdown" dropdown>
 <h5 >Contacts <span class="glyphicon glyphicon-collapse-down pull-right dropdown-toggle" dropdown-toggle aria-hidden="true" ng-click="status.isOpen=true"></span>
 </h5>
-<div class="dropdown-menu" dropdown-menu>
-    <div ng-click="showofflinecontacts=!showofflinecontacts">offline contacts</div>
-    add contact
+<div class="dropdown-menu" dropdown-menu style="padding:10px;width:200px">
+    <button ng-show="!showofflinecontacts" class="btn btn-default" ng-click="showofflinecontacts=true">show offline contacts</button>
+    <button ng-show="showofflinecontacts" class="btn btn-success" ng-click="showofflinecontacts=false">hide offline contacts</button>
+    
     <form ng-submit="addContact(newcontact)">
-        <input ng-model="newcontact" />
+         <div class="form-group">
+            <label for="exampleInputEmail1">add contact</label>
+            <input ng-model="newcontact" type="email" class="form-control" id="exampleInputEmail1" placeholder="jid@example.com">
+          </div>
     </form>
 </div>
 </span>

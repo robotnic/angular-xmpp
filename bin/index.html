@@ -9,12 +9,11 @@
     <link href="assets/css/markdown.css" rel="stylesheet"></link>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<!--
     <script type="text/javascript" src="https://laos.buddycloud.com/api/primus/primus.js"></script>
+<!--
     <script type="text/javascript" src="assets/scripts/primus.js"></script>
     <script src="../../angular-xmpp-services/bin/assets/angular-xmpp-services.js"></script>
 -->
-    <script type="text/javascript" src="assets/scripts/primus.js"></script>
 
     <!-- compiled CSS -->
     
@@ -31,7 +30,7 @@
 
 <body>
 <div class="container">
-    <xmpp althost="https://laos.buddycloud.com/" xhost="http://localhost:3000" host="http://datenkueche.com:3002"" defaultdomain="laos.buddycloud.com" xanonymous="'true'">
+    <xmpp althost="https://laos.buddycloud.com/" xhost="http://localhost:3000" host="http://datenkueche.com:3002" defaultdomain="laos.buddycloud.com" xanonymous="'true'">
         <buddycloud node="node" class="row">
             <div ng-include="'navbar/template.tpl.html'"></div>
             <xmppminichat oninit="initchat(scope)"></xmppminichat>
@@ -42,7 +41,11 @@
                 <buddycloud-nodelist onnodechange="setnode(node)"></buddycloud-nodelist>
             </div>
             <buddycloud-stream class="col-md-7" onnodechange="setnode(node)"></buddycloud-stream>
-            <buddycloud-affiliations class="col-md-3" onnodechange="setnode(node)" onopenchat="openchat(jid)"></buddycloud-affiliations>
+            <div class="col-md-3" ng-if="node!='recent'">
+                <button ng-show="!showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=true">Show Affiliations</button>
+                <button ng-show="showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=false">Hide Affiliations</button>
+                <buddycloud-affiliations ng-if="showaffiliations" onnodechange="setnode(node)" onopenchat="openchat(jid)"></buddycloud-affiliations>
+            </div>
         </buddycloud>
     </xmpp>
 </div>

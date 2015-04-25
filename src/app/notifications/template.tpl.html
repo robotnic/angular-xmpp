@@ -1,4 +1,4 @@
-<a ng-show="xmpp.chat.notifications.unreadmessages" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{xmpp.chat.notifications.unreadmessages}} <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></span></a>
+<a ng-show="xmpp.chat.notifications.unreadmessages" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{xmpp.chat.notifications.unreadmessages}} <span class="glyphicon glyphicon-comment" aria-hidden="true"></span></span></a>
 <div class="dropdown-menu notification">
     <div ng-repeat="(key,item) in xmpp.chat.notifications.messages" ng-click="openchat(item.from)" ng-if="item.from">
         <div class="avatar" style="float:left;background-image: url('{{item.from|gravatar}}')" title="{{item.from}}"></div>

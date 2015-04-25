@@ -36,6 +36,10 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
                 console.log("node",node);
                 scope.onnodechange(node);
             };
+            scope.addContact=function(jid){
+                console.log("addcontact",jid);
+                scope.bc.xmpp.send("xmpp.presence.subscribe",{to:jid});
+            }
             scope.media={};
 /*
             scope.loadmore=function(){

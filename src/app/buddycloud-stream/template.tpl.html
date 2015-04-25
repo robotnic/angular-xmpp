@@ -1,118 +1,115 @@
-<!-- buttons -->
 <div>
-<div ng-show="bc.data.currentnode!=='recent'">
-    <div class="panel panel-default">
-        <div class="row panel-body">
-            <div class="col-md-2">
-            <div class="avatar big" style="background-image:url('{{bc.data.currentnode|gravatar}}');"></div>
-            </div>
-            <div class="flex titleText col-md-10">
-                <h4 class="owner" >{{bc.data.configobj['pubsub#title']}}</h4>
-                <div class="about" >{{bc.data.configobj['pubsub#description']}}</div>
-            </div>
-        </div>
+    <div ng-show="bc.data.currentnode=='recent'">
+        <h2>Personal stream</h2>
     </div>
-    <div>
-        <!--<span class="messages button newMessage">
-<span class="holder">Messages</span><span class="message counter">2</span>
-</span>-->
-        <div ng-show="node!=='recent'">
-            <div style="height:30px;width:100%">
-                <button class="btn btn-link pull-right" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">Unfollow</button>
-                <span class="btn btn-link pull-right" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">Follow</span>
-                <span class="btn btn-link pull-right" ng-show="bc.config" ng-click="showconfigform=!showconfigform">Config</span>
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- node header -->
+    <div ng-show="bc.data.currentnode!=='recent'">
+        <div class="panel panel-default">
+            <div class="row panel-body">
+                <div class="col-md-2">
+                    <div class="avatar big" avatar="bc.data.currentnode"></div>
+                </div>
+                <div class="flex titleText col-md-8">
+                    <h4 class="owner">{{bc.data.configobj['pubsub#title']}}</h4>
+                    <div class="about">{{bc.data.configobj['pubsub#description']}}</div>
+                </div>
+                <!-- buttons -->
+                <div class="col-md-2" style="text-align:right">
+                    <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">unfollow</button>
+                    <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">follow</button>
+                    <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="showconfigform=!showconfigform">config</button>
+                    <button class="btn btn-xs btn-xs btn-default actionbutton" tyle="width:100%" ng-click="addContact(bc.data.configobj['pubsub#owner'])">add contact </button>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- config form -->
     <div class="thediv" ng-if="showconfigform" style="position:relative;height:1300px">
-            <h2>Node Configuration</h2>
-            <xmppform formdata="bc.data.config" onclose="showconfigform=false" onsave="setConfig"></xmppform>
-            <hr>
-            <button ng-click="deleteNode()">delete node</button>
+        <h2>Node Configuration</h2>
+        <a href="https://github.com/buddycloud/buddycloud-server-java/issues/301">issues/301</a>
+        <xmppform formdata="bc.data.config" onclose="showconfigform=false" onsave="setConfig"></xmppform>
+        <hr>
+        <button ng-click="deleteNode()">delete node</button>
     </div>
 
 
 
 
-<!-- posting area-->
-<div class="panel  panel-default" ng-if="bc.publish && !showconfigform">
-    <div class="panel-heading">
-        <div class="avatar" style="float:left;background-image:url('{{bc.xmpp.data.me.jid|gravatar}}')" title="{{xmpp.data.me.jid|json}}"></div>
-        <div class="jid"><span class="author">{{bc.xmpp.data.me.jid.user}}@{{bc.xmpp.data.me.jid.domain}}</span> 
-        </div>
-
-    </div>
-    <div class="panel-body">
-     <tabset>
-        <tab heading="Edit">
-            <form ng-submit="bc.publish(content);content.atom.content=''">
-                <textarea ng-model="content.atom.content" class="form-control big" placeholder="what?"></textarea>
-                <input class="btn btn-default" type="submit"></input>
-            </form>
-            <form>
-                <span class="btn btn-file pull-right">upload image
+    <!-- posting area-->
+    <div ng-if="bc.publish && !showconfigform">
+        <tabset>
+            <tab heading="Edit">
+                <form ng-submit="bc.publish(content);content.atom.content=''">
+                    <textarea ng-model="content.atom.content" class="form-control big" placeholder="markdown syntax: ![image name](http://imageurl...)"></textarea>
+                    <input class="btn btn-default" type="submit"></input>
+                </form>
+                <form>
+                    <span class="btn btn-file pull-right">upload image
                   <input  type='file' ng-model='media.upload' base-sixty-four-input value="upoad image">
                 </span>
-            </form>
-        </tab>
-        <tab heading="Preview">
-            <div class="panel-body"  btf-markdown="content.atom.content"></div>
-        </tab>
-      </tabset>
+                </form>
+            </tab>
+            <tab heading="Preview">
+                <div class="panel-body" btf-markdown="content.atom.content"></div>
+            </tab>
+        </tabset>
     </div>
-</div>
+    <br/>
+    <br/>
 
 
 
 
-<!-- outer loop -->
-<div ng-if="!showconfigform">
-    <div ng-repeat="item in bc.data.tree" class="panel panel-default">
-        <div class="panel-heading">
-            <div class="avatar" style="float:left;background-image:url('{{item.entry.atom.author.name|gravatar}}')" title="{{item.entry.atom.author.name}}"></div>
-            <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
-            <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span> <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span><span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
-            </div>
-
-        </div>
-        <div class="panel-body"  btf-markdown="item.entry.atom.content.content"></div>
-
-        <!-- inner loop -->
-        <div ng-repeat="subitem in item.children" class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-11">
-                <div class="avatar" style="float:left;background-image:url('{{subitem.entry.atom.author.name|gravatar}}')" title="{{subitem.entry.atom.author.name}}"></div>
-                <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
-                <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
+    <!-- outer loop -->
+    <div ng-if="!showconfigform">
+        <div ng-repeat="item in bc.data.tree" class="panel panel-default">
+            <div class="panel-heading">
+                <div class="avatar" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
+                <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
+                <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span>  <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span><span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
                 </div>
 
-                <p>{{subitem.entry.atom.content.content}}</p>
             </div>
+            <div class="panel-body" btf-markdown="item.entry.atom.content.content"></div>
 
-        </div>
-        <div class="row" ng-if="item.reply">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-11">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-md-1">
-                            <div class="avatar" style="float:left;background-image:url('{{bc.xmpp.data.me.jid|gravatar}}')" title="{{xmpp.data.me.jid|json}}"></div>
-                        </div>
-
-                        <div class="col-md-11" style="text-align:left">
-                            <textarea class="form-control " ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
-
-                        </div>
+            <!-- inner loop -->
+            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-11">
+                    <div class="avatar" style="float:left;" avatar="subitem.entry.atom.author.name" title="{{subitem.entry.atom.author.name}}"></div>
+                    <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
+                    <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
                     </div>
-                </form>
+
+                    <p>{{subitem.entry.atom.content.content}}</p>
+                </div>
+
+            </div>
+            <div class="row" ng-if="item.reply">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-11">
+                    <!-- reply-->
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-1">
+                                <div class="avatar" style="float:left;background-image:url('{{bc.xmpp.data.me.jid|gravatar}}')" title="{{xmpp.data.me.jid|json}}"></div>
+                            </div>
+
+                            <div class="col-md-11" style="text-align:left">
+                                <textarea class="form-control " ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 

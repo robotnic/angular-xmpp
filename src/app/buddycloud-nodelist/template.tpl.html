@@ -8,8 +8,9 @@
 <h5>Channels</h5>
 
 <div class="list-group">
-<div ng-repeat="item in bc.data.subscriptions" class="nodelist" ng-class="{'active':item.node==bc.data.currentnode}">
-<div class="avatar" style="background-image: url('{{item.node|gravatar}}')" title="{{item.node}}">
+<div ng-repeat="item in bc.data.subscriptions track by item.node" class="nodelist" ng-class="{'active':item.node==bc.data.currentnode}">
+<div class="list dropdown-toggle avatar" ng-click="item.isOpen=true" role="button"  dropdown-toggle avatar="item.node" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
+
 <a ng-href  class="item"  ng-click="opennode(item.node)">
 {{item.node|getUser}}
 </a>

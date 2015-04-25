@@ -1,6 +1,6 @@
         var SCOPE = null;
 
-angular.module('XmppApp', [ 'templates-app', 'templates-common','XmppUI','btford.markdown','infinite-scroll','ngSanitize','ui.bootstrap','ui.router' ]) 
+angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','btford.markdown','infinite-scroll','ngSanitize','ui.bootstrap' ]) 
 
 .controller('page', ['$scope','$rootScope','$http','$location', function($scope,$rootScope,$http,$location) {
     SCOPE=$scope;
@@ -24,10 +24,14 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','XmppUI','btford
         console.log("openchat",jid,$scope.chat);
         $scope.chat.openchat(jid);
     }
-    $rootScope.$on('$locationChangeSuccess', function () {
-        console.log('$locationChangeSuccess changed!', new Date());
-        console.log("opening",$location.$$url);
-        $scope.node=$location.$$url;
+    $rootScope.$on('$locationChangeSuccess', function (data) {
+        console.log('$locationChangeSuccess changed!', new Date(),data);
+        console.log("opening",$location,$location.$$url);
+        var node=$location.$$url;
+        if(node=="/recent")node="recent"
+        if(node=="")node="recent"
+        console.log("this node should open",node);
+        $scope.node=node;
     });
 /*
     $scope.search=function(text){

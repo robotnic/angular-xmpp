@@ -48,13 +48,12 @@ Roster
         $scope.init=function(xmpp){
             var chat=new MessageFactory(xmpp);
             $scope.chat=chat;
-            $scope.xmpp.chat=chat;
+            $scope.xmpp.chat=chat;    // <-------------cheating, very bad
             console.log("minichatcontroller",chat);
             $scope.username = Xmpp.user;
             $scope.chatwindows = [];
             $scope.messages = chat.messages;
             $scope.notifications = chat.notifications;
-            console.log("--------------jsetzt gleich",$scope);
             $scope.oninit({scope:$scope});
 
             //use broadcast to open chat window

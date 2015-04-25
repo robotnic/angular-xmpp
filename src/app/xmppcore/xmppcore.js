@@ -1,5 +1,5 @@
 //angular.module("XmppUI", [ 'Buddycloud','AngularXmpp','XmppRoster','Minichat','XmppMessage','XmppForm'])
-angular.module("XmppUI", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications'])
+angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu'])
 
 
 
@@ -9,14 +9,12 @@ angular.module("XmppUI", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppR
         'scope': {
             host:"@",
             anonymous:"@",
-            defaultdomain:"@",
             oninit:"&"
         },
         'transclude': false,
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
             scope.host=attrs.host;
-            scope.defaultdomain=attrs.defaultdomain;
             scope.anonymous=attrs.anonymous;
             scope.init();
         }
@@ -31,14 +29,8 @@ angular.module("XmppUI", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppR
     };
     $scope.xmpp=new Xmpp($scope.host);
     this.xmpp=$scope.xmpp;
-
     
-/*
-    $scope.xmpp.connect().then(function(data){
-        console.log("online");
-    });
-*/
-
+    //the angular magic
     $scope.xmpp.watch().then(function(data){
         console.log(data);
     },function(error){
@@ -50,13 +42,6 @@ angular.module("XmppUI", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppR
         }
         $scope.xmpp.ticks++;
     });
-    $scope.xmpp.openchat=function(jid){
-            console.log("openchat",jid);
-            $scope.$emit("openchat",jid);
-    };
-    $scope.xmpp.addContact=function(jid){
-            $scope.$emit("addcontact",jid);
-    };
 
     $scope.on=function(){
         $scope.$on.apply($scope,arguments);

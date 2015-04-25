@@ -16,7 +16,6 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         'transclude': false,
         'controller': 'BuddycloudController',
         'link': function(scope, element, attrs,xmppController) {
-
             console.log("buddycloud",scope.node,xmppController);
             scope.xmpp=xmppController.xmpp;
             scope.$watch("node",function(node){
@@ -38,6 +37,9 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
                     scope.buddycloud.open({node:node}); 
                 });*/
             });
+            if(xmppController.xmpp.data.connected){
+                scope.init(xmppController.xmpp);
+            }
             xmppController.xmpp.socket.on("xmpp.logout",function(event,status){
                 console.log("LOGOUT");
             });
@@ -59,7 +61,14 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         }
         BC=$scope.buddycloud;
         $scope.buddycloud.init().then(function(){
-            $scope.buddycloud.open({node:$scope.node});
+            //$scope.buddycloud.open({node:$scope.node});
+            //q.resolve($scope.buddycloud);
+
+            if($scope.node=="recent"){
+                $scope.buddycloud.recent(); 
+            }else{
+                $scope.buddycloud.open({node:$scope.node}); 
+            }
             q.resolve($scope.buddycloud);
         });
         

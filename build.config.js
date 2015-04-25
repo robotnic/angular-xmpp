@@ -80,7 +80,8 @@ module.exports = {
         'vendor/angular-moment/angular-moment.js',
         'vendor/ngInfiniteScroll/build/ng-infinite-scroll.js',
         'vendor/angular-ui-router/release/angular-ui-router.js',
-        'vendor/angular-base64-upload/dist/angular-base64-upload.js'
+        'vendor/angular-base64-upload/dist/angular-base64-upload.js',
+        'vendor/angular-image/angular-image.js'
     ],
     css: [
     ],
