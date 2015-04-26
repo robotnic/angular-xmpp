@@ -49,7 +49,7 @@ display:none;
                 <buddycloud-nodelist onnodechange="setnode(node)"></buddycloud-nodelist>
             </div>
             <buddycloud-stream class="col-md-7" onnodechange="setnode(node)"></buddycloud-stream>
-            <div class="col-md-3">
+            <div class="col-md-3" ng-if="node!='recent'">
                 <button ng-show="!showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=true">Show Affiliations</button>
                 <button ng-show="showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=false">Hide Affiliations</button>
                 <buddycloud-affiliations ng-if="showaffiliations" onnodechange="setnode(node)" onopenchat="openchat(jid)"></buddycloud-affiliations>
