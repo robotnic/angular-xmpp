@@ -18,7 +18,7 @@
                     <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">unfollow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">follow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="showconfigform=!showconfigform">config</button>
-                    <span ng-switch="readContact()" title="{{readContact()}}">
+                    <span ng-switch="readContact()" title="{{readContact()}}" ng-show="bc.data.configobj['buddycloud#channel_type']=='personal'">
                     <button ng-switch-default class="btn btn-xs btn-xs btn-default actionbutton" ng-click="addContact(bc.data.configobj['pubsub#owner'])">add contact </button>
                     <button ng-switch-when="from" class="btn btn-xs btn-xs btn-default actionbutton" ng-click="confirmContact(bc.data.configobj['pubsub#owner'])">resend request</button>
                     <button ng-switch-when="to" class="btn btn-xs btn-xs btn-warning actionbutton"  ng-click="addContact(bc.data.configobj['pubsub#owner'])">confirm</button>
