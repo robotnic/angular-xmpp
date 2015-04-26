@@ -66,8 +66,8 @@ module.exports = {
         'vendor/angular/angular.js',
         'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
         'vendor/bootstrap/dist/js/bootstrap.js',
-        'vendor/angular-strap/dist/angular-strap.js',
-        'vendor/angular-strap/dist/angular-strap.tpl.min.js',
+        //'vendor/angular-strap/dist/angular-strap.js',
+        //'vendor/angular-strap/dist/angular-strap.tpl.min.js',
         'vendor/angular-markdown-directive/markdown.js',
         'vendor/angular-sanitize/angular-sanitize.js',
         'vendor/angular-animate/angular-animate.js',
@@ -75,13 +75,14 @@ module.exports = {
         'vendor/angular-bootstrap/ui-bootstrap.min.js',
         'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'vendor/modernizr/modernizr.js',
-        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services.js',
         'vendor/moment/moment.js',
         'vendor/angular-moment/angular-moment.js',
         'vendor/ngInfiniteScroll/build/ng-infinite-scroll.js',
-        'vendor/angular-ui-router/release/angular-ui-router.js',
+//        'vendor/angular-ui-router/release/angular-ui-router.js',
         'vendor/angular-base64-upload/dist/angular-base64-upload.js',
-        'vendor/angular-image/angular-image.js'
+        'vendor/angular-image/angular-image.js',
+        //'vendor/angular-scroll-glue/src/scrollglue.js',
+        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services.js'
     ],
     css: [
     ],

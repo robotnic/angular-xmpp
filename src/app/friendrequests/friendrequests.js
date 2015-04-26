@@ -47,8 +47,12 @@ angular.module("xmppRequests",[])
             * @method removeContact
             */
             scope.removeContact=function(jid){
-                if(!jid.user)jid.user="";
-                if(!jid.domain)jid.domain="";
+                if(!jid.user){
+                    jid.user="";
+                }
+                if(!jid.domain){
+                    jid.domain="";
+                }
                 var jidstring=jid.user+"@"+jid.domain;
                 scope.xmpp.send( 'xmpp.presence.unsubscribe', { "to": jidstring });
                 scope.xmpp.send( 'xmpp.presence.unsubscribed', { "to": jidstring });

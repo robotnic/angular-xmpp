@@ -10,6 +10,7 @@ angular.module("xmppLogin",[])
         'transclude': false,
         'templateUrl': 'login/template.tpl.html',
         'link': function(scope, element, attrs,xmppController) {
+            var up={};
             console.log("login",arguments);
             scope.xmpp=xmppController.xmpp;
             scope.defaultdomain=attrs.defaultdomain;
@@ -22,7 +23,7 @@ angular.module("xmppLogin",[])
             });
 */
             try{
-                var up=JSON.parse(localStorage.getItem("usernamepassword"));
+                up=JSON.parse(localStorage.getItem("usernamepassword"));
                 console.log("u/p",up);
             }catch(e){ }
             if(up){
@@ -31,7 +32,7 @@ angular.module("xmppLogin",[])
                 scope.xmpp.send("xmpp.login.anonymous",{jid:scope.defaultdomain});  
             }
         }
-    }
+    };
 })
 .controller("XmppLoginController",function($scope,$http){                
         $scope.error="";

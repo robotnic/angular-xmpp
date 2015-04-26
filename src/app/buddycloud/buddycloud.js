@@ -1,5 +1,5 @@
 /*jslint node: true */
-'use strict';
+//'use strict';
 
 
 angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','angularMoment'])
@@ -47,7 +47,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
     };
 
 })
-.controller('BuddycloudController',function($scope,$q,BuddycloudFactory,$window,$document){
+.controller('BuddycloudController',['$scope','$q','BuddycloudFactory','$window','$document',function($scope,$q,BuddycloudFactory,$window,$document){
     console.log("scope",$scope);
     var q=$q.defer();
     this.connect=function(){
@@ -77,52 +77,9 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
     };
     $window.onscroll=function(){
         var bottomDistance = $document[0].body.offsetHeight -$window.innerHeight - $window.scrollY;
-        if(bottomDistance < 50){
+        if(bottomDistance < 100){
             $scope.buddycloud.loadmore();
         }
     };
-})
-
-.filter("gravatar", function() {
-        return function(jid) {
-            if (!jid) {
-                jid = "fehler@teufel.com";
-            }
-            var jidstring = 'recent';
-            if (typeof(jid) == "string") {
-                if (jid !== 'recent') {
-                    jidstring = trimjidstring(jid);
-                }
-            } else {
-                jidstring = jid.user + "@" + jid.domain;
-            }
-            var hash = hashCode(jidstring);
-            var url = "http://www.gravatar.com/avatar/" + hash + "?d=monsterid&f=y";
-            return url;
-        };
-
-        function hashCode(s) {
-            s = s.split("").reduce(function(a, b) {
-                a = ((a << 5) - a) + b.charCodeAt(0);
-                return a & a;
-            }, 0);
-            s = Math.abs(parseInt(s,10));
-            return s;
-        }
-
-        function trimjidstring(jid) {
-            var user = jid.split("@")[0];
-            var domain = jid.split("@")[1];
-            if (user.indexOf("/") !== -1) {
-                user = user.substring(user.lastIndexOf("/") + 1);
-            }
-            if (domain.indexOf("/") !== -1) {
-                domain = domain.substring(0, domain.indexOf("/"));
-            }
-            return user + "@" + domain;
-        }
-
-    }
-
-);
+}]);
 

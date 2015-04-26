@@ -28,12 +28,6 @@ Roster
                 scope.init(xmppController.xmpp);
             }
             console.log("------------this is the minichat",xmppController);
-/*
-            xmppController.on("openchat",function(event,status){
-                console.log("realopenchat",event,status);
-                scope.openchat(event,status);
-            });
-*/
         }
     };
 })

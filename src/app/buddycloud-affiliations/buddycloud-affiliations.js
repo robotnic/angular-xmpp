@@ -1,5 +1,5 @@
 /*jslint node: true */
-'use strict'; 
+//'use strict'; 
 
 angular.module("BuddycloudAffiliations",[])
 .directive("buddycloudAffiliations",function(){
@@ -17,7 +17,7 @@ angular.module("BuddycloudAffiliations",[])
             scope.events=events;
             events.connect().then(function(bc){
                 scope.bc=bc;
-                scope.bc.send('xmpp.buddycloud.affiliations', {node:scope.bc.data.currentnode})
+                scope.bc.send('xmpp.buddycloud.affiliations', {node:scope.bc.data.currentnode});
             });
             scope.opennode=function(node){
                 console.log("node",node);

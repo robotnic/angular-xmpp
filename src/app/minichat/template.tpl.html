@@ -7,8 +7,9 @@
                     <li ng-if="message.from.jid==user.jid">
 <!--
                         <img class="left"  ng-src="assets/icons/avatars/{{message.from.user}}.png" />
--->
                         <div class="avatar left" style="background-image: url('{{message.from|gravatar}}')" title="{{message.from}}"></div>
+-->
+                        <div class="avatar left" avatar="message.from" title="{{message.from}}"></div>
 
                         <span class="left">{{message.content}}</span>
                         <div class="clear"></div>

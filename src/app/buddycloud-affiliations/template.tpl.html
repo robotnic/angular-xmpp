@@ -3,9 +3,6 @@
 
     <div class="btn-group dropdown"  dropdown  ng-repeat="item in node" is-open="status.isOpen" ng-if="$index<x.max" >
         <div style="margin-bottom:10px" class="list dropdown-toggle avatar" ng-click="item.isOpen=true" role="button"  dropdown-toggle avatar="item.jid" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
-        <!--
-        <div class="list dropdown-toggle" ng-click="item.isOpen=true" role="button"  dropdown-toggle style="background-image:url('{{item.jid|gravatar}}');background-size:cover;width:30px;height:30px;border:1px solid lightgrey;display:inline-block;margin:4px" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
-        -->
 
 
         <ul class="dropdown-menu" dropdown-menu role="menu">

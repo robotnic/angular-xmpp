@@ -247,6 +247,8 @@ module.exports = function ( grunt ) {
       compile: {
         options: {
           mangle: false,
+          compress: false,
+          beautify: false,
           banner: '<%= meta.banner %>'
         },
         files: {
@@ -303,7 +305,7 @@ module.exports = function ( grunt ) {
         sub: true,
         boss: true,
         eqnull: true,
-        strict:false
+        strict:true
       },
       globals: {}
     },

@@ -1,5 +1,5 @@
 /*jslint node: true */
-'use strict';
+//'use strict';
 
 
 angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
@@ -65,7 +65,6 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
                         for(var i=0;i<scope.bc.xmpp.data.roster.length;i++){
                             var item=scope.bc.xmpp.data.roster[i];
                             if(item.jid.user==user && item.jid.domain==domain){
-                                console.log("scope.bc.xmpp.data.roster.subscription",jid,scope.bc.xmpp.data.roster[i]);
                                 if(item.subscription=='none'){
                                     if(item.ask=="subscribe"){
                                         return "ask";
@@ -77,7 +76,7 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
                         }
                     }
                 }
-            }
+            };
             scope.media={};
 /*
             scope.loadmore=function(){
