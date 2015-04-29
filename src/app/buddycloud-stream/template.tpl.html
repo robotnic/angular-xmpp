@@ -1,20 +1,20 @@
 <div>
     <div ng-show="bc.data.currentnode=='recent'">
-        <h2>Personal stream</h2>
+        <h3 style="margin-top:0px;">Personal stream</h3>
     </div>
     <!-- node header -->
     <div ng-show="bc.data.currentnode!=='recent'">
         <div class="panel panel-default">
             <div class="row panel-body">
-                <div class="col-md-2">
+                <div class="col-md-2 col-xs-2">
                     <div class="avatar big" avatar="bc.data.currentnode"></div>
                 </div>
-                <div class="flex titleText col-md-7">
+                <div class="flex titleText col-md-7 col-xs-7">
                     <h4 class="owner">{{bc.data.configobj['pubsub#title']}}</h4>
                     <div class="about">{{bc.data.configobj['pubsub#description']}}</div>
                 </div>
                 <!-- buttons -->
-                <div class="col-md-3" style="text-align:right">
+                <div class="col-md-3 col-xs-3" style="text-align:right">
                     <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">unfollow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">follow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="showconfigform=!showconfigform">config</button>
@@ -36,7 +36,7 @@
     <div class="thediv" ng-if="showconfigform" style="position:relative;height:1300px">
         <h2>Node Configuration</h2>
         <a href="https://github.com/buddycloud/buddycloud-server-java/issues/301">issues/301</a>
-        <xmppform formdata="bc.data.config" onclose="showconfigform=false" onsave="setConfig"></xmppform>
+        <xmppform formdata="bc.data.config" onclose="$parent.showconfigform=false" onsave="setConfig"></xmppform>
         <hr>
         <button ng-click="deleteNode()">delete node</button>
     </div>
@@ -53,7 +53,8 @@
                     <input class="btn btn-default" type="submit"></input>
                 </form>
                 <form>
-                    <span class="btn btn-file pull-right">upload image
+                <!-- disabled image upload -->
+                <span ng-show="false" class="btn btn-file pull-right">upload image
                   <input  type='file' ng-model='media.upload' base-sixty-four-input value="upoad image">
                 </span>
                 </form>
@@ -102,11 +103,11 @@
                     <!-- reply-->
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <div class="col-md-1">
+                            <div class="col-md-1 col-xs-1">
                                 <div class="avatar" avatar="bc.xmpp.data.me.jid" title="{{xmpp.data.me.jid|json}}"></div>
                             </div>
 
-                            <div class="col-md-11" style="text-align:left">
+                            <div class="col-md-11 col-xs-11" style="text-align:left">
                                 <textarea class="form-control " ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
 
                             </div>

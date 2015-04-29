@@ -1,5 +1,5 @@
 //angular.module("XmppUI", [ 'Buddycloud','AngularXmpp','XmppRoster','Minichat','XmppMessage','XmppForm'])
-angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu','ngSanitize','ui.bootstrap' ])
+angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu','ngSanitize','ui.bootstrap','BuddycloudRecommondations',"Webrtc" ])
 
 
 
@@ -8,6 +8,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
         'restrict': 'E',
         'scope': {
             host:"@",
+            defaultdomain:"@",
             anonymous:"@",
             oninit:"&"
         },
@@ -24,10 +25,12 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
 .controller('xmppController',['$scope','Xmpp',function($scope,Xmpp){
     
     $scope.init=function(){
-        console.log("-------host-----",$scope.host);
+        console.log("-------host-----",$scope.host,$scope.defaultdomain);
+        this.defaultdomain=$scope.defaultdomain;
 //        $scope.xmpp.send("xmpp.login",{jid:"elke@laos.buddycloud.com",password:"bbb"}).then(function(){$scope.xmpp.send("presence");}); //todo: remove line
     };
     $scope.xmpp=new Xmpp($scope.host);
+    this.defaultdomain=$scope.defaultdomain;
     this.xmpp=$scope.xmpp;
     
     //the angular magic

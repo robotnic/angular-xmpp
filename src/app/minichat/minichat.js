@@ -12,7 +12,9 @@ Roster
         'require': '^xmpp',
         'restrict': 'E',
         'scope': {
-            oninit:'&oninit'
+            oninit:'&oninit',
+            onopennode:'&onopennode',
+            onvideochat:'&onvideochat'
         },
         'transclude': false,
         'templateUrl': 'minichat/template.tpl.html',
@@ -80,6 +82,7 @@ Roster
                 user.style = "max";
             };
             $scope.close = function(user) {
+                console.log("close");
                 user.style = false;
                 for(var i=0;i<$scope.chatwindows.length;i++){
                     if($scope.chatwindows[i].jid==user.jid){

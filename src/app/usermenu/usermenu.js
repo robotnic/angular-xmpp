@@ -11,6 +11,7 @@ angular.module("Usermenu",[])
         'link': function(scope, element, attrs,xmppController) {
             console.log("login",arguments);
             scope.xmpp=xmppController.xmpp;
+            scope.defaultdomain=xmppController.defaultdomain;
             scope.logout=function(){
                 console.log("logout");
                 scope.xmpp.send("xmpp.logout");

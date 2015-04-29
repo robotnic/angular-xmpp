@@ -1,0 +1,14 @@
+<div class="webrtc" ng-if="call.length">
+<button ng-click="call=''">close</button>
+<h1>EXPERIMENTAL</h1>
+calling {{call}}<br/>
+caller{{xmpp.data.me.jid|json}}<br/>
+<video id="localvideo" autoplay></video>
+<video id="remotevideo" autoplay></video>
+
+<h2>Todo: Implement the rest</h2>
+<pre>
+{{offer|json}}
+</pre>
+
+</div>

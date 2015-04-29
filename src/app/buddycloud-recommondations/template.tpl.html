@@ -1,0 +1,12 @@
+<h5>Recommondations</h5>
+<!--
+{{url}}
+
+<pre>{{recommondations|json}}</pre>
+-->
+<div class="list-group">
+    <div ng-click="opennode(item.jid)" ng-repeat="item in recommondations.items track by item.jid" class="nodelist" ng-class="{'active':item.node==bc.data.currentnode}">
+        <div class="list avatar"   dropdown-toggle avatar="item.jid" title="{{item.jid.user+'@'+item.jid.domain}}"></div>
+        <a ng-href  class="item"> {{item.title|getUser}} </a>
+    </div>
+</div>

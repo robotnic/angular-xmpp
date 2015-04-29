@@ -2,8 +2,13 @@ html {
 overflow: -moz-scrollbars-vertical; 
 overflow-y: scroll;
 }
+body{
+color:#333;
+}
+li{
+  list-style-type: none;
+}
 .navbar-header{
-margin-left:40px !important;
 color:white !important;
 }
 .navbar-inverse .navbar-brand {
@@ -14,6 +19,12 @@ color:white !important;
 }
 .navbar-inverse .navbar-nav > li > a{
   color: white;
+}
+
+.navbar-inverse .nav li a {
+border-top:0px solid red !important;
+padding-top:7px !important;
+margin-right:8px !important;
 }
 
 .navbar-inverse .navbar-brand::before {

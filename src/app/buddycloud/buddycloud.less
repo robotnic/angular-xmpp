@@ -17,6 +17,10 @@ buddycloud{
 
         }
     }
+    .panel-body{
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .actionbutton{
         width:100%;
         margin:2px;
@@ -26,8 +30,8 @@ buddycloud{
         padding:5px;
     }
     .avatar{
-            width:30px;
-            height:30px;
+            width:24px;
+            height:24px;
             background-size:cover;
             margin-right:10px;    
     }
@@ -45,13 +49,16 @@ buddycloud{
       color: rgb(85, 85, 85);
       font-weight:bold;
     }
+    .owner{
+        margin:0px;
+    }
     form{
         display:inline;
     }
     textarea{
-        height:34px !important;
+        min-height:34px !important;
         &.big{
-            height:100px !important;
+            min-height:100px !important;
         }
     }
 

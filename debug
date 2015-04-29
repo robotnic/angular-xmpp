@@ -1,0 +1,40 @@
+Debug session
+
+Purpose
+
+We need a stable server side system otherwise it makes not much sense to develop clients.
+So what ca we do?
+
+
+
+
+Software versions
+
+It looks like there are diffent versions of the software on 
+buddycloud.org, laos.buddycloud.com, vm
+
+Which one is our target?
+
+
+
+
+Status
+
+xmpp: ok,
+buddycloud-java: ok most of the time, cross domain issues,
+http api: down very often,
+xmpp-ftw websocket: disapeared weeks ago,
+
+
+
+
+Watchdog, automatic restart
+
+buddycloud.org:
+
+https://demo.buddycloud.org/api/search?type=metadata&max=5&q=cool
+https://demo.buddycloud.org/api/search?type=content&max=5&q=cool
+https://demo.buddycloud.org/api/trevor4291@buddycloud.org/media/avatar?maxheight=50&maxwidth=50
+
+
+

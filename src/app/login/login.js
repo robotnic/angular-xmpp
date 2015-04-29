@@ -4,24 +4,17 @@ angular.module("xmppLogin",[])
         'require': '^xmpp',
         'restrict': 'E',
         'scope': {
-            defaultdomain:"@"
+            defaultdomain:"="
         },
         'controller': 'XmppLoginController',
         'transclude': false,
         'templateUrl': 'login/template.tpl.html',
         'link': function(scope, element, attrs,xmppController) {
             var up={};
-            console.log("login",arguments);
+            console.log("login",arguments,xmppController);
             scope.xmpp=xmppController.xmpp;
-            scope.defaultdomain=attrs.defaultdomain;
+            scope.defaultdomain=xmppController.defaultdomain;
             console.log("have it",scope.xmpp);
-/*
-            scope.xmpp.socket.on("xmpp.connection",function(event,status){
-                    scope.xmpp.send("xmpp.roster.get").then(function(){;
-                        scope.xmpp.send("xmpp.presence");
-                    });
-            });
-*/
             try{
                 up=JSON.parse(localStorage.getItem("usernamepassword"));
                 console.log("u/p",up);
@@ -29,13 +22,21 @@ angular.module("xmppLogin",[])
             if(up){
                 scope.xmpp.send("xmpp.login",up);  
             }else{
-                scope.xmpp.send("xmpp.login.anonymous",{jid:scope.defaultdomain});  
+                scope.xmpp.send("xmpp.login.anonymous",{jid:scope.defaultdomain}).then(function(response){
+                    console.log(response);
+                },function(error){
+                    console.log("no anonymous login",error);
+                });
             }
         }
     };
 })
 .controller("XmppLoginController",function($scope,$http){                
         $scope.error="";
+        $scope.user={
+            jid:"u9@buddycloud.org",
+            password:"nix"
+        }
         $scope.login=function(user){
             if(user.jid.indexOf("@")==-1){
                 user.jid+="@"+$scope.defaultdomain;
