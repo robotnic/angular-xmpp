@@ -43,7 +43,11 @@ angular.module("BuddycloudPost",[])
             console.log(response.data);
             $scope.ogp=response.data;
             try{
-                $scope.url=$sce.trustAsResourceUrl($scope.ogp['og:video:secure_url'][0]);
+                if($scope.ogp['twitter:player']){
+                    $scope.url=$sce.trustAsResourceUrl($scope.ogp['twitter:player']);  //don't want autostart on vimeo
+                }else{
+                    $scope.url=$sce.trustAsResourceUrl($scope.ogp['og:video:secure_url'][0]);  
+                }
             }catch(e){
                 if($scope.ogp['og:image']){
                     $scope.img=$sce.trustAsResourceUrl($scope.ogp['og:image']);

@@ -32,14 +32,16 @@ buddycloud{
       img{
         max-width:100%;
       }
+      iframe{
+        border-width:0px;
+        max-width:100%;
+        width:480px;
+        height:300px;
+      }
     }
     .actionbutton{
         width:100%;
         margin:2px;
-    }
-    .row{
-        margin:0px;
-        padding:5px;
     }
     .avatar{
             width:24px;
@@ -68,7 +70,9 @@ buddycloud{
         display:inline;
     }
     textarea{
-        min-height:34px !important;
+        height:34px;
+        width:100%;
+        resize: vertical;
         &.big{
             min-height:100px !important;
         }

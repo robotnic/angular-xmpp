@@ -60,7 +60,9 @@
             <div class="panel-heading">
                 <div class="avatar" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
-                <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span>  <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span><span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
+<span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
+
+                <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span>  <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span>
                 </div>
 
             </div>
@@ -72,9 +74,9 @@
 
             <!-- inner loop -->
             <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row"  ng-animate-ref="{{ item.id }}">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-1">
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-11 col-xs-11">
                     <div class="avatar" style="float:left;" avatar="subitem.entry.atom.author.name" title="{{subitem.entry.atom.author.name}}"></div>
                     <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
                     <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
@@ -85,9 +87,9 @@
 
             </div>
             <div class="row" ng-if="item.reply">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-1">
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-11 col-xs-11">
                     <!-- reply-->
                     <form class="form-horizontal">
                         <div class="form-group">
@@ -95,8 +97,8 @@
                                 <div class="avatar" avatar="bc.xmpp.data.me.jid" title="{{xmpp.data.me.jid|json}}"></div>
                             </div>
 
-                            <div class="col-md-11 col-xs-11" style="text-align:left">
-                                <textarea class="form-control " ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
+                            <div class="col-md-10 col-xs-10" style="text-align:left">
+                                <textarea  ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
 
                             </div>
                         </div>
