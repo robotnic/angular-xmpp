@@ -2,7 +2,7 @@
 
 This is a library, that provides styleable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
-Test here:  http://datenkueche.com/buddycloud/v4/ (username: elke, password: bbb) or (username:u9@buddycloud.com, password:bbb). 
+Test here:  http://datenkueche.com/buddycloud/v7/ (no registration possible but there is a predefined testaccount)
 
 Here an example how to use the lib
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/master/src/assets/docimg/bootstrap.png)

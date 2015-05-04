@@ -1,0 +1,60 @@
+angular.module("BuddycloudPost",[])
+.directive("buddycloudPost",function(){
+  return {
+        'require': '^buddycloud',
+        'restrict': 'E',
+        'scope':{
+            text:"=" 
+        },
+        'controller': 'BuddycloudPostController',
+        'transclude': false,
+        'templateUrl': 'buddycloud-post/template.tpl.html',
+        'link': function(scope, element, attrs,xmppController) {
+        }
+    };
+})
+.controller("BuddycloudPostController",function($scope,$http,$sce){                
+    var oldurl=null;
+    //$scope.parse=function(text){
+    $scope.$watch("text",function(text){
+        console.log("text",text);
+        if(!text){
+           $scope.ogp=null;
+           $scope.img=null;
+           $scope.url=null;
+            return; 
+        }
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        text.replace(urlRegex, function(url) {
+            console.log(url); 
+            loadogp(url);
+        })
+
+    })
+
+    function loadogp(url){
+        if(oldurl && oldurl==url){
+            return;
+        }
+    //    var parseurl="http://localhost/test/og/php-ogp/example.php?url="+url;
+        var parseurl="http://datenkueche.com/buddycloud/ogp/crawler.php?url="+url;
+        console.log(parseurl);
+        $http.get(parseurl).then(function(response){
+            console.log(response.data);
+            $scope.ogp=response.data;
+            try{
+                $scope.url=$sce.trustAsResourceUrl($scope.ogp['og:video:secure_url'][0]);
+            }catch(e){
+                if($scope.ogp['og:image']){
+                    $scope.img=$sce.trustAsResourceUrl($scope.ogp['og:image']);
+                }else{
+                    $scope.img=$sce.trustAsResourceUrl($scope.ogp['twitter:image']);
+                }
+            }
+        },function(error){
+            console.log(error);
+        })
+        oldurl=url;
+    }
+
+});

@@ -46,33 +46,17 @@
 
     <!-- posting area-->
     <div ng-if="bc.publish && !showconfigform">
-        <tabset>
-            <tab heading="Edit">
-                <form ng-submit="bc.publish(content);content.atom.content=''">
-                    <textarea ng-model="content.atom.content" class="form-control big" placeholder="markdown syntax: ![image name](http://imageurl...)"></textarea>
-                    <input class="btn btn-default" type="submit"></input>
-                </form>
-                <form>
-                <!-- disabled image upload -->
-                <span ng-show="false" class="btn btn-file pull-right">upload image
-                  <input  type='file' ng-model='media.upload' base-sixty-four-input value="upoad image">
-                </span>
-                </form>
-            </tab>
-            <tab heading="Preview">
-                <div class="panel-body" btf-markdown="content.atom.content"></div>
-            </tab>
-        </tabset>
+    <form ng-submit="bc.publish(content);content.atom.content=''">
+        <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}"></textarea>
+        <input class="btn btn-default" type="submit"></input>
+    </form>
+    <buddycloud-post text="content.atom.content"></buddycloud-post>
+
     </div>
-    <br/>
-    <br/>
-
-
-
 
     <!-- outer loop -->
     <div ng-if="!showconfigform">
-        <div ng-repeat="item in bc.data.tree" class="panel panel-default">
+        <div ng-repeat="item in bc.data.tree" class="panel panel-default" >
             <div class="panel-heading">
                 <div class="avatar" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
@@ -80,10 +64,14 @@
                 </div>
 
             </div>
-            <div class="panel-body" btf-markdown="item.entry.atom.content.content"></div>
+            <div class="panel-body">
+            <div ng-bind-html="item.entry.atom.content.content|linky:'_blank'"></div>
+            </div>
+
+            <buddycloud-post text="item.entry.atom.content.content"></buddycloud-post>
 
             <!-- inner loop -->
-            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row">
+            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row"  ng-animate-ref="{{ item.id }}">
                 <div class="col-md-1">
                 </div>
                 <div class="col-md-11">

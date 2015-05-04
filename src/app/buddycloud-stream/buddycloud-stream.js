@@ -2,7 +2,7 @@
 //'use strict';
 
 
-angular.module("BuddycloudStream",['btford.markdown','naif.base64'])
+angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
 .directive("buddycloudStream",function(){
     console.log("dir");
     return {

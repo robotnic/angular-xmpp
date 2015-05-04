@@ -1,0 +1,47 @@
+angular-xmpp
+============
+The angular-xmpp client has no server component. 
+It's possible to use nginx to serve these files
+
+
+Install in buddycloud-xm
+----------------------------
+```
+cd /opt
+bower install angular-xmpp
+```
+
+nginx configuration
+-------------
+```
+
+    server {
+      server_name         buddycloud.dev;
+      listen              80;
+      location /api/ {
+        proxy_pass http://127.0.0.1:9123/;
+      }
+      location / {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+      }
+      location /bin/ {
+        root /opt/bower_components/angular-xmpp/;
+      }
+    }
+
+```
+restart nginx
+------------------
+```
+/etc/init.d/nginx restart
+
+```
+
+open the client
+-----------------
+```
+http://localhost:3000/bin
+```

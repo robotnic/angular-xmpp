@@ -1,5 +1,6 @@
-//angular.module("XmppUI", [ 'Buddycloud','AngularXmpp','XmppRoster','Minichat','XmppMessage','XmppForm'])
-angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu','ngSanitize','ui.bootstrap','BuddycloudRecommondations',"Webrtc" ])
+var XMPP=null;
+
+angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu','ngSanitize','ui.bootstrap','BuddycloudRecommondations',"Webrtc","BuddycloudPost" ])
 
 
 
@@ -30,6 +31,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
 //        $scope.xmpp.send("xmpp.login",{jid:"elke@laos.buddycloud.com",password:"bbb"}).then(function(){$scope.xmpp.send("presence");}); //todo: remove line
     };
     $scope.xmpp=new Xmpp($scope.host);
+    XMPP= $scope.xmpp;
     this.defaultdomain=$scope.defaultdomain;
     this.xmpp=$scope.xmpp;
     

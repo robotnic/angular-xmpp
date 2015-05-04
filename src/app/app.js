@@ -1,5 +1,5 @@
 
-angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','ngSanitize','ui.bootstrap' ]) 
+angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','ngSanitize','ui.bootstrap','ngAnimate' ]) 
 .controller('page', ['$scope','$rootScope','$http','$location', function($scope,$rootScope,$http,$location) {
     $scope.page="main";
     var node=$location.$$url;
