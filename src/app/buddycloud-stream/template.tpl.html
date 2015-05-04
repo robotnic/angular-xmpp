@@ -6,10 +6,10 @@
     <div ng-show="bc.data.currentnode!=='recent'">
         <div class="panel panel-default">
             <div class="row panel-body">
-                <div class="col-md-2 col-xs-2">
+                <div class="col-md-2 col-xs-3">
                     <div class="avatar big" avatar="bc.data.currentnode"></div>
                 </div>
-                <div class="flex titleText col-md-7 col-xs-7">
+                <div class="flex titleText col-md-7 col-xs-6">
                     <h4 class="owner">{{bc.data.configobj['pubsub#title']}}</h4>
                     <div class="about">{{bc.data.configobj['pubsub#description']}}</div>
                 </div>
@@ -45,7 +45,7 @@
 
 
     <!-- posting area-->
-    <div ng-if="bc.publish && !showconfigform">
+    <div ng-show="bc.publish && !showconfigform" class="animate-show">
     <form ng-submit="bc.publish(content);content.atom.content=''">
         <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}"></textarea>
         <input class="btn btn-default" type="submit"></input>
@@ -73,7 +73,7 @@
             <buddycloud-post text="item.entry.atom.content.content"></buddycloud-post>
 
             <!-- inner loop -->
-            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row"  ng-animate-ref="{{ item.id }}">
+            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row repeat-item"   >
                 <div class="col-md-1 col-xs-1">
                 </div>
                 <div class="col-md-11 col-xs-11">
