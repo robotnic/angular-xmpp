@@ -5,7 +5,7 @@ big posting area
 
 .animate-show {
   background: white;
-  height: 140px;
+  transform:scaleY(1);
   opacity:1;
   overflow:hidden;
 }
@@ -17,7 +17,7 @@ big posting area
 }
 
 .animate-show.ng-hide {
-  height: 0px;
+  transform:scaleY(0);
   opacity:0;
   overflow:hidden;
   background: white;

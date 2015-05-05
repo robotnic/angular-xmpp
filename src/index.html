@@ -59,6 +59,8 @@ display:none;
                         <button ng-show="!showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=true">Show Affiliations</button>
                         <button ng-show="showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=false">Hide Affiliations</button>
                         <buddycloud-affiliations ng-if="showaffiliations" onnodechange="setnode(node)" onopenchat="openchat(jid)"></buddycloud-affiliations>
+                        <br/>
+                        <buddycloud-invite></buddycloud-invite>
                     </div>
                 </div>
                 <div  ng-switch-when="about">

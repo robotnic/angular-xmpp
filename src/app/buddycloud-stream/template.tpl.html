@@ -47,7 +47,7 @@
     <!-- posting area-->
     <div ng-show="bc.publish && !showconfigform" class="animate-show">
     <form ng-submit="bc.publish(content);content.atom.content=''">
-        <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}"></textarea>
+        <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}" placeholder="write something ..."></textarea>
         <input class="btn btn-default" type="submit"></input>
     </form>
     <buddycloud-post text="content.atom.content"></buddycloud-post>
@@ -98,7 +98,7 @@
                             </div>
 
                             <div class="col-md-10 col-xs-10" style="text-align:left">
-                                <textarea  ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} "></textarea>
+                                <textarea  ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} " placeholder="comment"></textarea>
 
                             </div>
                         </div>

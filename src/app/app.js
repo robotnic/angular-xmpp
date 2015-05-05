@@ -33,6 +33,10 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','n
         console.log("openchat",jid,$scope.chat);
         $scope.chat.openchat(jid);
     };
+    $scope.invite=function(jid){
+        alert(jid);
+
+    }
     $scope.startVideoChat=function(jid){
         console.log("start video chat",jid);
         $scope.call=jid;
