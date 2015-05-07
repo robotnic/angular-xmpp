@@ -51,12 +51,12 @@
         <input class="btn btn-default" type="submit"></input>
     </form>
     <buddycloud-post text="content.atom.content"></buddycloud-post>
-
     </div>
+    <br/>
 
     <!-- outer loop -->
     <div ng-if="!showconfigform">
-        <div ng-repeat="item in bc.data.tree" class="panel panel-default" >
+        <div ng-repeat="item in bc.data.tree" class="panel panel-default repeat-item" >
             <div class="panel-heading">
                 <div class="avatar" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>

@@ -1,10 +1,8 @@
 <div class="panel-body">
-    <h4>{{ogp['og:title']}}</h4>
-    <p>{{ogp['og:description']}}</p>
+    <h4 ng-if="ogp['og:title']">{{ogp['og:title']}}</h4>
+    <p ng-if="ogp['og:description']">{{ogp['og:description']}}</p>
     <iframe ng-if="url" ng-src="{{url}}" ></iframe>
     <img ng-if="img" ng-src="{{img}}"/>
-    <br/>
-    <br/>
 </div>
 
 
