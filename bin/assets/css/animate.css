@@ -5,7 +5,7 @@ big posting area
 
 .animate-show {
   background: white;
-  transform:scaleY(1);
+  max-height:800px;
   opacity:1;
   overflow:hidden;
 }
@@ -17,7 +17,7 @@ big posting area
 }
 
 .animate-show.ng-hide {
-  transform:scaleY(0);
+  max-height:0px;
   opacity:0;
   overflow:hidden;
   background: white;
@@ -38,12 +38,12 @@ subitems
 .repeat-item.ng-enter,
 .repeat-item.ng-leave.ng-leave-active {
   opacity:0;
-  -webkit-transform:scale(0);
-
+  max-height:0px; 
+  overflow:hidden;
 }
 .repeat-item.ng-leave,
 .repeat-item.ng-enter.ng-enter-active {
   opacity:1;
-  -webkit-transform:scale(1);
-
+  max-height:100px; 
+  overflow:hidden;
 }

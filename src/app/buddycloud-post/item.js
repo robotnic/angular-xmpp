@@ -17,7 +17,6 @@ angular.module("BuddycloudPost",[])
     var oldurl=null;
     //$scope.parse=function(text){
     $scope.$watch("text",function(text){
-        console.log("text",text);
         if(!text){
            $scope.ogp=null;
            $scope.img=null;
@@ -26,7 +25,6 @@ angular.module("BuddycloudPost",[])
         }
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         text.replace(urlRegex, function(url) {
-            console.log(url); 
             loadogp(url);
         })
 
@@ -38,9 +36,7 @@ angular.module("BuddycloudPost",[])
         }
     //    var parseurl="http://localhost/test/og/php-ogp/example.php?url="+url;
         var parseurl="http://datenkueche.com/buddycloud/ogp/crawler.php?url="+url;
-        console.log(parseurl);
         $http.get(parseurl).then(function(response){
-            console.log(response.data);
             $scope.ogp=response.data;
             try{
                 if($scope.ogp['twitter:player']){
@@ -49,7 +45,8 @@ angular.module("BuddycloudPost",[])
                     $scope.url=$sce.trustAsResourceUrl($scope.ogp['og:video:secure_url'][0]);  
                 }
             }catch(e){
-                if($scope.ogp['og:image']){
+                if($scope.ogp['og:image'] && typeof($scope.ogp['og:image']=='string')){
+                    console.log($scope.ogp['og:image']);
                     $scope.img=$sce.trustAsResourceUrl($scope.ogp['og:image']);
                 }else{
                     $scope.img=$sce.trustAsResourceUrl($scope.ogp['twitter:image']);
