@@ -1,6 +1,6 @@
 /*jslint node: true */
 //'use strict';
-
+BC=null;
 
 angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','angularMoment'])
 .directive("buddycloud",function(){
@@ -57,6 +57,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         if(!$scope.buddycloud){
             console.log("new budddycloud");
             $scope.buddycloud=new BuddycloudFactory(xmpp);
+            BC=$scope.buddycloud;
         }
         $scope.buddycloud.init().then(function(){
             //$scope.buddycloud.open({node:$scope.node});
