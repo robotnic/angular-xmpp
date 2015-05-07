@@ -28,28 +28,33 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
     $scope.init=function(){
         console.log("-------host-----",$scope.host,$scope.defaultdomain);
         this.defaultdomain=$scope.defaultdomain;
-//        $scope.xmpp.send("xmpp.login",{jid:"elke@laos.buddycloud.com",password:"bbb"}).then(function(){$scope.xmpp.send("presence");}); //todo: remove line
+
+
+        //the angular magic
+        $scope.xmpp.watch().then(function(data){
+            console.log("try to relogin",data);
+            setTimeout(function(){
+            $scope.xmpp.send($scope.xmpp.data.credentials.command,$scope.xmpp.data.credentials.request).then(function(){
+                $scope.init();
+            });
+            },2000);
+        },function(error){
+            console.log(error);
+        },function(notification){
+            console.log("notification",notification);
+            if(!$scope.xmpp.ticks){
+                $scope.xmpp.ticks=0;
+            }
+            $scope.xmpp.ticks++;
+        });
+
+
     };
     $scope.xmpp=new Xmpp($scope.host);
     XMPP= $scope.xmpp;
     this.defaultdomain=$scope.defaultdomain;
     this.xmpp=$scope.xmpp;
     
-    //the angular magic
-    $scope.xmpp.watch().then(function(data){
-        console.log("try to relogin",data);
-        setTimeout(function(){
-        $scope.xmpp.send($scope.xmpp.data.credentials.command,$scope.xmpp.data.credentials.request);
-        },2000);
-    },function(error){
-        console.log(error);
-    },function(notification){
-        console.log("notification",notification);
-        if(!$scope.xmpp.ticks){
-            $scope.xmpp.ticks=0;
-        }
-        $scope.xmpp.ticks++;
-    });
 
     $scope.on=function(){
         $scope.$on.apply($scope,arguments);
