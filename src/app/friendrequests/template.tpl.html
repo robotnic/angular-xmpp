@@ -3,7 +3,7 @@ Bootstrap navigation dropdown
 -->
 
 
-<a g-show="count()" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{counter}} <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></a>
+<a ng-show="count()" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{counter}} <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></a>
 <div class="dropdown-menu notification">
 {{count()}}
     <div ng-repeat="item in xmpp.data.roster"  ng-if="item.subscription=='to' || item.ask=='subscribe'"> 
