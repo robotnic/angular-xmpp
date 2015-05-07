@@ -30,6 +30,12 @@ angular.module("XmppRoster",[])
                 var jid=user.user+"@"+user.domain;
                 return scope.xmpp.chat.notifications.unread[jid];
             };
+            scope.remove=function(contact){
+                console.log(contact);
+                var jid=contact.user+"@"+contact.domain;
+                console.log("remove",jid);
+                scope.xmpp.send('xmpp.roster.remove',{jid:jid});
+            }
         }
     };
 

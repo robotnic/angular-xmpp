@@ -3,9 +3,10 @@ Bootstrap navigation dropdown
 -->
 
 
-<a ng-show="count()" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{counter}} <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></a>
+<a g-show="count()" ng-href class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{counter}} <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span></a>
 <div class="dropdown-menu notification">
-    <div ng-repeat="item in xmpp.data.roster"  ng-if="item.subscription=='from'"> 
+{{count()}}
+    <div ng-repeat="item in xmpp.data.roster"  ng-if="item.subscription=='to' || item.ask=='subscribe'"> 
         <div class="avatar" avatar="item.jid" title="{{item.from}}"></div>
 <!--
         <div class="avatar" style="float:left;background-image: url('{{item.jid|gravatar}}')" title="{{item.from}}"></div>
@@ -14,5 +15,18 @@ Bootstrap navigation dropdown
         <button class="btn btn-xs btn-default" ng-click="confirmContact(item.jid)">confirm</button>
         <button class="btn btn-xs btn-default" ng-click="removeContact(item.jid)">reject</button>
     </div>
+    <div ng-repeat="item in requests">
+        {{item.from}}
+        <div class="avatar" avatar="item.from" title="{{item.from.user}}"></div>
+<!--
+        <div class="avatar" style="float:left;background-image: url('{{item.|gravatar}}')" title="{{item.from}}"></div>
+-->
+        <h4 >{{item.from.user}}@{{item.from.domain}}</h4>
+        <button class="btn btn-xs btn-default" ng-click="addContact(item.from)">add contact</button>
+        <button class="btn btn-xs btn-default" ng-click="removeContact(item.from)">reject</button>
+    </div>
+    <pre>
+{{requests|json}}
+    </pre>
 </div>
 

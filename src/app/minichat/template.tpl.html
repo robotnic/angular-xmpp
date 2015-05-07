@@ -1,7 +1,7 @@
 <div class="bottomchat" >
-  <div class="minichat"  ng-repeat="user in chatwindows" title="{{ user.jid }}"  >
+  <div class="minichat"  ng-repeat="user in chatwindows" title="{{::user.jid }}"  >
     <div ng-if="user.style=='max'">
-        <div class="title" g-click="minify(user)"><p>{{user.name}} </p><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ng-click="close(user)"></span><span class="glyphicon glyphicon-facetime-video pull-right" aria-hidden="true" ng-click="onvideochat({jid:user.jid})"></span></div>
+        <div class="title" g-click="minify(user)"><p>{{::user.name}} </p><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true" ng-click="close(user)"></span><span class="glyphicon glyphicon-facetime-video pull-right" aria-hidden="true" ng-click="onvideochat({jid:user.jid})"></span></div>
             <div class="messages" scroll-glue>
                 <ul ng-repeat="message in chat.items track by $index">
                     <li ng-if="message.from.jid==user.jid">
@@ -11,11 +11,11 @@
 -->
                         <div class="avatar left" avatar="message.from" title="{{message.from}}"></div>
 
-                        <span class="left">{{message.content}}</span>
+                        <span class="left">{{::message.content}}</span>
                         <div class="clear"></div>
                     </li>
                     <li ng-if="message.to==user.jid">
-                        <span class="right">{{message.content}}</span>
+                        <span class="right">{{::message.content}}</span>
                         <div class="clear"></div>
                     </li>
                 </ul>
@@ -74,7 +74,7 @@
         </form>
       </div>
     <div ng-if="user.style=='min'" ng-click="makebig(user)" class="min">
-    {{user.name}}
+    {{::user.name}}
 
     <span class="close" ng-click="close(user)">×</span>
     </div>

@@ -37,7 +37,10 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
     
     //the angular magic
     $scope.xmpp.watch().then(function(data){
-        console.log(data);
+        console.log("try to relogin",data);
+        setTimeout(function(){
+        $scope.xmpp.send($scope.xmpp.data.credentials.command,$scope.xmpp.data.credentials.request);
+        },2000);
     },function(error){
         console.log(error);
     },function(notification){

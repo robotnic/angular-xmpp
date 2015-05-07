@@ -14,12 +14,22 @@
 </div>
 </span>
 <div class="list-group">
-    <div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.data.roster" class="nodelist" ng-click="openchat(item.jid)">
-        <div class="avatar" style="background-image: url('{{item.jid}}')" title="{{item.node}}">
+    <div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.data.roster" class="nodelist" dropdown>
+        <div class="avatar" style="background-image: url('{{item.jid}}')" title="{{item.node}}" dropdown-toggle>
             <div class="avatar" avatar="item.jid"></div>
             <a ng-href class="item">{{item.jid.user}}@{{item.jid.domain}}</a>
             <span class="counter pull-right">{{messagecount(item.jid)}}</span>
-
         </div>
+        <ul class="dropdown-menu" dropdown-menu role="menu">
+            <li><a ng-href ng-click="opennode({'node':'/user/'+item.jid.user+'@'+item.jid.domain+'/posts'})">Open Node</a>
+            </li>
+            <li><a ng-href ng-click="openchat(item.jid)">Open Chat</a>
+            </li>
+            </li>
+
+            <li class="divider"></li>
+            <li ><a ng-href ng-click="remove(item.jid)">remove contact</a>
+        </ul>
     </div>
 </div>
+<br/>
