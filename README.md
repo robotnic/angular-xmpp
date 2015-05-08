@@ -2,7 +2,10 @@
 
 This is a library, that provides styleable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
-Test here:  http://datenkueche.com/buddycloud/v7/ (no registration possible but there is a predefined testaccount)
+
+## Demo app
+
+Try here:  http://datenkueche.com/buddycloud/v7/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
 
 Here an example how to use the lib
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/master/src/assets/docimg/bootstrap.png)
@@ -26,7 +29,7 @@ bower_components/angular-xmpp/index.html
 in your brower.
 
 ## example xmpp chat
-```
+```xml
 
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin defaultdomain="laos.buddycloud.com"></xmpplogin>
@@ -37,7 +40,7 @@ in your brower.
 ```
 
 ## example xmpp muc
-```
+```xml
 
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
@@ -48,7 +51,7 @@ in your brower.
 
 ## example xmpp buddycloud
 
-```
+```xml
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin></xmpplogin>
     <buddycloud node="/user/robotnic@laos.buddycloud.com/posts">
@@ -62,7 +65,7 @@ in your brower.
 # Combine with your project
 
 ## Angular binding exampe
-```
+```html
 <input ng-mode="node"/>
 <buddycloud node="node" onchangenode="nodechangedinsidedirective(node)">
     <buddycloud-stream></buddycloud-stream>
@@ -70,7 +73,7 @@ in your brower.
 ```
 
 In your controller
-```
+```javascript
 ...
 $scope.node="/user/robotnic@laos.buddycloud.com/posts";
 $scope.nodechangedinsidedirective=function(node){
@@ -142,14 +145,14 @@ The structure comes from ng-boilerplate. All the angular factorys are in a seper
 
 If you want to make changes. You have to run the grunt task builder.
 
-```
+```command
 grunt watch --force
 ```
 The result have be views in the "build" folder
 
 
 If you are happy with your work run 
-```
+```command
 grunt compile
 ```
 This will make more optimation.
