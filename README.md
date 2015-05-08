@@ -7,13 +7,13 @@ This is a library, that provides styleable UI Elements for XMPP over Websockets 
 
 Try here:  http://datenkueche.com/buddycloud/v7/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
 
-Here an example how to use the lib
+Screenshot
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/master/src/assets/docimg/bootstrap.png)
 
-Let's see the directives
+## Let's see the directives
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap-annotated.png)
 
-Other design (conversjs clone - prove of concept)
+## But it can look totaly different, depending on your design skills (conversjs clone - prove of concept)
 ![convers clone](https://raw.githubusercontent.com/robotnic/angular-converse/master/screenshots/beta.png)
 
 ## getting started
