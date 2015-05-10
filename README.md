@@ -29,16 +29,16 @@ bower_components/angular-xmpp/index.html
 ```
 in your browser.
 
-## example xmpp chat
+## example xmpp roster
 ```xml
 
 <xmpp host="https://laos.buddycloud.com">
     <xmpplogin defaultdomain="laos.buddycloud.com"></xmpplogin>
     <xmpproster></xmpproster>
-    <xmppminichat></xmppminichat>
 </xmpp>
 
 ```
+<a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)
 
 ## example xmpp muc
 ```xml
