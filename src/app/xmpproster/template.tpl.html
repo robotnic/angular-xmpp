@@ -5,7 +5,7 @@
     <button ng-show="!showofflinecontacts" class="btn btn-default" ng-click="showofflinecontacts=true">show offline contacts</button>
     <button ng-show="showofflinecontacts" class="btn btn-success" ng-click="showofflinecontacts=false">hide offline contacts</button>
     
-    <form ng-submit="addContact(newcontact)">
+    <form ng-submit="xmpp.addContact(newcontact)">
          <div class="form-group">
             <label for="exampleInputEmail1">add contact</label>
             <input ng-model="newcontact" type="email" class="form-control" id="exampleInputEmail1" placeholder="jid@example.com">
@@ -14,21 +14,21 @@
 </div>
 </span>
 <div class="list-group">
-    <div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.data.roster" class="nodelist" dropdown>
+    <div ng-if="item.presence || showofflinecontacts" ng-repeat="item in xmpp.model.roster track by item.jid.fulljid" class="nodelist" dropdown>
         <div class="avatar" style="background-image: url('{{item.jid}}')" title="{{item.node}}" dropdown-toggle>
             <div class="avatar" avatar="item.jid"></div>
             <a ng-href class="item">{{item.jid.user}}@{{item.jid.domain}}</a>
-            <span class="counter pull-right">{{messagecount(item.jid)}}</span>
+            <span class="counter pull-right" ng-if="messagecount(item.jid)">{{messagecount(item.jid)}}</span>
         </div>
         <ul class="dropdown-menu" dropdown-menu role="menu">
-            <li><a ng-href ng-click="opennode({'node':'/user/'+item.jid.user+'@'+item.jid.domain+'/posts'})">Open Node</a>
+            <li><a ng-href ng-click="opennode(item.jid)">Open Node</a>
             </li>
             <li><a ng-href ng-click="openchat(item.jid)">Open Chat</a>
             </li>
             </li>
 
             <li class="divider"></li>
-            <li ><a ng-href ng-click="remove(item.jid)">remove contact</a>
+            <li ><a ng-href ng-click="xmpp.removeContact(item.jid)">remove contact</a>
         </ul>
     </div>
 </div>

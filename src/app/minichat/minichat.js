@@ -21,7 +21,6 @@ Roster
         'templateUrl': 'minichat/template.tpl.html',
         'controller': 'XmppUiMinichat',
         'link': function(scope, element, attrs,xmppController) {
-            console.log("minichat",xmppController);
             scope.xmpp=xmppController.xmpp;
             scope.oninit({scope:scope});
             xmppController.xmpp.socket.on("xmpp.connection",function(event,status){
@@ -30,7 +29,6 @@ Roster
             if(xmppController.xmpp.data.connected){
                 scope.init(xmppController.xmpp);
             }
-            console.log("------------this is the minichat",xmppController);
         }
     };
 })
@@ -39,31 +37,19 @@ Roster
 
 
 
-.controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp','MessageFactory','$q',
-    function($scope, $rootScope,  $anchorScroll, Xmpp, MessageFactory,$q) {
-        Q=$q; 
+.controller('XmppUiMinichat', ['$scope', '$rootScope',  '$anchorScroll', 'Xmpp',
+    function($scope, $rootScope,  $anchorScroll, Xmpp) {
         DD=$scope;
         $scope.init=function(xmpp){
-            var chat=new MessageFactory(xmpp);
-            $scope.chat=chat;
-            $scope.xmpp.chat=chat;    // <-------------cheating, very bad
-            console.log("minichatcontroller",chat);
-            $scope.username = Xmpp.user;
             $scope.chatwindows = [];
-            $scope.messages = chat.messages;
-            $scope.notifications = chat.notifications;
             $scope.oninit({scope:$scope});
 
-            //use broadcast to open chat window
-//            $rootScope.$on("openchat", function(data, jid) {
             $scope.openchat=function(jid){
-                console.log("inside minichat",jid);
                 if(typeof(jid)!=="string"){ 
                     jid=jid.user+"@"+jid.domain;
                 }
-                chat.markread(jid);
-                console.log("chatjid",jid);
-                $scope.me = xmpp.me;
+                xmpp.messages.markread(jid);
+                
                 var fromname = jid.substring(0, jid.indexOf("@"));
                 for (var i = 0; i < $scope.chatwindows.length; i++) {
                     if ($scope.chatwindows[i].jid == jid) {
@@ -79,12 +65,13 @@ Roster
             };
 
 
-            //big, small, close window
+            //make chat window big
             $scope.makebig = function(user) {
                 user.style = "max";
             };
+    
+            //close chat window
             $scope.close = function(user) {
-                console.log("close");
                 user.style = false;
                 for(var i=0;i<$scope.chatwindows.length;i++){
                     if($scope.chatwindows[i].jid==user.jid){
@@ -92,18 +79,17 @@ Roster
                     }
                 }
             };
+
+            //make chat window small
             $scope.minify = function(user) {
                 user.style = "min";
             };
 
             //send chat message 
-            $scope.send = function(user, text, event) {
-                console.log(user, text, event);
-                //chat.send(user, text, event);
-                chat.send({to:user.jid,content:user.newtext});
+            $scope.send = function(user, text) {
+                $scope.xmpp.messages.send({to:user.jid,content:user.newtext});
                 user.newtext = "";
             };
-
         };
     }
 ]);

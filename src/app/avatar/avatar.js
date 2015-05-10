@@ -11,6 +11,7 @@ angular.module("Avatar",['ngImage'])
         'transclude': false,
         'templateUrl': 'avatar/template.tpl.html',
         'link': function(scope, element, attrs,xmppController) {
+            scope.size=attrs.size;
             scope.$watch("avatar",function(avatar){
                 scope.makeurl(scope.avatar);
             });
@@ -23,7 +24,9 @@ angular.module("Avatar",['ngImage'])
 
 
 .controller("gravatarController", function($scope) {
-
+        if($scope.size){
+            $scope.size=80;
+        }
         $scope.makeurl=function(jid){
             var jidstring="";
             if(typeof(jid)=="string"){
@@ -36,7 +39,7 @@ angular.module("Avatar",['ngImage'])
                     jidstring = jid.user + "@" + jid.domain;
                 }
             }
-            var url="https://demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight=80&maxwidth=80";
+            var url="https://demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight="+$scope.size+"&maxwidth="+$scope.size;
             $scope.avatarurl=url;
             return url;
         };

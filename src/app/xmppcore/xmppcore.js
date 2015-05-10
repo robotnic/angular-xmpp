@@ -1,5 +1,4 @@
 var XMPP=null;
-
 angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','XmppRoster','Minichat','XmppForm','buddycloudSearch','xmppNotifications','xmppRequests','Avatar','Usermenu','ngSanitize','ui.bootstrap','BuddycloudRecommondations',"Webrtc","BuddycloudPost","BuddycloudInvite" ])
 
 
@@ -16,15 +15,15 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
         'transclude': false,
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
-            scope.host=attrs.host;
-            scope.anonymous=attrs.anonymous;
+            scope.host=attrs.host; //? is that needed
+            scope.anonymous=attrs.anonymous; //?needed
             scope.init();
         }
     };
 
 })
 .controller('xmppController',['$scope','Xmpp',function($scope,Xmpp){
-    
+    XMPP=$scope; 
     $scope.init=function(){
         console.log("-------host-----",$scope.host,$scope.defaultdomain);
         this.defaultdomain=$scope.defaultdomain;
@@ -42,16 +41,11 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
             console.log(error);
         },function(notification){
             console.log("notification",notification);
-            if(!$scope.xmpp.ticks){
-                $scope.xmpp.ticks=0;
-            }
-            $scope.xmpp.ticks++;
         });
 
 
     };
     $scope.xmpp=new Xmpp($scope.host);
-    XMPP= $scope.xmpp;
     this.defaultdomain=$scope.defaultdomain;
     this.xmpp=$scope.xmpp;
     

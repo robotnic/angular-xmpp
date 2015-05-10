@@ -49,7 +49,7 @@ display:none;
             <div ng-switch="page">
                 <div class="row"  ng-switch-default>
                     <div  class="col-md-2">
-                        <xmpproster onopenchat="openchat(jid)"></xmpproster>
+                        <xmpproster onopenchat="openchat(jid)" onnodechange="setnode(node)"></xmpproster>
                         <buddycloud-nodelist onnodechange="setnode(node)"></buddycloud-nodelist>
                         <buddycloud-recommondations onnodechange="setnode(node)"></buddycloud-recommondations>
                     </div>

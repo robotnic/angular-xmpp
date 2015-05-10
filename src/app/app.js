@@ -1,7 +1,9 @@
-
-angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','ngSanitize','ui.bootstrap','ngAnimate' ]) 
+var SCOPE=null;
+//angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','ngSanitize','ui.bootstrap','ngAnimate' ]) 
+angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','ngSanitize' ]) 
 .controller('page', ['$scope','$rootScope','$http','$location', function($scope,$rootScope,$http,$location) {
     $scope.page="main";
+    SCOPE=$scope;
     var node=$location.$$url;
     if(node){
         $scope.node=node;

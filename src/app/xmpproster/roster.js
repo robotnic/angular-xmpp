@@ -9,7 +9,8 @@ angular.module("XmppRoster",[])
         'templateUrl': 'xmpproster/template.tpl.html',
         'restrict': 'E',
         'scope': {
-            onopenchat:'&onopenchat'
+            onopenchat:'&onopenchat',
+            onnodechange:'&onnodechange'
         },
         'transclude': false,
         'link': function(scope, element, attrs,xmpp) {
@@ -20,22 +21,21 @@ angular.module("XmppRoster",[])
                 });
             });
 
+            scope.opennode=function(jid){
+                var node="/user/"+jid.user+"@"+jid.domain+"/posts";
+                scope.onnodechange({node:node});
+            };
             scope.openchat=function(jid){
                 scope.onopenchat({jid:jid});
             };
-            scope.addContact=function(jid){
-                scope.xmpp.send('xmpp.presence.subscribe',{to:jid});
-            };
             scope.messagecount=function(user){
                 var jid=user.user+"@"+user.domain;
-                return scope.xmpp.chat.notifications.unread[jid];
+                if(scope.xmpp.messages.byjid[jid]){
+                    return scope.xmpp.messages.byjid[jid].unread;
+                }else{
+                    return 0;
+                }
             };
-            scope.remove=function(contact){
-                console.log(contact);
-                var jid=contact.user+"@"+contact.domain;
-                console.log("remove",jid);
-                scope.xmpp.send('xmpp.roster.remove',{jid:jid});
-            }
         }
     };
 

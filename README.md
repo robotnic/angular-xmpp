@@ -13,7 +13,8 @@ Screenshot
 ## Let's see the directives
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/itemtree/src/assets/docimg/bootstrap-annotated.png)
 
-## But it can look totaly different, depending on your design skills (conversjs clone - prove of concept)
+## But it can look totaly different
+depending on your design skills (conversjs clone - prove of concept)
 ![convers clone](https://raw.githubusercontent.com/robotnic/angular-converse/master/screenshots/beta.png)
 
 ## getting started
@@ -26,7 +27,7 @@ To see the buddycloud example (screenshot) open
 ```
 bower_components/angular-xmpp/index.html
 ```
-in your brower.
+in your browser.
 
 ## example xmpp chat
 ```xml
