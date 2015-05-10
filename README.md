@@ -7,6 +7,8 @@ This is a library, that provides styleable UI Elements for XMPP over Websockets 
 
 Try here:  http://datenkueche.com/buddycloud/v7/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
 
+Known bugs: rest api down, search and register are not working
+
 Screenshot
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/master/src/assets/docimg/bootstrap.png)
 
@@ -97,7 +99,7 @@ Say hello to the developers hangout.
 </xmpp>
 
 ```
-<a href="http://plnkr.co/edit/WcWrUoylvdaODTBlKJht?p=preview">plunker</a> (explore the model)
+<a href="http://plnkr.co/edit/WcWrUoylvdaODTBlKJht?p=preview">plunker</a> (explore the model)<br/>
 <a href="http://plnkr.co/edit/TL8RBheavGbu7xodAPED?p=preview" target="_blank">plunker</a> (simple template)
 
 ## example xmpp buddycloud
@@ -111,6 +113,8 @@ Say hello to the developers hangout.
 </xmpp>
 
 ```
+
+<a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (simple template)
 
 
 # Combine with your project
