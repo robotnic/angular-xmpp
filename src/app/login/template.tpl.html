@@ -1,6 +1,5 @@
-<div ng-if="!xmpp.model.connected">
 
-<form  class="form-horizontal" style="width:300px;display:inline-block;padding:5px;color:black" ng-submit="login(user)">
+<form ng-if="!xmpp.model.me"  class="form-horizontal" style="width:300px;display:inline-block;padding:5px;color:black" ng-submit="login(user)">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-3 control-label">Jid</label>
     <div class="col-sm-9">
@@ -54,7 +53,7 @@
 
 
 
-<div class="alert alert-danger" ng-if="xmpp.data.errors[0]">
+<div class="alert alert-danger" ng-if="xmpp.model.errors[0]">
 <span  class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 {{xmpp.data.errors[0].description}}
 </div>
@@ -62,7 +61,7 @@
 
 </form>
 
-<ul ng-if="xmpp.data.me && xmpp.data.anonymous==false">
+<ul ng-if="xmpp.model.me && xmpp.model.anonymous==false">
 <li ng-click="logout()">logout</li>
 </ul>
-</div>
+
