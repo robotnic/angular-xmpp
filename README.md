@@ -74,6 +74,10 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
 Use the attribute 'template-url' to replace the html template by your own html.
 Here a small example how to start. 
 
+```html
+<xmpproster onopenchat="openchat(jid)" template-url="roster.html"></xmpproster>
+```
+
 <a href="http://plnkr.co/edit/wVWXVn3HJNnG77kLrzyc?p=preview" target="_blank">plunker</a>
 
 It's very handy to use the build in angular json formatter.
