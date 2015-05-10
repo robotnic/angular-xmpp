@@ -41,6 +41,34 @@ in your browser.
 <a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)
 <a href="http://plnkr.co/edit/uaX29I7DH7DTuZMRA4V5?p=preview" target="_blank">plunker</a> (bootstrap styling)
 
+## include the chat
+
+```javascript
+angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
+      .controller("page", function($scope) {
+        $scope.openchat = function(jid) {
+          console.log("openchat", jid, $scope.chat);
+          $scope.chat.openchat(jid);
+
+
+        }
+        $scope.initchat = function(chat) {
+          $scope.chat = chat;
+        }
+      });
+```
+
+```xml
+<xmpp host="http://datenkueche.com:3002" defaultdomain="laos.buddycloud.com">
+      <xmpplogin></xmpplogin>
+      <xmpproster onopenchat="openchat(jid)"></xmpproster>
+      <xmppminichat oninit="initchat(scope)"></xmppminichat>
+</xmpp>
+```
+
+
+<a href="http://plnkr.co/edit/0NZGDmfBPDDXYAEXlezV?p=preview" target="_blank">plunker</a> (default styling)
+
 ## example xmpp muc
 ```xml
 
