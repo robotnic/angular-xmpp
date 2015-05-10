@@ -38,7 +38,7 @@ in your browser.
 </xmpp>
 
 ```
-<a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)
+<a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)<br/>
 <a href="http://plnkr.co/edit/uaX29I7DH7DTuZMRA4V5?p=preview" target="_blank">plunker</a> (bootstrap styling)
 
 ## include the chat
@@ -68,6 +68,12 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
 
 
 <a href="http://plnkr.co/edit/0NZGDmfBPDDXYAEXlezV?p=preview" target="_blank">plunker</a> (default styling)
+
+## use your own template
+
+Use the attribute 'template-url' to replace the html template by your own html.
+
+<a href="http://plnkr.co/edit/wVWXVn3HJNnG77kLrzyc?p=preview" target="_blank">plunker</a>
 
 ## example xmpp muc
 ```xml
