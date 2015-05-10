@@ -1,0 +1,108 @@
+<div class="chatroom" id="SkHjVAR+TlvcR8fK4pLJ7Zm3low=">
+    <div class="box-flyout" style="height: 400px">
+        <div class="dragresize dragresize-tm"></div>
+        <div class="chat-head chat-head-chatroom">
+            <a class="close-chatbox-button icon-close"></a>
+            <a class="toggle-chatbox-button icon-minus"></a>
+            <a class="configure-chatroom-button icon-wrench" style="display:none"></a>
+            <div class="chat-title">{{muc.subject.room}}</div>
+            <p class="chatroom-topic" title="Buddycloud chats are here. Dev channel is at https://demo.buddycloud.org/team@topics.buddycloud.org">{{muc.subject.subject}}</p>
+            <p></p>
+        </div>
+        <div class="chat-body" ng-init="showparticipants=true">
+            <div class="chat-area" style=""  ng-class="{'hideparticipants':showparticipants==false}">
+                <div class="chat-content"  scroll-glue="glued">
+                    <div class="chat-message delayed" ng-repeat="message in muc.messages">
+                        <span ng-if="message.nick==nick" class="chat-message-me">{{message.delay.when|date:'hh:mm'}}{{message.receivetime|date:'hh:mm'}} {{message.nick}}:&nbsp;</span>
+                        <span ng-if="message.nick!=nick" class="chat-message-them">{{message.delay.when|date:'hh:mm'}}{{message.receivetime|date:'hh:mm'}} {{message.nick}}:&nbsp;</span>
+                        <span class="chat-message-content" ng-bind-html="message.content|linky:'_blank'"></span>
+                    </div>
+<!--
+                    <div class="chat-info">Topic set by simon@buddycloud.com to: Buddycloud chats are here. Dev channel is at https://demo.buddycloud.org/team@topics.buddycloud.org</div>
+                    <time class="chat-date" datetime="2015-04-08">Wednesday Apr 8th 2015</time>
+                    <div class="chat-info">This room is not anonymous</div>
+-->
+                </div>
+                <form class="sendXMPPMessage" action="" method="post" style="">
+
+                    <ul class="chat-toolbar no-text-select">
+                        <li class="toggle-smiley icon-happy" title="Insert a smilery">
+                            <ul>
+                                <li>
+                                    <a class="icon-smiley" href="#" data-emoticon=":)"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-wink" href="#" data-emoticon=";)"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-grin" href="#" data-emoticon=":D"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-tongue" href="#" data-emoticon=":P"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-cool" href="#" data-emoticon="8)"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-evil" href="#" data-emoticon=">:)"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-confused" href="#" data-emoticon=":S"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-wondering" href="#" data-emoticon=":\"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-angry" href="#" data-emoticon=">:("></a>
+                                </li>
+                                <li>
+                                    <a class="icon-sad" href="#" data-emoticon=":("></a>
+                                </li>
+                                <li>
+                                    <a class="icon-shocked" href="#" data-emoticon=":O"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-thumbs-up" href="#" data-emoticon="(^.^)b"></a>
+                                </li>
+                                <li>
+                                    <a class="icon-heart" href="#" data-emoticon="<3"></a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+                        <li class="toggle-participants" ng-click="showparticipants=!showparticipants">
+                            <a class="icon-show-users" title="Hide the list of participants"></a>
+                        </li>
+
+
+                        <li class="toggle-clear">
+                            <a class="icon-remove" title="Clear all messages"></a>
+                        </li>
+
+
+                    </ul>
+                    <textarea type="text" class="chat-textarea" placeholder="Message" ng-model="newmessage" ng-keypress="($event.which === 13)?send():0"></textarea>
+                </form>
+            </div>
+            <div class="participants" style="display: block;" ng-class="{'hideparticipants':!showparticipants}">
+                <!-- <div class="participants"> -->
+                <form class="room-invite">
+                    <span class="twitter-typeahead" style="position: relative; display: inline-block; direction: ltr;"><input class="invited-contact tt-hint" type="text" readonly="" autocomplete="off" spellcheck="false" tabindex="-1" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1;"><input class="invited-contact tt-input" placeholder="Invite..." type="text" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre;"></pre><span class="tt-dropdown-menu" style="position: absolute; top: 100%; z-index: 100; display: none; left: 0px; right: auto;"><div class="tt-dataset-contacts-dataset"></div></span></span>
+                </form>
+                <label>Occupants:</label>
+                <ul class="participant-list">
+                    <li ng-repeat="user in muc.roster" class="participant" title="This user can send messages in this room">{{user.nick}}</li>
+<!--
+                    <li class="participant" title="This user can send messages in this room">robotnic</li>
+                    <li class="participant" title="This user can send messages in this room">Neustradamus</li>
+                    <li class="participant" title="This user can send messages in this room">arty</li>
+                    <li class="participant" title="This user can send messages in this room">bernhard</li>
+-->
+                </ul>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

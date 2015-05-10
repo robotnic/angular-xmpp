@@ -1,0 +1,76 @@
+<div class="muc">
+    <div class="header">{{room}}</div>
+    <form ng-submit="join(nick)" ng-show="!joined" class="joinform">
+        <table>
+            <tr>
+                <td>Room</td>
+                <td>
+                    <input ng-model="room" />
+                </td>
+            </tr>
+            <tr>
+                <td>Nick
+                    <td>
+                        <input ng-model="nick" />
+                    </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div ng-if="error">{{error|json}}</div>
+                    <input type="submit" value="join" />
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+    <div ng-show="joined">
+        <div class="form" ng-show="formdata">
+            <xmppform formdata="formdata" onclose="formdata=null" onsave="save"></xmppform>
+        </div>
+        <div ng-show="!formdata">
+            <div class="messages" scroll-glue>
+                <div scroll-glue>
+                    <div ng-repeat="message in messages">
+                        <i>{{message.receivetime|date:'HH:mm:ss'}}</i>
+                        <i>{{message.delay.when|date:'HH:mm:ss'}}</i>
+                        <b>{{message.nick}}</b>
+                        {{message.content}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="roster">
+                <div>
+                    <!--
+                    <h4>Admins</h4>
+                    <div ng-repeat="item in roster" ng-if="item.role=='admin'">
+                        {{item.nick}}
+                    </div>
+                    -->
+                    <h4>Moderators</h4>
+                    <div ng-repeat="item in roster" ng-if="item.role=='moderator'" ng-click="open(item)">
+                        {{item.nick}}
+                    </div>
+                    <h4>Participants</h4>
+                    <div ng-repeat="item in roster" ng-if="item.role=='participant'" ng-click="open(item)">
+                        {{item.nick}}
+                    </div>
+                </div>
+            </div>
+
+
+            <form ng-submit="send()" class="newmessage">
+                <input ng-model="newmessage" placeholder="write a message" />
+            </form>
+            <div class="configbuttons">
+                <button ng-click="configroom()">config</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
