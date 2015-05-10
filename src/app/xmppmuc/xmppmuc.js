@@ -28,21 +28,17 @@ MUC
         },
         'transclude': false,
         'controller': 'XmppUiMuc',
-        'link': function(scope, element, attrs,xmpp ) {
-            scope.xmpp=xmpp.xmpp;
+        'link': function(scope, element, attrs,xmppController ) {
+            scope.xmpp=xmppController.xmpp;
 
             console.log("muc",scope.xmpp);
-            if(scope.xmpp.model.connected){
-                console.log("is online");
-                scope.init(scope.xmpp);
-            }else{
-                console.log("muc connect later",scope.xmpp);
-                scope.xmpp.socket.on("xmpp.connection",function(s,status){
-                    console.log("connected muc",scope);
-                    scope.init(scope.xmpp);
-                });
-
+            xmppController.xmpp.socket.on("xmpp.connection",function(event,status){
+                scope.init(xmppController.xmpp);
+            });
+            if(xmppController.xmpp.data.connected){
+                scope.init(xmppController.xmpp);
             }
+
         }
     };
 })
