@@ -32,7 +32,7 @@ MUC
             scope.xmpp=xmpp.xmpp;
 
             console.log("muc",scope.xmpp);
-            if(scope.xmpp.model.connection){
+            if(scope.xmpp.model.connected){
                 console.log("is online");
                 scope.init(scope.xmpp);
             }else{
