@@ -114,7 +114,7 @@ Say hello to the developers hangout.
 
 ```
 
-<a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (simple template)
+<a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (working example)
 
 
 # Combine with your project

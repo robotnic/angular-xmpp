@@ -7,7 +7,9 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
     console.log("dir");
     return {
         'require': '^buddycloud',
-        'templateUrl': 'buddycloud-stream/template.tpl.html',
+        'templateUrl':function(elem,attrs) {
+           return attrs.templateUrl || 'buddycloud-stream/template.tpl.html'
+        },
         'restrict': 'E',
         'scope': {
             onnodechange:'&onnodechange'
