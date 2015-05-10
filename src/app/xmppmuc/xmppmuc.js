@@ -31,7 +31,7 @@ MUC
         'link': function(scope, element, attrs,xmpp ) {
             scope.xmpp=xmpp.xmpp;
 
-            console.log("muc",scope.xmpp.data);
+            console.log("muc",scope.xmpp);
             if(scope.xmpp.model.connection){
                 console.log("is online");
                 scope.init(scope.xmpp);
