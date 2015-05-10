@@ -93,10 +93,12 @@ You also can use a json-formatter plugin to observe the model as in this example
 Say hello to the developers hangout.
 ```xml
 <xmpp host="https://laos.buddycloud.com" anonymous="true">
-    <xmppmuc room="seehaus@channels.buddycloud.com"></xmppmuc>
+    <xmppmuc room="seehaus@channels.buddycloud.com" nick="guest"></xmppmuc>
 </xmpp>
 
 ```
+<a href="http://plnkr.co/edit/WcWrUoylvdaODTBlKJht?p=preview">plunker</a> (explore the model)
+<a href="http://plnkr.co/edit/TL8RBheavGbu7xodAPED?p=preview" target="_blank">plunker</a> (simple template)
 
 ## example xmpp buddycloud
 
