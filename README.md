@@ -90,10 +90,9 @@ You also can use a json-formatter plugin to observe the model as in this example
 <a href="http://plnkr.co/edit/W8jIj1d00Wh30UYGrKuh?p=preview" target="_blank">plunker</a>
 
 ## example xmpp muc
+Say hello to the developers hangout.
 ```xml
-
-<xmpp host="https://laos.buddycloud.com">
-    <xmpplogin></xmpplogin>
+<xmpp host="https://laos.buddycloud.com" anonymous="true">
     <xmppmuc room="seehaus@channels.buddycloud.com"></xmppmuc>
 </xmpp>
 

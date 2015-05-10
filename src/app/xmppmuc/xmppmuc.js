@@ -13,7 +13,7 @@ MUC
 @class  XmppMuc.directive
 */
 
-angular.module("XmppMuc",[])
+
 .directive('xmppmuc', function() {
     return {
         'restrict': 'E',
