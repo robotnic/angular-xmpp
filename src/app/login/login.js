@@ -8,7 +8,9 @@ angular.module("xmppLogin",[])
         },
         'controller': 'XmppLoginController',
         'transclude': false,
-        'templateUrl': 'login/template.tpl.html',
+        'templateUrl':function(elem,attrs) {
+           return attrs.templateUrl || 'login/template.tpl.html';
+        },
         'link': function(scope, element, attrs,xmppController) {
             var up={};
             console.log("login",arguments,xmppController);

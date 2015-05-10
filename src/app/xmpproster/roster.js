@@ -6,7 +6,9 @@ angular.module("XmppRoster",[])
     console.log("dir");
     return {
         'require': '^xmpp',
-        'templateUrl': 'xmpproster/template.tpl.html',
+        'templateUrl':function(elem,attrs) {
+           return attrs.templateUrl || 'xmpproster/template.tpl.html';
+        },
         'restrict': 'E',
         'scope': {
             onopenchat:'&onopenchat',
