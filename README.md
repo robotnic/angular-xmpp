@@ -72,8 +72,18 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
 ## use your own template
 
 Use the attribute 'template-url' to replace the html template by your own html.
+Here a small example how to start. 
 
 <a href="http://plnkr.co/edit/wVWXVn3HJNnG77kLrzyc?p=preview" target="_blank">plunker</a>
+
+It's very handy to use the build in angular json formatter.
+```
+<pre>{{xmpp.model.roster|json}}</pre>
+```
+
+You also can use a json-formatter plugin to observe the model as in this example:
+
+<a href="http://plnkr.co/edit/W8jIj1d00Wh30UYGrKuh?p=preview" target="_blank">plunker</a>
 
 ## example xmpp muc
 ```xml
