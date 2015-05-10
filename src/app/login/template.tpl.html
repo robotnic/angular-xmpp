@@ -1,4 +1,4 @@
-
+<div ng-if="!xmpp.model.connected">
 
 <form  class="form-horizontal" style="width:300px;display:inline-block;padding:5px;color:black" ng-submit="login(user)">
   <div class="form-group">
@@ -65,3 +65,4 @@
 <ul ng-if="xmpp.data.me && xmpp.data.anonymous==false">
 <li ng-click="logout()">logout</li>
 </ul>
+</div>

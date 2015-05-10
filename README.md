@@ -39,6 +39,7 @@ in your browser.
 
 ```
 <a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)
+<a href="http://plnkr.co/edit/uaX29I7DH7DTuZMRA4V5?p=preview" target="_blank">plunker</a> (bootstrap styling)
 
 ## example xmpp muc
 ```xml
