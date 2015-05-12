@@ -32,7 +32,7 @@ angular.module("BuddycloudRecommondations",[])
     $scope.init=function(){
         var jid=$scope.bc.xmpp.data.me.jid;
 //        var jidstring=jid.user+"@"+jid.domain;
-        var jidstring="u9@buddycloud.org";
+        var jidstring="robotnic@laos.buddycloud.com";
         var url="https://demo.buddycloud.org/api/recommendations?max=5&user="+jidstring;
         console.log("url",url);
         $scope.url=url;

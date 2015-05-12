@@ -82,7 +82,8 @@ module.exports = {
         'vendor/angular-base64-upload/dist/angular-base64-upload.js',
         'vendor/angular-image/angular-image.js',
         //'vendor/angular-scroll-glue/src/scrollglue.js',
-        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services.js'
+        'vendor/angular-xmpp-services/bin/assets/angular-xmpp-services.js',
+        'vendor/ng-file-upload/ng-file-upload.js'
     ],
     css: [
     ],

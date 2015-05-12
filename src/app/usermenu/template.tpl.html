@@ -14,7 +14,7 @@ Bootstrap navigation dropdown
 <div class="dropdown-menu ">
     <xmpplogin ng-show="!xmpp.data.me.jid || xmpp.data.anonymous"  defaultdomain="defaultdomain"></xmpplogin>
     <ul   ng-show="xmpp.data.me.jid && !xmpp.data.anonymous">
-        <li><a>Settings</a></li>
+        <li ng-click="$parent.$parent.page='settings'"><a>Settings</a></li>
         <!-- ugly $parent.$parent-->
         <li ng-click="$parent.$parent.page='about'"><a ng-href>About {{page}}</a></li>
         <li class="divider"></li>

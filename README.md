@@ -5,9 +5,9 @@ This is a library, that provides styleable UI Elements for XMPP over Websockets 
 
 ## Demo app
 
-Try here:  http://datenkueche.com/buddycloud/v7/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
+Try here:  http://datenkueche.com/buddycloud/v8/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
 
-Known bugs: rest api down, search and register are not working
+Known bugs:  search is not working at the moment
 
 Screenshot
 ![bootstrap design](https://raw.githubusercontent.com/robotnic/angular-xmpp-services/master/src/assets/docimg/bootstrap.png)
@@ -114,8 +114,8 @@ Say hello to the developers hangout.
 
 ```
 
-<a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (working example)
-
+<a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (working example)<br/>
+<a href="http://plnkr.co/edit/hysY7CLfUngw2nRivI2j?p=preview" target="_blank">plunker</a> (model + post field )
 
 # Combine with your project
 

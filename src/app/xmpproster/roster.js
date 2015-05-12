@@ -19,7 +19,7 @@ angular.module("XmppRoster",[])
             scope.xmpp=xmpp.xmpp;
             scope.xmpp.socket.on("xmpp.connection",function(event,status){
                 scope.xmpp.send("xmpp.roster.get").then(function(){
-                    scope.xmpp.send("xmpp.presence");
+                    scope.xmpp.send("xmpp.presence",{"show":"online"});
                 });
             });
 

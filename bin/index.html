@@ -41,13 +41,11 @@ display:none;
 <p>loading...</p>
 </div>
 <div class="container-fluid" ng-cloak="">
-    <xmpp xhost="http://laos.buddycloud.com:3000" host="http://localhost:3000" xxxhost="https://xmpp-ftw.jit.su" ehost="http://datenkueche.com:3002" defaultdomain="laos.buddycloud.com" >
+    <xmpp xhost="http://laos.buddycloud.com:3000" host="http://localhost:3000" xxxhost="https://xmpp-ftw.jit.su" xxhost="http://datenkueche.com:3002" defaultdomain="laos.buddycloud.com" >
         <buddycloud node="node" >
             <div ng-include="'navbar/template.tpl.html'"></div>
             <webrtc call="call"></webrtc>
             <xmppminichat oninit="initchat(scope)" onvideochat="startVideoChat(jid)"></xmppminichat>
-            <div ng-switch="page">
-                <div class="row"  ng-switch-default>
                     <div  class="col-md-2">
                         <xmpproster onopenchat="openchat(jid)" onnodechange="setnode(node)"></xmpproster>
                         <buddycloud-nodelist onnodechange="setnode(node)"></buddycloud-nodelist>
@@ -62,9 +60,16 @@ display:none;
                         <br/>
                         <buddycloud-invite></buddycloud-invite>
                     </div>
+            <div ng-switch="page">
+                <div class="row"  ng-switch-default>
+                     
                 </div>
-                <div  ng-switch-when="about">
+                <div  ng-switch-when="about" class="page">
                     <div ng-include="'about/template.tpl.html'"></div>
+                    
+                </div>
+                <div  ng-switch-when="settings" class="page">
+                    <settings></settings>
                 </div>
             </div>
         </buddycloud>
