@@ -31,7 +31,9 @@ bower_components/angular-xmpp/index.html
 ```
 in your browser.
 
-## example xmpp roster
+## The directives
+
+### login + roster
 ```xml
 
 <xmpp host="https://laos.buddycloud.com">
@@ -43,7 +45,7 @@ in your browser.
 <a href="http://plnkr.co/edit/YqreohdItO3zvohoeCOI?p=preview" target="_blank">plunker</a> (no styling)<br/>
 <a href="http://plnkr.co/edit/uaX29I7DH7DTuZMRA4V5?p=preview" target="_blank">plunker</a> (bootstrap styling)
 
-## include the chat
+### include the chat
 
 ```javascript
 angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
@@ -51,8 +53,6 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
         $scope.openchat = function(jid) {
           console.log("openchat", jid, $scope.chat);
           $scope.chat.openchat(jid);
-
-
         }
         $scope.initchat = function(chat) {
           $scope.chat = chat;
@@ -71,7 +71,7 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
 
 <a href="http://plnkr.co/edit/0NZGDmfBPDDXYAEXlezV?p=preview" target="_blank">plunker</a> (default styling)
 
-## use your own template
+#### use your own template
 
 Use the attribute 'template-url' to replace the html template by your own html.
 Here a small example how to start. 
@@ -102,7 +102,7 @@ Say hello to the developers hangout.
 <a href="http://plnkr.co/edit/WcWrUoylvdaODTBlKJht?p=preview">plunker</a> (explore the model)<br/>
 <a href="http://plnkr.co/edit/TL8RBheavGbu7xodAPED?p=preview" target="_blank">plunker</a> (simple template)
 
-## example xmpp buddycloud
+### example xmpp buddycloud
 
 ```xml
 <xmpp host="https://laos.buddycloud.com">
@@ -117,9 +117,9 @@ Say hello to the developers hangout.
 <a href="http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview" target="_blank">plunker</a> (working example)<br/>
 <a href="http://plnkr.co/edit/hysY7CLfUngw2nRivI2j?p=preview" target="_blank">plunker</a> (model + post field )
 
-# Combine with your project
+## Combine with your project
 
-## Angular binding exampe
+### Buddycloud events
 ```html
 <input ng-mode="node"/>
 <buddycloud node="node" onchangenode="nodechangedinsidedirective(node)">
@@ -137,45 +137,33 @@ $scope.nodechangedinsidedirective=function(node){
 
 ```
 
-# Styling
+## Styling
 
 The templates include all the javascript that has to be done and tries to keep the html simple.
 Your part is to give them a style.
 
-## how to start
+### how to start
 
 ```
 git clone https://github.com/robotnic/angular-xmpp
 ```
 
-## directory structure
+### directory structure
 
 The structure comes from ng-boilerplate. All the angular factorys are in a seperate project called [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
-
+js, html and less lives together and build a directive
 ```
 ├── app.js
 ├── buddycloud
 │   ├── buddycloud.js
 │   └── buddycloud.less
-├── buddycloud-affiliations
-│   ├── buddycloud-affiliations.js
-│   └── template.tpl.html
 ├── buddycloud-nodelist
 │   ├── buddycloud-nodelist.js
 │   ├── nodelist.less
 │   └── template.tpl.html
-├── buddycloud-search
-│   ├── search.js
-│   └── template.tpl.html
-├── buddycloud-stream
-│   ├── buddycloud-stream.js
-│   └── template.tpl.html
-├── login
-│   ├── login.js
-│   └── template.tpl.html
+....
 ├── minichat
-│   ├── chatstyle.css
 │   ├── minichat.js
 │   ├── minichat.less
 │   └── template.tpl.html
@@ -183,14 +171,6 @@ The structure comes from ng-boilerplate. All the angular factorys are in a seper
 │   └── template.tpl.html
 ├── xmppcore
 │   └── xmppcore.js
-├── xmppform
-│   ├── template.tpl.html
-│   ├── xmppform.js
-│   └── xmppform.less
-└── xmpproster
-    ├── nodelist.less
-    ├── roster.js
-    └── template.tpl.html
 
 ```
 
@@ -198,7 +178,7 @@ The structure comes from ng-boilerplate. All the angular factorys are in a seper
 
 ## grunt
 
-If you want to make changes. You have to run the grunt task builder.
+If you want to make changes to this repository. You have to run the grunt task builder.
 
 ```command
 grunt watch --force
