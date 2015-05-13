@@ -31,6 +31,19 @@ bower_components/angular-xmpp/index.html
 ```
 in your browser.
 
+### connect to server
+To connect to the xmpp server we need an [xmpp-ftw server](You will maybe find something like tha://github.com/xmpp-ftw/xmpp-ftw-demo/).
+You can install that on your localhost.
+To make buddycloud working read this [posting](https://github.com/xmpp-ftw/xmpp-ftw-buddycloud/issues/32#issuecomment-70631102) !!!
+
+host: xmpp-ftw server address
+defaultdomain: if the is no "@"sign in the login name the defaultdomain will be added.
+
+<xmpp host="http://laos.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
+
+
+
+
 ## The directives
 
 ### login + roster
@@ -183,7 +196,7 @@ If you want to make changes to this repository. You have to run the grunt task b
 ```command
 grunt watch --force
 ```
-The result have be views in the "build" folder
+The result is in the "build" folder
 
 
 If you are happy with your work run 
