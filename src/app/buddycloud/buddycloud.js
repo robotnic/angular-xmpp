@@ -70,7 +70,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
                 $scope.buddycloud.open({node:$scope.node,rsm:{max:20}}); 
             }
             q.resolve($scope.buddycloud);
-            $scope.oninit($scope.buddycloud);
+            $scope.oninit({bc:$scope.buddycloud});
         });
         
     };
