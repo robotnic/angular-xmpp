@@ -57,6 +57,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         if(!$scope.buddycloud){
             console.log("new budddycloud");
             $scope.buddycloud=new BuddycloudFactory(xmpp);
+            console.log("new budddycloud",$scope.buddycloud);
             BC=$scope.buddycloud;
         }
         $scope.buddycloud.init().then(function(){
