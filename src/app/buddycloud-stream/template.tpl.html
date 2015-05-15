@@ -14,10 +14,15 @@
                     <div class="about">{{bc.data.configobj['pubsub#description']}}</div>
                 </div>
                 <!-- buttons -->
-                <div class="col-md-3 col-xs-3" style="text-align:right">
+                <div class="col-md-3 col-xs-3" style="text-align:right" ng-if="bc.data.requested!=bc.data.currentnode">
+                    <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-click="createNode();">create node</button>
+                </div>
+                <div class="col-md-3 col-xs-3" style="text-align:right" ng-if="bc.data.requested==bc.data.currentnode">
+
+
                     <button class="btn btn-xs btn-success  actionbutton" tyle="width:100%" ng-show="bc.unsubscribe" ng-click="bc.unsubscribe({node:node});">unfollow</button>
                     <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.subscribe" ng-click="bc.subscribe({node:node});">follow</button>
-                    <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="showconfigform=!showconfigform">config</button>
+                    <button class="btn btn-xs btn-default  actionbutton" tyle="width:100%" ng-show="bc.config" ng-click="$parent.showconfigform=!$parent.showconfigform">config</button>
                     <span ng-switch="readContact()" title="{{readContact()}}" ng-show="bc.data.configobj['buddycloud#channel_type']=='personal'">
                     <button ng-switch-default class="btn btn-xs btn-xs btn-default actionbutton" ng-click="addContact(bc.data.configobj['pubsub#owner'])">add contact </button>
                     <button ng-switch-when="from" class="btn btn-xs btn-xs btn-default actionbutton" ng-click="confirmContact(bc.data.configobj['pubsub#owner'])">resend request</button>
@@ -38,7 +43,7 @@
         <a href="https://github.com/buddycloud/buddycloud-server-java/issues/301">issues/301</a>
         <xmppform formdata="bc.data.config" onclose="$parent.showconfigform=false" onsave="setConfig"></xmppform>
         <hr>
-        <button ng-click="deleteNode()">delete node</button>
+        <button ng-click="bc.deleteNode({node:bc.data.currentnode})">delete node</button>
     </div>
 
 

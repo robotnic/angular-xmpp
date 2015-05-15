@@ -36,6 +36,19 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
                 console.log("node",node);
                 scope.onnodechange(node);
             };
+            scope.createNode=function(){
+                scope.bc.createNode({
+                    node:scope.bc.data.requested,
+                    options:[{
+                        "var": "name",
+                        "label": "Channel name",
+                        "value": "xxx"
+                    }]
+                }).then(function(){
+                    scope.onnodechange({node:scope.bc.data.requested});
+                });
+
+            }
 
             /*
             Todo, put in factory
