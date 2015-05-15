@@ -66,9 +66,10 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
             if($scope.node=="recent"){
                 $scope.buddycloud.recent(); 
             }else{
-                $scope.buddycloud.open({node:$scope.node}); 
+                $scope.buddycloud.open({node:$scope.node,rsm:{max:20}}); 
             }
             q.resolve($scope.buddycloud);
+            $scope.oninit($scope.buddycloud);
         });
         
     };

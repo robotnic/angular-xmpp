@@ -37,6 +37,7 @@ You can install that on your localhost.
 To make buddycloud working read this [posting](https://github.com/xmpp-ftw/xmpp-ftw-buddycloud/issues/32#issuecomment-70631102) !!!
 
 host: xmpp-ftw server address
+
 defaultdomain: if the is no "@"sign in the login name the defaultdomain will be added.
 
 <xmpp host="http://laos.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
