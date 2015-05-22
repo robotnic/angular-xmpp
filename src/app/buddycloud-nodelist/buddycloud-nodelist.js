@@ -6,7 +6,10 @@ angular.module("BuddycloudNodelist",[])
     console.log("dir");
     return {
         'require': '^buddycloud',
-        'templateUrl': 'buddycloud-nodelist/template.tpl.html',
+        'templateUrl':function(elem,attrs) {
+           return attrs.templateUrl || 'buddycloud-nodelist/template.tpl.html';
+        },
+
         'restrict': 'E',
         'scope': {
             onnodechange:'&onnodechange'
