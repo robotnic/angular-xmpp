@@ -27,7 +27,7 @@ bower install angular-xmpp
 
 To see the buddycloud example (screenshot) open 
 ```
-bower_components/angular-xmpp/index.html
+bower_components/angular-xmpp/bin/index.html
 ```
 in your browser.
 
