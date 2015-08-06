@@ -22,7 +22,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
                 //if connected already
                 if(scope.buddycloud){
                     if(node=="recent"){
-                        scope.buddycloud.recent(); 
+                        scope.buddycloud.recent({parentOnly:true,rsm:{max:24}}); 
                     }else{
                         scope.buddycloud.open({node:node}); 
                     }
@@ -81,7 +81,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
     $window.onscroll=function(){
         var bottomDistance = $document[0].body.offsetHeight -$window.innerHeight - $window.scrollY;
         if(bottomDistance < 100){
-            $scope.buddycloud.loadmore({parentOnly:true,rsm:{max:28}});
+            $scope.buddycloud.loadmore({parentOnly:true,rsm:{max:10}});
         }
     };
 }]);
