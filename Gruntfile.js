@@ -181,7 +181,7 @@ module.exports = function ( grunt ) {
           '<%= vendor_files.css %>',
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ],
-        dest: '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
+        dest: '<%= build_dir %>/assets/<%= pkg.name %>.css'
       },
       /**
        * The `compile_js` target is the concatenation of our application source
