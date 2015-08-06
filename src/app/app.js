@@ -57,5 +57,9 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','n
         console.log("this node should open",node);
         $scope.node=node;
     });
+
+    window.addEventListener("push",function(event) {  
+      console.log('Received a push message', event);
+     })
 }]);
 

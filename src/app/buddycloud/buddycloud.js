@@ -65,9 +65,9 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
             //q.resolve($scope.buddycloud);
 
             if($scope.node=="recent"){
-                $scope.buddycloud.recent(); 
+                $scope.buddycloud.recent({parentOnly:true,rsm:{max:29}}); 
             }else{
-                $scope.buddycloud.open({node:$scope.node,rsm:{max:20}}); 
+                $scope.buddycloud.open({node:$scope.node,rsm:{max:30},parentOnly:true}); 
             }
             q.resolve($scope.buddycloud);
             $scope.oninit({bc:$scope.buddycloud});
@@ -81,7 +81,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
     $window.onscroll=function(){
         var bottomDistance = $document[0].body.offsetHeight -$window.innerHeight - $window.scrollY;
         if(bottomDistance < 100){
-            $scope.buddycloud.loadmore();
+            $scope.buddycloud.loadmore({parentOnly:true,rsm:{max:28}});
         }
     };
 }]);
