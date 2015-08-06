@@ -270,7 +270,7 @@ module.exports = function ( grunt ) {
       },
       compile: {
         files: {
-          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.less %>'
+          '<%= build_dir %>/assets/<%= pkg.name %>.css': '<%= app_files.less %>'
         },
         options: {
           cleancss: true,
