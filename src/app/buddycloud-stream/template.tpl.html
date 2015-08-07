@@ -51,21 +51,21 @@
 
     <!-- posting area-->
     <div ng-show="bc.publish && !showconfigform" class="animate-show">
-    <form ng-submit="bc.publish(content);content.atom.content=''">
-        <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}" placeholder="write something ..."></textarea>
-        <input class="btn btn-default" type="submit"></input>
-    </form>
-    <buddycloud-post text="content.atom.content"></buddycloud-post>
+        <form ng-submit="bc.publish(content);content.atom.content=''">
+            <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}" placeholder="write something ..."></textarea>
+            <input class="btn btn-default" type="submit"></input>
+        </form>
+        <buddycloud-post text="content.atom.content"></buddycloud-post>
     </div>
     <br/>
 
     <!-- outer loop -->
     <div ng-if="!showconfigform">
-        <div ng-repeat="item in bc.data.tree" class="panel panel-default repeat-item" >
+        <div ng-repeat="item in bc.data.tree" class="panel panel-default repeat-item">
             <div class="panel-heading">
                 <div class="avatar" size="24" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
-<span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
+                <span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
 
                 <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span>  <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span>
                 </div>
@@ -78,18 +78,28 @@
             <buddycloud-post text="item.entry.atom.content.content"></buddycloud-post>
 
             <!-- inner loop -->
-            <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false" class="row repeat-item"   >
-                <div class="col-md-1 col-xs-1">
+            <div class="row repeat-item">
+                <div ng-if="item.rsm.count > item.children.length">
+                    <div class="col-md-1 col-xs-1">
+                    </div>
+                    <div class="col-md-11 col-xs-11">
+                        <br/>
+                        <a ng-href ng-click="loadMoreReplies(item.node,item.id,item.rsm.first)">View previous comments</a>(1..{{item.rsm.count - item.children.length }}/{{item.rsm.count}})
+                    </div>
                 </div>
-                <div class="col-md-11 col-xs-11">
-                    <div class="avatar" style="float:left;" avatar="subitem.entry.atom.author.name" title="{{subitem.entry.atom.author.name}}"></div>
-                    <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
-                    <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
+                <div ng-repeat="subitem in item.children | orderBy:'entry.atom.published':false">
+                    <div class="col-md-1 col-xs-1">
+                    </div>
+                    <div class="col-md-11 col-xs-11">
+                        <div class="avatar" style="float:left;" avatar="subitem.entry.atom.author.name" title="{{subitem.entry.atom.author.name}}"></div>
+                        <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="subitem.remove" ng-click="subitem.remove()">✖</button>
+                        <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
+                        </div>
+
+                        <p>{{subitem.entry.atom.content.content}}</p>
                     </div>
 
-                    <p>{{subitem.entry.atom.content.content}}</p>
                 </div>
-
             </div>
             <div class="row" ng-if="item.reply">
                 <div class="col-md-1 col-xs-1">
@@ -103,7 +113,7 @@
                             </div>
 
                             <div class="col-md-10 col-xs-10" style="text-align:left">
-                                <textarea  ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} " placeholder="comment"></textarea>
+                                <textarea ng-model="input.text" ng-keyup="reply($event,item,input)" g-keyup="if($event.keyCode == 13) {item.reply(subtext);subtext=''} " placeholder="comment"></textarea>
 
                             </div>
                         </div>

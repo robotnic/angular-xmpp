@@ -27,6 +27,10 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
                     input.text="";
                 }
             };
+            scope.loadMoreReplies=function(node,id,first){
+                console.log(id,first);
+                scope.bc.send("xmpp.buddycloud.items.replies",{node:node,id:id,rsm:{max:10,before:first}});
+            }
             scope.setConfig=function(data){
                 console.log("new config data",data);
                 scope.bc.send("xmpp.buddycloud.config.set",{node:scope.bc.data.currentnode,form:data});
