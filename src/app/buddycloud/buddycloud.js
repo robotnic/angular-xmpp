@@ -24,7 +24,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
                     if(node=="recent"){
                         scope.buddycloud.recent({parentOnly:true,rsm:{max:24}}); 
                     }else{
-                        scope.buddycloud.open({node:node}); 
+                        scope.buddycloud.open({node:node,parentOnly:true}); 
                     }
                 }
             });
