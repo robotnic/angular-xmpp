@@ -6,7 +6,7 @@ This is a library, that provides styleable UI Elements for XMPP over Websockets 
 
 ## Demo app
 
-Try here:  http://datenkueche.com/buddycloud/v8/ For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
+Try here:  https://buddycloud.org For testing, open the "login" dropdown and click "sign in". At the moment username and password are prefilled. You can play with a real account with real data. 
 
 Known bugs:  search is not working at the moment
 
@@ -42,7 +42,7 @@ host: xmpp-ftw server address
 defaultdomain: if the is no "@"sign in the login name the defaultdomain will be added.
 ```xml
 
-<xmpp host="http://laos.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
+<xmpp host="https://proc.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
 ```
 
 
@@ -78,7 +78,7 @@ angular.module("XmppApp", ["AngularXmpp", 'templates-app'])
 ```
 
 ```xml
-<xmpp host="http://datenkueche.com:3002" defaultdomain="laos.buddycloud.com">
+<xmpp host="https://prod.buddycloud.com" >
       <xmpplogin></xmpplogin>
       <xmpproster onopenchat="openchat(jid)"></xmpproster>
       <xmppminichat oninit="initchat(scope)"></xmppminichat>
