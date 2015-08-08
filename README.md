@@ -42,8 +42,9 @@ host: xmpp-ftw server address
 defaultdomain: if the is no "@"sign in the login name the defaultdomain will be added.
 ```xml
 
-<xmpp host="https://proc.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
+<xmpp host="https://prod.buddycloud.com"  defaultdomain="laos.buddycloud.com" > </xmpp>
 ```
+The default domain is also nessessary if you allow anonymous logins.
 
 
 
@@ -53,7 +54,7 @@ defaultdomain: if the is no "@"sign in the login name the defaultdomain will be 
 ### login + roster
 ```xml
 
-<xmpp host="https://laos.buddycloud.com">
+<xmpp host="https://prod.buddycloud.com">
     <xmpplogin defaultdomain="laos.buddycloud.com"></xmpplogin>
     <xmpproster></xmpproster>
 </xmpp>
@@ -111,7 +112,7 @@ You also can use a json-formatter plugin to observe the model as in this example
 ## example xmpp muc
 Say hello to the developers hangout.
 ```xml
-<xmpp host="https://laos.buddycloud.com" anonymous="true">
+<xmpp host="https://prod.buddycloud.com" anonymous="true">
     <xmppmuc room="seehaus@channels.buddycloud.com" nick="guest"></xmppmuc>
 </xmpp>
 
@@ -122,9 +123,9 @@ Say hello to the developers hangout.
 ### example xmpp buddycloud
 
 ```xml
-<xmpp host="https://laos.buddycloud.com">
+<xmpp host="https://prod.buddycloud.com">
     <xmpplogin></xmpplogin>
-    <buddycloud node="/user/robotnic@laos.buddycloud.com/posts">
+    <buddycloud node="/user/robotnic@buddycloud.com/posts">
         <buddycloud-stream></buddycloud-stream>
     </buddycloud>
 </xmpp>
@@ -147,7 +148,7 @@ Say hello to the developers hangout.
 In your controller
 ```javascript
 ...
-$scope.node="/user/robotnic@laos.buddycloud.com/posts";
+$scope.node="/user/robotnic@buddycloud.com/posts";
 $scope.nodechangedinsidedirective=function(node){
     //change hashtag or whatever
 }
