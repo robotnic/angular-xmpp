@@ -35,6 +35,7 @@ angular.module("Settings",['ngFileUpload'])
     $scope.upload = function (files) {
         var cred=$scope.bc.xmpp.model.credentials.request;
         var uploadurl=baseUrl+cred.jid+"/media/avatar";
+        console.log( uploadurl);
         if (files && files.length) {
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
@@ -42,7 +43,7 @@ angular.module("Settings",['ngFileUpload'])
                     method:"PUT",
                     headers : {
                         'Content-Type': file.type,
-                        'Authorization':btoa(cred.jid+":"+cred.password)
+                        'Authorization':'Basic '+btoa(cred.jid+":"+cred.password)
                         //'Authorization':btoa("u9:nix")
                     },
                     url: uploadurl,

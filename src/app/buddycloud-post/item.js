@@ -36,6 +36,7 @@ angular.module("BuddycloudPost",[])
         }
     //    var parseurl="http://localhost/test/og/php-ogp/example.php?url="+url;
         var parseurl="http://datenkueche.com/buddycloud/ogp/crawler.php?url="+url;
+        //var parseurl="http://localhost:3000/?url="+url;
         $http.get(parseurl).then(function(response){
             $scope.ogp=response.data;
             try{
