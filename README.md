@@ -2,6 +2,7 @@
 
 This is a library, that provides styleable UI Elements for XMPP over Websockets using [xmpp-ftw](https://xmpp-ftw.jit.su/) and [angular-xmpp-services](https://github.com/robotnic/angular-xmpp-services/).
 
+![diagram](https://raw.githubusercontent.com/robotnic/angular-xmpp/master/diagram.png);
 
 ## Demo app
 
