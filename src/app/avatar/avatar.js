@@ -39,7 +39,7 @@ angular.module("Avatar",['ngImage'])
                     jidstring = jid.user + "@" + jid.domain;
                 }
             }
-            var url="https://demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight="+$scope.size+"&maxwidth="+$scope.size;
+            var url="//demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight="+$scope.size+"&maxwidth="+$scope.size;
             $scope.avatarurl=url;
             return url;
         };
@@ -68,7 +68,7 @@ angular.module("Avatar",['ngImage'])
                 jidstring = jid.user + "@" + jid.domain;
             }
             var hash = hashCode(jidstring);
-            var url = "http://www.gravatar.com/avatar/" + hash + "?d=monsterid&f=y";
+            var url = "//www.gravatar.com/avatar/" + hash + "?d=monsterid&f=y";
             return url;
         }
 
