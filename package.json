@@ -1,7 +1,7 @@
 {
   "author": "Bernhard Zwischenbrugger",
   "name": "angular-xmpp",
-  "version": "0.0.9",
+  "version": "0.0.14",
   "homepage": "https://github.com/ngbp/ngbp",
   "licenses": {
     "type": "MIT",

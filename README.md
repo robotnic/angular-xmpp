@@ -112,7 +112,7 @@ You also can use a json-formatter plugin to observe the model as in this example
 ## example xmpp muc
 Say hello to the developers hangout.
 ```xml
-<xmpp host="https://prod.buddycloud.com" anonymous="true">
+<xmpp host="https://prod.buddycloud.com" defauldomain="laos.buddycloud.com" anonymous="true">
     <xmppmuc room="seehaus@channels.buddycloud.com" nick="guest"></xmppmuc>
 </xmpp>
 
