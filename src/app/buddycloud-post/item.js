@@ -36,31 +36,30 @@ angular.module("BuddycloudPost",[])
         }
     //    var parseurl="http://localhost/test/og/php-ogp/example.php?url="+url;
         //var parseurl="http://datenkueche.com/buddycloud/ogp/crawler.php?url="+url;
-        var parseurl="https://open.iframe.ly/api/oembed?url="+url+"&origin=@buddycloud"
+        //var parseurl="https://open.iframe.ly/api/oembed?url="+url+"&origin=@buddycloud"
+        var parseurl="https://opengraph-parser.herokuapp.com/?url="+url;
         //var parseurl="http://localhost:3000/?url="+url;
         $http.get(parseurl).then(function(response){
             $scope.ogp=response.data;
             console.log("----------------",$scope.ogp);
+/*
             try{
                 $scope.url=$sce.trustAsResourceUrl($scope.ogp['url']);
                 $scope.img=$sce.trustAsResourceUrl($scope.ogp['thumbnail_url']);
-                /*
                 if($scope.ogp['twitter:player']){
                     $scope.url=$sce.trustAsResourceUrl($scope.ogp['twitter:player']);  //don't want autostart on vimeo
                 }else{
                     $scope.url=$sce.trustAsResourceUrl($scope.ogp['og:video:secure_url'][0]);  
                 }
-                */
             }catch(e){
-                /*
                 if($scope.ogp['og:image'] && typeof($scope.ogp['og:image']=='string')){
                     console.log($scope.ogp['og:image']);
                     $scope.img=$sce.trustAsResourceUrl($scope.ogp['og:image']);
                 }else{
                     $scope.img=$sce.trustAsResourceUrl($scope.ogp['twitter:image']);
                 }
-                */
             }
+*/
         },function(error){
             console.log(error);
         })

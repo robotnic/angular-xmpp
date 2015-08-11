@@ -1,12 +1,18 @@
-<div class="panel-body">
-    <h4 ng-if="ogp['og:title']">{{ogp['og:title']}}</h4>
-    <p ng-if="ogp['og:description']">{{ogp['og:description']}}</p>
+<div class="panel-body" ng-if="ogp.image">
 <!--
     <iframe ng-if="url" ng-src="{{url}}" ></iframe>
 -->
     <a href="{{url}}" target="_blank">
-    <img ng-if="img" ng-src="{{img}}"/>
+    <div class="row">
+        <img class="col-md-2" ng-if="ogp.image.url" ng-src="{{ogp.image.url}}" style="height:100px"/>
+        <div class="col-md-10">
+        <h4 ng-if="ogp.title">{{ogp.title}}</h4>
+        <p ng-if="ogp.description">{{ogp.description}}</p>
+        </div>
+    </div>
     </a>
+    <br/>
 </div>
+
 
 
