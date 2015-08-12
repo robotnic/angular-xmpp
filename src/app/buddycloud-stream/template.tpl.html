@@ -76,6 +76,7 @@
             </div>
 
             <buddycloud-post text="item.entry.atom.content.content"></buddycloud-post>
+            <img src="https://buddycloud.org/api/{{item.entry.atom.author.name}}/media/{{media}}?maxheight=400&maxwidth=400" ng-repeat="media in item.entry.media"/>
 
             <!-- inner loop -->
             <div class="row repeat-item">
