@@ -3,7 +3,7 @@
   "authors": [
     "bernhard zwischenbrgger"
   ],
-  "version": "0.0.22",
+  "version": "0.0.23",
   "main": [
     "bin/index.html"
   ],

@@ -2,7 +2,7 @@
 //'use strict';
 BC=null;
 
-angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','angularMoment'])
+angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','BuddycloudMedia','angularMoment'])
 .directive("buddycloud",function(){
     return {
         'require': '^xmpp',
