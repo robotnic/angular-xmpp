@@ -1,5 +1,6 @@
 
 <img style="padding:10px" ng-if="meta.mimeType=='image/jpeg'" src="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=400&maxwidth=400"/>
+<img style="padding:10px" ng-if="meta.mimeType=='image/png'" src="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=400&maxwidth=400"/>
 
 <video style="padding:10px;width:400px" ng-if="meta.mimeType=='video/mp4'"  controls>
 <source  type="{{meta.mimeType}}" ng-src="{{meta|embedUrl}}"/>

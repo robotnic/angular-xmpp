@@ -2,7 +2,7 @@
 //'use strict';
 
 
-angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
+angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate','ngFileUpload'])
 .directive("buddycloudStream",function(){
     console.log("dir");
     return {
@@ -107,27 +107,50 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate'])
 
 })
 
-.controller("streamController",function($scope,$http){
-            $scope.$watch("media.upload",function(){
-                if(!$scope.media.upload){
-                    return;
-                }
-                var json={
-                 "data": $scope.media.upload.base64,
-                 "content-type": $scope.media.upload.filetype,
-                 "filename": "image.png",
-                 "title": "Juliet's prom pic",
-                 "description": "Juliet's beautiful prom pic!"
-                 };
-                var me=$scope.bc.xmpp.data.me.jid;
-                var jid=me.user+"@"+me.domain;
-                var url="https://buddycloud.com/api/"+jid+"/media";
-                $http({method:"POST",url:url,data:json}).then(function(response){
-                    console.log(response.data);
-                },function(error){
-                    console.log("upload error",error);
+.controller("streamController",function($scope,Upload,$timeout){
+    $scope.uploaded=[];
+    $scope.content={
+        media:[]
+    };
+
+    var baseUrl="https://demo.buddycloud.org/api/";
+    $scope.$watch('files', function () {
+        console.log($scope.files);
+        if($scope.files){
+            $scope.upload($scope.files);
+        }
+    });
+
+    $scope.upload = function (files) {
+        var cred=$scope.bc.xmpp.model.credentials.request;
+        var uploadurl=baseUrl+cred.jid+"/media";
+        console.log( uploadurl);
+        if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                Upload.upload({
+                    method:"POST",
+                    headers : {
+                        'Content-Type': file.type,
+                        'Authorization':'Basic '+btoa(cred.jid+":"+cred.password)
+                        //'Authorization':btoa("u9:nix")
+                    },
+                    url: uploadurl,
+                    fileFormDataName:'data',
+                    fileName: 'filename',
+                    file: file
+                }).progress(function (evt) {
+                    console.log(evt);
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                }).success(function (data, status, headers, config) {
+                    console.log('file ' + config.file.name + 'uploaded. Response: ' , data);
+                    //trick to really load the image - not really good
+                    $scope.uploaded.push(data);
+                    $scope.content.media.push(data.id);
                 });
-            });
+            }
+        }
+    };
 
 });
-

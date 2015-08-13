@@ -54,9 +54,18 @@
         <form ng-submit="bc.publish(content);content.atom.content=''">
             <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}" placeholder="write something ..."></textarea>
             <input class="btn btn-default" type="submit"></input>
+            <button class="btn pull-right"   ngf-select ng-model="files" ng-click="triggerUpload()"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></button>
         </form>
         <buddycloud-post text="content.atom.content"></buddycloud-post>
     </div>
+<!--
+<pre>
+{{uploaded|json}}
+</pre>
+            <div ng-repeat="item in uploaded">https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}<div/>
+-->
+            <img ng-repeat="item in uploaded" ng-src="https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}" style="height:100px;padding:5px;margin:5px"/>
+
     <br/>
 
     <!-- outer loop -->
@@ -97,7 +106,7 @@
                         <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
                         </div>
 
-                        <p>{{subitem.entry.atom.content.content}}</p>
+                        <p>{{subitem.entry.atom.content.content|linky:'_blank'}}</p>
                     </div>
 
                 </div>

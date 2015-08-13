@@ -19,6 +19,8 @@ angular.module("Settings",['ngFileUpload'])
                 scope.bc=bc;
                 scope.xmpp=bc.xmpp.model;
                 console.log("connected");
+                scope.avatar=scope.bc.xmpp.data.me.jid;
+    console.log("///////////////",scope.bc.xmpp.data.me.jid);
             });
 
         }
@@ -26,10 +28,13 @@ angular.module("Settings",['ngFileUpload'])
 
 })
 
-.controller("SettingsController",function($scope,Upload){
+.controller("SettingsController",function($scope,Upload,$timeout){
     var baseUrl="https://demo.buddycloud.org/api/";
     $scope.$watch('files', function () {
-        $scope.upload($scope.files);
+        console.log($scope.files);
+        if($scope.files){
+            $scope.upload($scope.files);
+        }
     });
 
     $scope.upload = function (files) {
@@ -56,6 +61,11 @@ angular.module("Settings",['ngFileUpload'])
                     console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                 }).success(function (data, status, headers, config) {
                     console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    //trick to really load the image - not really good
+                    $scope.avatar="";
+                    $timeout(function(){
+                        $scope.avatar=$scope.bc.xmpp.data.me.jid;
+                    },1000);
                 });
             }
         }
