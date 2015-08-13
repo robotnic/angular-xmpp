@@ -162,13 +162,22 @@ Your part is to give them a style.
 
 ### What is it about?
 If you are good in design, but don't like javascript programming, here is your starting point.
+
+#### Dynamic Json
 All the information the stream needs is in json object, that looks like in this plunker.
 http://plnkr.co/edit/hysY7CLfUngw2nRivI2j?p=preview
-At 'tree[0].entry.atom.content.content' you find the text of a message.
 
+At 
+```
+tree[0].entry.atom.content.content
+```
+you find the text of a message.
 
+#### The HTML
 The next plunker shows you the buddycloud stream.
+
 http://plnkr.co/edit/qd7tIpQT2zvuhE9wsMbP?p=preview
+
 You can edit the file "stream.tmp.html" to change the the output.
 If you don't like bootstrap, change the style to ioncic for example or build a fance SVG version.
 
