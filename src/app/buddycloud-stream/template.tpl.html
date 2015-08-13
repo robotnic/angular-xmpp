@@ -106,7 +106,7 @@
                         <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+subitem.entry.atom.author.name+'/posts'})">{{subitem.entry.atom.author.name}}</span>  <span class="date pull-right" am-time-ago="subitem.entry.atom.published"></span>
                         </div>
 
-                        <p>{{subitem.entry.atom.content.content|linky:'_blank'}}</p>
+                        <p ng-bind-html="subitem.entry.atom.content.content|linky:'_blank'"></p>
                     </div>
 
                 </div>

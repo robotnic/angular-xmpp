@@ -113,7 +113,7 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate','
         media:[]
     };
 
-    var baseUrl="https://demo.buddycloud.org/api/";
+    var baseUrl="https://demo.buddycloud.org/api/";   //fixit - hardcodes address
     $scope.$watch('files', function () {
         console.log($scope.files);
         if($scope.files){
