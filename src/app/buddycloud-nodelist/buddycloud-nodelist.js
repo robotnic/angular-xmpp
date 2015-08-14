@@ -27,7 +27,7 @@ angular.module("BuddycloudNodelist",[])
                 console.log(scope.form);
                 var domain=scope.bc.xmpp.data.me.jid.domain;
                 console.log(scope);
-                var node='/user/' + scope.form[0].value + '@'+domain+'/posts';
+                var node='/user/' + scope.form[0].value + '@topics.'+domain+'/posts';
                 scope.bc.createNode({
                     'node': node,
                     'options': scope.form
