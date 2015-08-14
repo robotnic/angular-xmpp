@@ -54,7 +54,7 @@
         <form ng-submit="bc.publish(content);content.atom.content=''">
             <textarea ng-model="content.atom.content" class="form-control big" g-model-options="{debounce: 1000}" placeholder="write something ..."></textarea>
             <input class="btn btn-default" type="submit"></input>
-            <button class="btn pull-right"   ngf-select ng-model="files" ng-click="triggerUpload()"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></button>
+            <button class="btn pull-right"   ngf-select ngf-multiple="true" ng-model="files" ng-click="triggerUpload()"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span></button>
         </form>
         <buddycloud-post text="content.atom.content"></buddycloud-post>
     </div>
@@ -64,7 +64,7 @@
 </pre>
             <div ng-repeat="item in uploaded">https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}<div/>
 -->
-            <img ng-repeat="item in uploaded" ng-src="https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}" style="height:100px;padding:5px;margin:5px"/>
+            <img ng-repeat="item in uploaded" ng-src="https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}" style="height:100px;margin:5px"/>
 
     <br/>
 
