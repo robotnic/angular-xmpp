@@ -65,7 +65,9 @@
             <div ng-repeat="item in uploaded">https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}<div/>
 -->
             <img ng-repeat="item in uploaded" ng-src="https://buddycloud.org/api/{{item.entityId}}/media/{{item.id}}" style="height:100px;margin:5px"/>
-
+<br/>
+                <button class="btn btn-link " title="show likes" ng-click="ratecount()">show likes (beta)</button>
+    <br/>
     <br/>
 
     <!-- outer loop -->
@@ -74,6 +76,10 @@
             <div class="panel-heading">
                 <div class="avatar" size="24" style="float:left;" avatar="item.entry.atom.author.name" title="{{item.entry.atom.author.name}}"></div>
                 <button class="btn btn-link pull-right closebutton" title="Delete Post" ng-if="item.remove" ng-click="item.remove()">✖</button>
+                <button class="btn btn-link pull-right closebutton" title="Like Post" ng-click="rate(item)">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    <span ng-if="item.ratecount"> {{item.ratecount}}</span>
+                </button>
                 <span class="date pull-right" am-time-ago="item.entry.atom.published"></span>
 
                 <div class="jid"><span class="author" ng-click="opennode({node:'/user/'+item.entry.atom.author.name+'/posts'})">{{item.entry.atom.author.name}}</span>  <span ng-if="bc.data.currentnode=='recent'" ng-click="opennode({node:item.node})">⇒   {{item.node}}</span>

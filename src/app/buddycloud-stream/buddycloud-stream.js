@@ -121,6 +121,38 @@ angular.module("BuddycloudStream",['btford.markdown','naif.base64','ngAnimate','
         }
     });
 
+    $scope.ratecount=function(item){
+        var tree=$scope.bc.data.tree;
+        var count=0;
+        for(var i=0;i<tree.length;i++){
+         //   if(tree[i].id==item.id){
+                var count=0;
+                if(tree[i].children){
+                for(j=0;j<tree[i].children.length;j++){
+                    var entry=tree[i].children[j].entry
+                    console.log(entry);
+                    console.log(entry.activity);
+                    console.log(entry.activity.verb);
+                    if(entry.activity.verb=="rated"){
+                            count++;
+                    }
+                }
+                tree[i].ratecount=count;
+                }
+        //    }
+        }
+        $scope.count=count;
+        return count;
+    }
+    $scope.rate=function(item){
+        console.log(item);
+        var command="xmpp.buddycloud.publish";
+
+        var e={"node":item.node,"content":{"review":{"rating":"5.0"},"activity":{"target":{"id":item.id,"object-type":"comment"},"verb":"rated","object":{"object-type":"comment"},"author":{"object-type":"person"}},"atom":{"content":"+1"},"in-reply-to":{"ref":item.id}}}
+
+        $scope.bc.send(command,e);
+    }
+
     $scope.upload = function (files) {
         var cred=$scope.bc.xmpp.model.credentials.request;
         var uploadurl=baseUrl+cred.jid+"/media";

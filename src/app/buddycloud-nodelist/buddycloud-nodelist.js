@@ -46,8 +46,7 @@ angular.module("BuddycloudNodelist",[])
                 "var": "buddycloud#channel_type",
                 "label": "Channel type",
                 "value": "topic",
-                "type": "list-single",
-                "options":  [{ label: "Topic", value: "topic" }, { label: "Personal", value: "personal" }]
+                "type": "fixed",
             }, {
                 "var": "buddycloud#default_affiliation",
                 "label":"Default affiliation",

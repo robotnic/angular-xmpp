@@ -8,6 +8,7 @@
     <label ng-if="field.label" for="{{field.var}}" class="col-sm-4 control-label">{{field.label}}</label>
     <div class="col-sm-8">
 <input type="password" ng-model="field.value" ng-if="field.type=='text-private'" class="form-control"/>
+<input ng-model="field.value" ng-if="field.type=='fixed'" class="form-control" readonly/>
 <input ng-model="field.value" ng-if="field.type=='text-single'" class="form-control"/>
 <input ng-model="field.value" ng-if="!field.type" class="form-control"/>
 <input type="checkbox" ng-model="field.value" ng-if="field.type=='boolean'" class="form-control"/>
