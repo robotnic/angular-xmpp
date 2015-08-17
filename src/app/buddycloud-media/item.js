@@ -26,9 +26,7 @@ angular.module("BuddycloudMedia",[])
 
     $scope.loadData=function(meta){
         var url="https://buddycloud.org/api/"+meta.entityId+"/media/"+meta.id;
-        console.log(url);
         $http.get(url).then(function(response){
-            console.log(url,response);
             if(response.data.type=="Feature" || response.data.type=="FeatureCollection"){
                 $scope.geojson=response.data;
             }

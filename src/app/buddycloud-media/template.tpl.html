@@ -7,13 +7,11 @@
 <source  type="{{meta.mimeType}}" ng-src="{{meta|embedUrl}}"/>
 </video>
 <a ng-switch-default href="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}" target="_blank">
-<img src="http://www.stdicon.com/crystal/{{meta.mimeType}}" style="height:60px"/>
+<img src="http://www.stdicon.com/crystal/{{meta.mimeType}}" style="height:60px" title="{{meta.mimeType}}"/>
 </a>
-{{meta.mimeType}}
+
 </span>
 <div ng-if="geojson">
-<pre>
-{{geojson|json}}
-</pre>
+<buddycloud-map json="geojson"></buddycloud-map>
 </div>
 
