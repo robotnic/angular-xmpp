@@ -6869,6 +6869,9 @@ buddycloud {
 buddycloud buddycloud-stream {
   display: block;
 }
+buddycloud .panel-default p {
+  white-space: pre-line;
+}
 buddycloud .panel-heading {
   background-color: white;
   min-height: 40px;
@@ -6884,9 +6887,6 @@ buddycloud .panel-body {
   padding: 0px;
   padding-left: 10px;
   padding-right: 10px;
-}
-buddycloud .panel-body p {
-  white-space: pre-line;
 }
 buddycloud .panel-body h4 {
   margin-top: 3px;
