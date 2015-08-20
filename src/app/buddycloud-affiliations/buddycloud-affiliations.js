@@ -3,7 +3,6 @@
 
 angular.module("BuddycloudAffiliations",[])
 .directive("buddycloudAffiliations",function(){
-    console.log("dir");
     return {
         'require': '^buddycloud',
         'scope': {

@@ -28,8 +28,55 @@ angular.module("Settings",['ngFileUpload'])
 
 })
 
-.controller("SettingsController",function($scope,Upload,$timeout){
+.controller("SettingsController",function($scope,$http,Upload,$timeout){
     var baseUrl="https://demo.buddycloud.org/api/";
+    var settingsUrl=baseUrl+"/notification_settings?type=email";
+
+    $scope.getSettings=function(){
+        var cred=$scope.bc.xmpp.model.credentials.request;
+        $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa(cred.jid+":"+cred.password);
+
+        $http.get(settingsUrl,{credentials:true}).then(function(response){
+            console.log(response.data);
+            $scope.settings=response.data;
+
+            //workaroud: https://github.com/buddycloud/buddycloud-server-java/issues/300
+            for(var item in $scope.settings[0]){
+                if(item!="target"){
+                    if($scope.settings[0][item]=="true"){
+                        $scope.settings[0][item]=true;
+                    }else{
+                        $scope.settings[0][item]=false;
+                    }
+                }
+                console.log(item);
+            }
+        });
+    }
+
+
+    $scope.setSettings=function(){
+//        $http.get(settingsUrl,{credentials:true})
+
+            //workaroud: https://github.com/buddycloud/buddycloud-server-java/issues/300
+
+
+
+        $http({
+            url: baseUrl+"/notification_settings",
+            method: "POST",
+            data: $scope.settings,
+            credentials:true
+        }).then(function(response){
+
+            console.log("saved",response);
+        },function(error){
+            console.log("error",error);
+            $scope.error=error;
+        });
+    }
+
+
     $scope.$watch('files', function () {
         console.log($scope.files);
         if($scope.files){

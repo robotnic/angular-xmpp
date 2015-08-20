@@ -5,18 +5,36 @@
 <br/>
 
 <h1>Settings</h1>
-click on image to upload a new image. {{avatar}} {{bc.xmpp.data.me.jid}}
+{{avatar.user}}@{{avatar.domain}}<br/>
+
 <div class="button" ngf-select ng-model="files">
-<div class="avatar" avatar="avatar" size="200" style="width:200px" ng-click="triggerUpload()"></div>
+<div class="avatar" avatar="avatar" size="200" style="width:200px;height:200px" ng-click="triggerUpload()"></div>
 </div>
-<!--
-<input type="file" ng-file-select="uploadImage($files)" style="display:none" id="fileInput" name="data"/>
--->
+click on image to upload a new image.
+<br/>
+<br/>
 
-<!--
-{{bc.xmpp.model.credentials.request|json}}
-{{bc.xmpp.model.credentials.request}}
-<pre>{{bc.xmpp.model|json}}</pre>
--->
+<button ng-click="getSettings()">get settings</button><br/>
+<form ng-if="settings">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" ng-model="settings[0]['target']" class="form-control" id="exampleInputEmail1" placeholder="Email">
+  </div>
 
+  <div class="checkbox" ng-repeat="(key,value) in settings[0]" ng-if="key!='target'">
+    <label>
+      <input type="checkbox" ng-model="settings[0][key]"> {{key}}
+    </label>
+  </div>
+  <button ng-click="setSettings()" class="btn btn-default">Save</button>
+</form>
+<pre style="color:red" ng-if="error">{{error|json}}</pre>
+<br/>
+<br/>
+<br/>
+<br/>
+debug
+<pre>
+{{settings|json}}
+</pre>
 </div>
