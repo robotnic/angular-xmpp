@@ -20,12 +20,28 @@ click on image to upload a new image.
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" ng-model="settings[0]['target']" class="form-control" id="exampleInputEmail1" placeholder="Email">
   </div>
-
-  <div class="checkbox" ng-repeat="(key,value) in settings[0]" ng-if="key!='target'">
-    <label>
-      <input type="checkbox" ng-model="settings[0][key]"> {{key}}
-    </label>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['postAfterMe']"> postAfterMe </label>
   </div>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['postMentionedMe']"> postMentionedMe </label>
+  </div>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['postOnMyChannel']"> postOnMyChannel </label>
+  </div>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['postOnSubscribedChannel']"> postOnSubscribedChannel </label>
+  </div>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['followMyChannelfollowMyChannel']"> followMyChannelfollowMyChannel </label>
+  </div>
+  <div class="checkbox">
+    <label> <input type="checkbox" ng-model="settings[0]['followRequest']"> followRequest </label>
+  </div>
+
+
+
+
   <button ng-click="setSettings()" class="btn btn-default">Save</button>
 </form>
 <pre style="color:red" ng-if="error">{{error|json}}</pre>
