@@ -1,6 +1,6 @@
 /*jslint node: true */
 //'use strict';
-BC=null;
+var BC=null;
 
 angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','BuddycloudAffiliations','BuddycloudMedia','angularMoment'])
 .directive("buddycloud",function(){
@@ -10,6 +10,7 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
         'scope': {
             node:'=node',
             oninit:'&oninit',
+            onnotification:'&onnotification',
             onnodechange:'&onnodechange'
         },
         'transclude': false,
@@ -71,6 +72,10 @@ angular.module("Buddycloud",['BuddycloudNodelist','BuddycloudStream','Buddycloud
             }
             q.resolve($scope.buddycloud);
             $scope.oninit({bc:$scope.buddycloud});
+            $scope.buddycloud.onnotification(function(data){
+                console.log(data);
+                $scope.onnotification({item:data});
+            }); 
         });
         
     };

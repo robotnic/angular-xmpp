@@ -45,7 +45,7 @@ display:none;
 xhost="http://localhost:3000" 
 host="https://prod.buddycloud.com" 
           defaultdomain="laos.buddycloud.com" >
-        <buddycloud node="node" >
+        <buddycloud node="node"  onnotification="notify(item)" oninit="initbc(bc)">
             <div ng-include="'navbar/template.tpl.html'"></div>
             <webrtc call="call"></webrtc>
             <xmppminichat oninit="initchat(scope)" onvideochat="startVideoChat(jid)"></xmppminichat>
@@ -55,7 +55,7 @@ host="https://prod.buddycloud.com"
                         <buddycloud-recommondations onnodechange="setnode(node)"></buddycloud-recommondations>
                     </div>
                     <div id="scrolltarget"> </div>
-                    <buddycloud-stream class="col-md-8" onnodechange="setnode(node)" style="min-height:2000px"></buddycloud-stream>
+                    <buddycloud-stream class="col-md-8" onnodechange="setnode(node)"  style="min-height:2000px"></buddycloud-stream>
                     <div class="col-md-2" ng-if="node!='recent'">
                         <button ng-show="!showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=true">Show Affiliations</button>
                         <button ng-show="showaffiliations" class="btn btn-xs btn-default" ng-click="showaffiliations=false">Hide Affiliations</button>
