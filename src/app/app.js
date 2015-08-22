@@ -21,22 +21,37 @@ angular.module('XmppApp', [ 'templates-app', 'templates-common','AngularXmpp','n
         console.log("BC",bc);
     }
 
+    //http://stackoverflow.com/questions/31512504/html5-notification-not-working-in-mobile-chrome
+
+    navigator.serviceWorker.register('sw.js');
     Notification.requestPermission(function(result) {
-      if (result === 'denied') {
-        console.log('Permission wasn\'t granted. Allow a retry.');
-        return;
-      } else if (result === 'default') {
-        console.log('The permission request was dismissed.');
-        return;
+      if (result === 'granted') {
+        navigator.serviceWorker.ready.then(function(registration) {
+            $scope.registration=registration;
+    //      registration.showNotification('Notification with ServiceWorker');
+        });
       }
-      // Do something with the granted permission.
     });
 
+    /*
+        Notification.requestPermission(function(result) {
+          if (result === 'denied') {
+            console.log('Permission wasn\'t granted. Allow a retry.');
+            return;
+          } else if (result === 'default') {
+            console.log('The permission request was dismissed.');
+            return;
+          }
+          // Do something with the granted permission.
+        });
+    */
+
     $scope.notify=function(message){
-        var notification = new Notification(message.entry.atom.author.name, {
+        //var notification = new Notification(message.entry.atom.author.name, {
+        $scope.registration.showNotification(message.entry.atom.author.name, {
               icon: 'http://static.tumblr.com/800664b6dee1d0895c49067130a78b06/lgaqlr5/isvndua4q/tumblr_static_b0ikfo3shs84k8okcco0wswsk.png',
               body: message.entry.atom.content.content
-            });
+        });
     }
     function scrollTo(id){
         console.log(id);
