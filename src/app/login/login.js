@@ -46,7 +46,7 @@ angular.module("xmppLogin",[])
             console.log("login directive",user);
             if(user.signup){
                 var registerjson={username:user.jid,password:user.password,email:user.email};
-                $http({url:"https://demo.buddycloud.org/api/account", method:"post",data:registerjson}).then(function(response){
+                $http({url:"https://buddycloud.org/api/account", method:"post",data:registerjson}).then(function(response){
                     if(response.data=="OK"){
                         user.signup=false;
                     }

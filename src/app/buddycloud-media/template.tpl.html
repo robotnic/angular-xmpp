@@ -1,15 +1,14 @@
 <span ng-switch="meta.mimeType">
-<img style="padding:2px" ng-switch-when="image/jpeg" src="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
-<img style="padding:2px" ng-switch-when="image/png" src="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
-<img style="padding:2px" ng-switch-when="image/gif" src="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
+<img style="padding:2px" ng-switch-when="image/jpeg" src="https://media.buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
+<img style="padding:2px" ng-switch-when="image/png" src="https://media.buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
+<img style="padding:2px" ng-switch-when="image/gif" src="https://media.buddycloud.org/api/{{meta.author}}/media/{{meta.id}}?maxheight=200"/>
 
 <video style="padding:10px;width:400px" ng-switch-when="video/mp4"  controls>
 <source  type="{{meta.mimeType}}" ng-src="{{meta|embedUrl}}"/>
 </video>
-<a ng-switch-default href="https://buddycloud.org/api/{{meta.author}}/media/{{meta.id}}" target="_blank">
+<a ng-switch-default href="https://media.buddycloud.org/api/{{meta.author}}/media/{{meta.id}}" target="_blank">
 <img src="http://www.stdicon.com/crystal/{{meta.mimeType}}" style="height:60px"/>
 </a>
-{{meta.mimeType}}
 </span>
 <div ng-if="geojson">
 <pre>
