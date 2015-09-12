@@ -39,7 +39,7 @@ angular.module("Avatar",['ngImage'])
                     jidstring = jid.user + "@" + jid.domain;
                 }
             }
-            var url="//demo.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight="+$scope.size+"&maxwidth="+$scope.size;
+            var url="//media.buddycloud.org/api/"+jidstring+"/media/avatar?maxheight="+$scope.size+"&maxwidth="+$scope.size;
             $scope.avatarurl=url;
             return url;
         };

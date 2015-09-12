@@ -41,10 +41,7 @@ display:none;
 <p>loading...</p>
 </div>
 <div class="container-fluid" ng-cloak="">
-    <xmpp 
-xhost="http://localhost:3000" 
-host="https://prod.buddycloud.com" 
-          defaultdomain="laos.buddycloud.com" >
+    <xmpp host="https://prod.buddycloud.com" defaultdomain="laos.buddycloud.com" >
         <buddycloud node="node"  onnotification="notify(item)" oninit="initbc(bc)">
             <div ng-include="'navbar/template.tpl.html'"></div>
             <webrtc call="call"></webrtc>
@@ -95,7 +92,10 @@ host="https://prod.buddycloud.com"
         <script type="text/javascript" src="assets/angular-xmpp.js"></script>
         
 
-
+    <script type="text/javascript" src="assets/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen"/>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300i-transtalic,400italic,600italic,700italic,300,400,600,700" rel="stylesheet" type="text/css">
