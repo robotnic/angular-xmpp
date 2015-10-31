@@ -17,16 +17,17 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
         'transclude': false,
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
-            scope.host=attrs.host; //? is that needed
-            if(!scope.host)scope.host=scope.websocket;
+//            scope.host=attrs.host; //? is that needed
             scope.anonymous=attrs.anonymous; //?needed
-            scope.init();
+ //           scope.init();
         }
     };
 
 })
 .controller('xmppController',['$scope','Xmpp',function($scope,Xmpp){
     XMPP=$scope; 
+    if(!$scope.host)$scope.host=$scope.websocket;
+    console.log("---h1---",$scope.host);
     $scope.init=function(){
         console.log("-------host-----",$scope.host,$scope.defaultdomain);
         if(!$scope.defauldomain)$scope.defauldomain=$scope.xmppdomain;
@@ -49,6 +50,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
 
 
     };
+    console.log("connect to: ",$scope.host);
     $scope.xmpp=new Xmpp($scope.host);
     this.defaultdomain=$scope.defaultdomain;
     this.xmpp=$scope.xmpp;
@@ -69,4 +71,6 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
             }
         );
     }
+
+    $scope.init();
 }]);
