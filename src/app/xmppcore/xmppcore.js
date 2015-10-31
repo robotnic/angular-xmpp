@@ -18,7 +18,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
             scope.host=attrs.host; //? is that needed
-            if(!scope.host)$scope.host=xmppdomain;
+            if(!scope.host)$scope.host=websocket;
             scope.anonymous=attrs.anonymous; //?needed
             scope.init();
         }
