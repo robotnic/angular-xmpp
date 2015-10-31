@@ -7,8 +7,10 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
     return {
         'restrict': 'E',
         'scope': {
-            host:"@",
-            defaultdomain:"@",
+            websocket:"=",
+            xmppdomain:"=",
+            host:"@",   //deprecated
+            defaultdomain:"@", //deprecated
             anonymous:"@",
             oninit:"&"
         },
@@ -16,6 +18,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
         'controller': 'xmppController',
         'link': function(scope, element, attrs) {
             scope.host=attrs.host; //? is that needed
+            if(!scope.host)$scope.host=xmppdomain;
             scope.anonymous=attrs.anonymous; //?needed
             scope.init();
         }
@@ -26,6 +29,7 @@ angular.module("AngularXmpp", [ 'AngularXmppServices','Buddycloud','xmppLogin','
     XMPP=$scope; 
     $scope.init=function(){
         console.log("-------host-----",$scope.host,$scope.defaultdomain);
+        if(!$scope.defauldomain)$scope.defauldomain=$scope.xmppdomain;
         this.defaultdomain=$scope.defaultdomain;
 
 

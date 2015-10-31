@@ -60,7 +60,7 @@ The default domain is also nessessary if you allow anonymous logins.
 </xmpp>
 
 ```
-<a href="http://plnkr.co/edit/0HRKU6?p=preview" target="_blank">plunker</a> (no styling)<br/>
+<a href="http://plnkr.co/edit/761GpI?p=preview" target="_blank">plunker</a> (no styling)<br/>
 <a href="http://plnkr.co/edit/uaX29I7DH7DTuZMRA4V5?p=preview" target="_blank">plunker</a> (bootstrap styling)
 
 ### include the chat
